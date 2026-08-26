@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GVA Tools - Monthly Report — AUG 2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=72:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gem-1:    #6B35E8;
+  --gem-2:    #0070F2;
+  --gem-3:    #9B67FF;
+  --gem-deep: #3D1A7A;
+  --lav:      #EDE8FF;
+  --lav-2:    #F5F3FF;
+  --bg:       #F3F4FB;
+  --white:    #FFFFFF;
+  --txt:      #1A1A2E;
+  --txt-mid:  #374151;
+  --txt-muted:#6B7280;
+  --border:   #E5E7EB;
+  --success:  #107E3E;
+  --danger:   #BB0000;
+  --warn:     #C05000;
+  --radius:   14px;
+  --shadow:   0 2px 20px rgba(60,30,120,0.08);
+  --shadow-lg:0 8px 48px rgba(60,30,120,0.18);
+  --th-1:     #3D1A7A;
+  --font:     '72','Helvetica Neue',Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14px;min-height:100vh}
+
+/* ── HEADER ── */
+.header{background:var(--white);padding:0 40px;position:relative;overflow:hidden;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+.header-gem{position:absolute;top:-30px;right:-30px;width:260px;height:260px;pointer-events:none;opacity:0.22}
+.header-inner{display:flex;align-items:center;justify-content:space-between;padding:22px 0;position:relative;z-index:1}
+.header-brand{display:flex;align-items:center;gap:16px}
+.sap-logo{height:26px;padding:0 10px;background:linear-gradient(135deg,var(--gem-deep),var(--gem-1));border-radius:6px;display:flex;align-items:center;font-weight:700;font-size:13px;color:#fff;letter-spacing:1.5px}
+.header-eyebrow{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;background:linear-gradient(135deg,var(--gem-1),var(--gem-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px}
+.header-title h1{font-size:26px;font-weight:700;letter-spacing:-0.5px;line-height:1;background:linear-gradient(135deg,var(--gem-deep) 0%,var(--gem-1) 45%,var(--gem-2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.header-title .sub{font-size:12px;color:var(--txt-muted);margin-top:5px}
+.header-meta{display:flex;align-items:center;gap:12px}
+.header-stat{background:var(--lav);border-radius:12px;padding:10px 20px;text-align:right;border:1px solid rgba(107,53,232,0.12)}
+.header-stat .hs-val{font-size:22px;font-weight:700;line-height:1;background:linear-gradient(135deg,var(--gem-1),var(--gem-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-variant-numeric:tabular-nums}
+.header-stat .hs-lbl{font-size:9px;color:var(--txt-muted);letter-spacing:0.8px;text-transform:uppercase;margin-top:3px;font-weight:600}
+.header-divider{width:1px;height:40px;background:var(--border)}
+
+/* ── TAB BAR ── */
+.tab-bar-wrap{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(60,30,120,0.06);padding:0 40px}
+.tab-bar-scroll{overflow-x:auto;white-space:nowrap;scrollbar-width:none;padding:10px 0}
+.tab-bar-scroll::-webkit-scrollbar{display:none}
+.tab-bar{display:inline-flex;gap:6px;align-items:center}
+.tab-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;font-size:13px;font-weight:600;color:var(--txt-muted);cursor:pointer;border:1.5px solid transparent;background:transparent;border-radius:20px;transition:all 0.18s;white-space:nowrap;font-family:var(--font)}
+.tab-btn:hover{color:var(--gem-1);background:var(--lav-2);border-color:rgba(107,53,232,0.25)}
+.tab-btn.active{color:#fff;background:linear-gradient(135deg,var(--gem-1),var(--gem-2));border-color:transparent;box-shadow:0 4px 16px rgba(107,53,232,0.35)}
+.tab-sep{width:1px;height:20px;background:var(--border);margin:0 4px}
+.tab-dropdown{position:relative;display:inline-block}
+.tab-dropdown-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;font-size:13px;font-weight:600;color:var(--txt-muted);cursor:pointer;border:1.5px solid transparent;background:transparent;border-radius:20px;transition:all 0.18s;font-family:var(--font)}
+.tab-dropdown-btn:hover,.tab-dropdown.open .tab-dropdown-btn{color:var(--gem-1);background:var(--lav-2);border-color:rgba(107,53,232,0.25)}
+.tab-dropdown-btn.has-active{color:#fff;background:linear-gradient(135deg,var(--gem-1),var(--gem-2));border-color:transparent;box-shadow:0 4px 16px rgba(107,53,232,0.35)}
+.tab-dropdown-arrow{font-size:8px;transition:transform 0.15s;opacity:0.7}
+.tab-dropdown.open .tab-dropdown-arrow{transform:rotate(180deg)}
+.tab-dropdown-menu{display:none;position:fixed;background:var(--white);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow-lg);min-width:220px;z-index:9999;padding:8px 0}
+.tab-dropdown.open .tab-dropdown-menu{display:block}
+.tab-dropdown-item{display:block;width:100%;padding:10px 20px;font-size:13px;font-weight:500;color:var(--txt-mid);cursor:pointer;border:none;background:none;text-align:left;font-family:var(--font);transition:background 0.1s,color 0.1s}
+.tab-dropdown-item:hover{background:var(--lav-2);color:var(--gem-1)}
+.tab-dropdown-item.active{color:var(--gem-1);font-weight:700;background:var(--lav)}
+
+/* ── PANELS ── */
+.panel{display:none;padding:32px 40px;max-width:1440px;margin:0 auto}
+.panel.active{display:block}
+
+/* ── SECTION TITLE ── */
+.section-title{font-size:15px;font-weight:700;color:var(--txt);margin-bottom:16px;margin-top:4px;display:flex;align-items:center;gap:12px}
+.section-title::before{content:'';display:block;width:4px;height:20px;background:linear-gradient(180deg,var(--gem-1),var(--gem-2));border-radius:3px;flex-shrink:0}
+
+/* ── HOME: CATEGORY SECTION ── */
+.cat-section{margin-bottom:36px}
+.cat-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.cat-header-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--txt-muted);padding:3px 12px;background:var(--lav);border-radius:12px}
+
+/* ── HOME: TOOL CARD GRID ── */
+.tool-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
+
+.tool-card{background:var(--white);border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;transition:box-shadow 0.22s,transform 0.22s;cursor:pointer}
+.tool-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+.tool-card-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px 16px;border-bottom:1px solid var(--border)}
+.tool-card-name{font-size:14px;font-weight:700;color:var(--txt)}
+.tool-card-nav{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:var(--gem-1);padding:4px 10px;border-radius:10px;background:var(--lav);transition:background 0.15s}
+.tool-card-nav:hover{background:var(--gem-1);color:#fff}
+
+/* Internal / External split */
+.tool-card-split{display:grid;grid-template-columns:1fr 1fr;min-height:90px}
+.split-col{padding:14px 16px}
+.split-col+.split-col{border-left:1px solid var(--border)}
+.split-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--txt-muted);margin-bottom:6px}
+.split-mau{font-size:28px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums;background:linear-gradient(135deg,var(--gem-deep),var(--gem-1) 60%,var(--gem-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.split-mau.tbd{font-size:22px;color:var(--txt-muted);background:none;-webkit-text-fill-color:var(--txt-muted)}
+.split-sub{font-size:11px;color:var(--txt-muted);margin-top:2px}
+.split-trend{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:700;margin-top:5px;padding:2px 8px;border-radius:8px;background:var(--lav)}
+.trend-up{color:var(--success)}
+.trend-dn{color:var(--danger)}
+.split-out{font-size:12px;color:var(--txt-mid);margin-top:8px;font-weight:600}
+.split-out span{color:var(--txt-muted);font-weight:400;font-size:11px}
+
+/* YTD footer */
+.tool-card-ytd{padding:10px 16px;background:var(--lav-2);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.ytd-label{font-size:10px;color:var(--txt-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.8px}
+.ytd-val{font-size:15px;font-weight:700;color:var(--gem-deep);font-variant-numeric:tabular-nums}
+
+/* ── KPI ROW (tool pages) ── */
+.kpi-row{display:flex;gap:16px;margin-bottom:28px;flex-wrap:wrap}
+.kpi-card{background:var(--white);border-radius:var(--radius);padding:22px 24px 18px 28px;flex:1;min-width:180px;box-shadow:var(--shadow);position:relative;overflow:hidden;border:1px solid var(--border);transition:box-shadow 0.22s,transform 0.22s}
+.kpi-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:4px;background:linear-gradient(180deg,var(--gem-1),var(--gem-2));border-radius:var(--radius) 0 0 var(--radius)}
+.kpi-card.blue::before{background:linear-gradient(180deg,var(--gem-2),#1B90FF)}
+.kpi-card.navy::before{background:linear-gradient(180deg,var(--gem-deep),var(--gem-1))}
+.kpi-card.teal::before{background:linear-gradient(180deg,#00A19A,var(--gem-2))}
+.kpi-card .lbl{font-size:10px;color:var(--txt-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;font-weight:700}
+.kpi-card .val{font-size:36px;font-weight:700;background:linear-gradient(135deg,var(--gem-deep),var(--gem-1) 60%,var(--gem-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-1.5px}
+.kpi-card .sub{font-size:11px;color:var(--txt-muted);margin-top:6px}
+.kpi-card .trend{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;margin-top:6px;padding:2px 8px;border-radius:8px;background:var(--lav)}
+
+/* ── CHART ROW ── */
+.chart-row{display:flex;gap:20px;margin-bottom:28px;flex-wrap:wrap}
+.chart-box{flex:1;min-width:280px;background:var(--white);border-radius:var(--radius);padding:22px 26px;box-shadow:var(--shadow);border:1px solid var(--border)}
+.chart-box .section-title{margin-bottom:16px}
+
+/* ── ROADMAP ── */
+.roadmap-wrap{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--border);margin-bottom:28px;overflow:hidden}
+.roadmap-legend{display:flex;align-items:center;gap:20px;padding:12px 20px;background:var(--lav-2);border-bottom:1px solid var(--border);font-size:11px;color:var(--txt-mid)}
+.rm-leg-item{display:flex;align-items:center;gap:5px;font-weight:600}
+.rm-orig-dot{color:var(--txt-muted);font-size:14px}
+.rm-curr-dot{color:var(--gem-2);font-size:14px}
+.rm-actual-dot{color:var(--success);font-size:14px}
+
+.roadmap-grid{width:100%}
+.rm-header-row,.rm-row{display:grid;grid-template-columns:200px 110px 1fr;align-items:center;border-bottom:1px solid var(--border)}
+.rm-row:last-child{border-bottom:none}
+.rm-row:hover{background:var(--lav-2)}
+.rm-header-row{background:var(--th-1);color:#fff}
+.rm-col-item{padding:12px 16px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px}
+.rm-col-status{padding:12px 12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px}
+.rm-col-timeline{padding:8px 20px 8px 0}
+.rm-header-row .rm-col-item,.rm-header-row .rm-col-status{color:#fff}
+
+.rm-row .rm-col-item{font-size:13px;font-weight:600;color:var(--txt);text-transform:none;letter-spacing:0}
+.rm-row .rm-col-status{padding:12px 12px}
+
+/* Month header within timeline */
+.rm-months-row{display:flex;position:relative;height:28px;margin-bottom:2px}
+.rm-month-lbl{flex:1;font-size:10px;font-weight:600;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.5px;text-align:center}
+.rm-header-row .rm-col-timeline{padding:0 20px 0 0}
+
+/* Timeline track */
+.rm-track{position:relative;height:32px;display:flex;align-items:center}
+.rm-line{position:absolute;left:0;right:0;height:2px;background:var(--border);border-radius:1px}
+.rm-marker{position:absolute;transform:translateX(-50%);font-size:16px;line-height:1;cursor:default}
+.rm-marker-orig{color:var(--txt-muted)}
+.rm-marker-curr{color:var(--gem-2)}
+.rm-marker-actual{color:var(--success)}
+
+/* Status badges */
+.status-badge{display:inline-block;padding:4px 10px;border-radius:8px;font-size:11px;font-weight:700;letter-spacing:0.3px}
+.st-delivered{background:#D4EDDA;color:#155724}
+.st-on-track {background:#D1ECF1;color:#0C5460}
+.st-at-risk  {background:#FFF3CD;color:#856404}
+.st-delayed  {background:#F8D7DA;color:#721C24}
+
+/* ── EMPTY STATE ── */
+.empty-panel{text-align:center;padding:80px 20px;color:var(--txt-muted)}
+.empty-panel .ei{font-size:52px;margin-bottom:16px;opacity:0.35}
+.empty-panel h3{font-size:18px;font-weight:700;margin-bottom:8px;color:var(--txt-mid)}
+.empty-panel p{font-size:13px}
+
+/* ── TEMPLATE BADGE ── */
+.template-banner{display:flex;align-items:center;gap:8px;background:repeating-linear-gradient(45deg,#FFFBEE,#FFFBEE 6px,#FFF3CD 6px,#FFF3CD 12px);border:1px solid #F0C040;border-radius:10px;padding:7px 14px;margin-bottom:20px;font-size:12px;color:#856404;font-weight:700}
+.template-banner svg{flex-shrink:0}
+.template-tag{display:inline-block;background:#FFF3CD;color:#856404;font-size:9px;font-weight:700;padding:2px 7px;border-radius:6px;letter-spacing:0.8px;text-transform:uppercase;border:1px solid #F0C040;margin-left:6px;vertical-align:middle}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#D4D0E8;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--gem-1)}
+
+@media(max-width:700px){
+  .panel{padding:16px}
+  .header-meta{display:none}
+  .header,.tab-bar-wrap{padding:0 16px}
+  .tool-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<div class="header">
+  <svg class="header-gem" viewBox="0 0 260 260" fill="none">
+    <defs>
+      <linearGradient id="gA" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#B04FFF"/><stop offset="100%" stop-color="#6B35E8"/></linearGradient>
+      <linearGradient id="gB" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#6B35E8"/><stop offset="100%" stop-color="#0070F2"/></linearGradient>
+      <linearGradient id="gC" x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#0070F2"/><stop offset="100%" stop-color="#1B90FF"/></linearGradient>
+      <linearGradient id="gD" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#3D1A7A"/><stop offset="100%" stop-color="#6B35E8"/></linearGradient>
+      <linearGradient id="gE" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#9B67FF"/><stop offset="100%" stop-color="#B04FFF"/></linearGradient>
+      <linearGradient id="gF" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#6B35E8"/><stop offset="100%" stop-color="#3D1A7A"/></linearGradient>
+    </defs>
+    <polygon points="130,20 195,80 165,105 130,72" fill="url(#gA)"/>
+    <polygon points="130,20 65,80 95,105 130,72" fill="url(#gE)"/>
+    <polygon points="195,80 220,150 175,140 165,105" fill="url(#gC)"/>
+    <polygon points="65,80 40,150 85,140 95,105" fill="url(#gD)"/>
+    <polygon points="130,20 195,80 220,40" fill="url(#gA)" opacity="0.6"/>
+    <polygon points="130,20 65,80 40,40" fill="url(#gE)" opacity="0.6"/>
+    <polygon points="165,105 130,72 95,105 85,140 130,152 175,140" fill="url(#gB)"/>
+    <polygon points="175,140 130,152 130,230 220,150" fill="url(#gC)"/>
+    <polygon points="85,140 130,152 130,230 40,150" fill="url(#gD)"/>
+  </svg>
+  <div class="header-inner">
+    <div class="header-brand">
+      <div class="sap-logo">SAP</div>
+      <div class="header-title">
+        <div class="header-eyebrow">Global Value Advisory</div>
+        <h1>GVA Tools - Monthly Report</h1>
+        <div class="sub">Tool Adoption &amp; Usage &nbsp;·&nbsp; Internal &nbsp;·&nbsp; AUG 2026</div>
+      </div>
+    </div>
+    <div class="header-meta">
+      <div class="header-stat">
+        <div class="hs-val">3,697</div>
+        <div class="hs-lbl">Total MAU — Aug 2026</div>
+      </div>
+      <div class="header-divider"></div>
+      <div class="header-stat">
+        <div class="hs-val">23,522</div>
+        <div class="hs-lbl">Total Users YTD 2026</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TAB BAR ══ -->
+<div class="tab-bar-wrap">
+  <div class="tab-bar-scroll">
+    <div class="tab-bar" id="tabBar">
+
+      <button class="tab-btn active" onclick="showTab('home')">&#8962; Home</button>
+      <div class="tab-sep"></div>
+
+      <!-- Customer Research -->
+      <div class="tab-dropdown" id="dd_cr">
+        <button class="tab-dropdown-btn" onclick="toggleDd('dd_cr',event)">Customer Research <span class="tab-dropdown-arrow">▼</span></button>
+        <div class="tab-dropdown-menu">
+          <button class="tab-dropdown-item" onclick="showTab('cse');closeDd()">CSE &amp; Vally</button>
+          <button class="tab-dropdown-item" onclick="showTab('evb');closeDd()">Executive Value Brief</button>
+          <button class="tab-dropdown-item" onclick="showTab('cve');closeDd()">Customer Value Explorer</button>
+          <button class="tab-dropdown-item" onclick="showTab('scg');closeDd()">Strategic Conversations Guide</button>
+        </div>
+      </div>
+
+      <!-- Portfolio Discovery -->
+      <div class="tab-dropdown" id="dd_pd">
+        <button class="tab-dropdown-btn" onclick="toggleDd('dd_pd',event)">Portfolio Discovery <span class="tab-dropdown-arrow">▼</span></button>
+        <div class="tab-dropdown-menu">
+          <button class="tab-dropdown-item" onclick="showTab('solution_scout');closeDd()">SAP Solution Scout</button>
+          <button class="tab-dropdown-item" onclick="showTab('exp_agent');closeDd()">Experience Agent</button>
+          <button class="tab-dropdown-item" onclick="showTab('roadmap_exp');closeDd()">SAP Road Map Explorer</button>
+        </div>
+      </div>
+
+      <!-- Outside-In Analysis -->
+      <div class="tab-dropdown" id="dd_oi">
+        <button class="tab-dropdown-btn" onclick="toggleDd('dd_oi',event)">Outside-In Analysis <span class="tab-dropdown-arrow">▼</span></button>
+        <div class="tab-dropdown-menu">
+          <button class="tab-dropdown-item" onclick="showTab('mtn');closeDd()">Move the Needle</button>
+          <button class="tab-dropdown-item" onclick="showTab('v_starter');closeDd()">Value Starter</button>
+          <button class="tab-dropdown-item" onclick="showTab('v_onepager');closeDd()">Value One-Pager</button>
+        </div>
+      </div>
+
+      <!-- Benchmarking -->
+      <div class="tab-dropdown" id="dd_bm">
+        <button class="tab-dropdown-btn" onclick="toggleDd('dd_bm',event)">Benchmarking <span class="tab-dropdown-arrow">▼</span></button>
+        <div class="tab-dropdown-menu">
+          <button class="tab-dropdown-item" onclick="showTab('flash');closeDd()">FLASH</button>
+          <button class="tab-dropdown-item" onclick="showTab('perf_bm');closeDd()">Performance Benchmarking</button>
+        </div>
+      </div>
+
+      <!-- Value Case -->
+      <div class="tab-dropdown" id="dd_vc">
+        <button class="tab-dropdown-btn" onclick="toggleDd('dd_vc',event)">Value Case <span class="tab-dropdown-arrow">▼</span></button>
+        <div class="tab-dropdown-menu">
+          <button class="tab-dropdown-item" onclick="showTab('aevc');closeDd()">AEVC</button>
+          <button class="tab-dropdown-item" onclick="showTab('gbc');closeDd()">VLM / GBC</button>
+          <button class="tab-dropdown-item" onclick="showTab('tco');closeDd()">TCO</button>
+        </div>
+      </div>
+
+      <!-- Learning -->
+      <div class="tab-dropdown" id="dd_ln">
+        <button class="tab-dropdown-btn" onclick="toggleDd('dd_ln',event)">Learning &amp; Tools <span class="tab-dropdown-arrow">▼</span></button>
+        <div class="tab-dropdown-menu">
+          <button class="tab-dropdown-item" onclick="showTab('v_library');closeDd()">Value Library</button>
+          <button class="tab-dropdown-item" onclick="showTab('l_enable');closeDd()">Learning &amp; Enablement</button>
+          <button class="tab-dropdown-item" onclick="showTab('v_content');closeDd()">Value Content</button>
+        </div>
+      </div>
+
+      <button class="tab-btn" onclick="showTab('vr_dash')">Value Realization</button>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     PANEL — HOME (OVERVIEW)
+     ══════════════════════════════════════ -->
+<div id="p_home" class="panel active">
+  <div id="homeGrid"></div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     PANEL — CSE & VALLY
+     ══════════════════════════════════════ -->
+<div id="p_cse" class="panel">
+
+  <!-- Period badge -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px">
+    <div class="section-title" style="margin:0">CSE &amp; Vally — August 2026</div>
+    <span style="background:var(--lav);color:var(--gem-deep);font-size:12px;font-weight:700;padding:5px 14px;border-radius:12px">Reporting month: AUG 2026</span>
+  </div>
+
+  <!-- KPI Row: Internal -->
+  <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--txt-muted);margin-bottom:8px;padding-left:4px">Internal — CSE</div>
+  <div class="kpi-row">
+    <div class="kpi-card">
+      <div class="lbl">Monthly Active Users</div>
+      <div class="val">1,240</div>
+      <div class="sub">Aug 2026</div>
+      <div class="trend trend-up">▲ 8% vs Jul</div>
+    </div>
+    <div class="kpi-card blue">
+      <div class="lbl">Uploads</div>
+      <div class="val">480</div>
+      <div class="sub">Customer files uploaded</div>
+    </div>
+    <div class="kpi-card navy">
+      <div class="lbl">YTD 2026 — MAU total</div>
+      <div class="val">8,048</div>
+      <div class="sub">Jan – Aug cumulative</div>
+    </div>
+  </div>
+
+  <!-- KPI Row: External -->
+  <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--txt-muted);margin-bottom:8px;padding-left:4px">External — Vally</div>
+  <div class="kpi-row">
+    <div class="kpi-card teal">
+      <div class="lbl">Monthly Active Users</div>
+      <div class="val">842</div>
+      <div class="sub">Aug 2026</div>
+      <div class="trend trend-up">▲ 12% vs Jul</div>
+    </div>
+    <div class="kpi-card blue">
+      <div class="lbl">Deliverables</div>
+      <div class="val">1,965</div>
+      <div class="sub">Customer deliverables generated</div>
+    </div>
+    <div class="kpi-card navy">
+      <div class="lbl">YTD 2026 — MAU total</div>
+      <div class="val">5,474</div>
+      <div class="sub">Jan – Aug cumulative</div>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <div class="chart-row">
+    <div class="chart-box" style="flex:2">
+      <div class="section-title">Monthly Active Users — 2026</div>
+      <canvas id="cseChartMAU" height="110"></canvas>
+    </div>
+    <div class="chart-box" style="flex:1">
+      <div class="section-title">Aug Output KPIs</div>
+      <canvas id="cseChartOutput" height="180"></canvas>
+    </div>
+  </div>
+
+  <!-- Roadmap -->
+  <div class="section-title">Milestones &amp; Roadmap — H2 2026</div>
+  <div id="cseRoadmap"></div>
+
+</div>
+
+
+<!-- ══════════════════════════════════════
+     PANEL — AEVC
+     ══════════════════════════════════════ -->
+<div id="p_aevc" class="panel">
+
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px">
+    <div class="section-title" style="margin:0">AEVC — August 2026</div>
+    <span style="background:var(--lav);color:var(--gem-deep);font-size:12px;font-weight:700;padding:5px 14px;border-radius:12px">Reporting month: AUG 2026</span>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi-card">
+      <div class="lbl">Monthly Active Users</div>
+      <div class="val">615</div>
+      <div class="sub">Aug 2026</div>
+      <div class="trend trend-dn">▼ 3% vs Jul</div>
+    </div>
+    <div class="kpi-card blue">
+      <div class="lbl">Analyses Run</div>
+      <div class="val">1,120</div>
+      <div class="sub">Automated analyses</div>
+    </div>
+    <div class="kpi-card navy">
+      <div class="lbl">YTD 2026 — MAU total</div>
+      <div class="val">4,891</div>
+      <div class="sub">Jan – Aug cumulative</div>
+    </div>
+  </div>
+
+  <div class="chart-row">
+    <div class="chart-box" style="flex:2">
+      <div class="section-title">Monthly Active Users — 2026</div>
+      <canvas id="aevcChartMAU" height="110"></canvas>
+    </div>
+    <div class="chart-box" style="flex:1">
+      <div class="section-title">Trend Summary</div>
+      <div style="padding:20px 0;text-align:center;color:var(--txt-muted);font-size:13px">MAU slightly declining since Jun peak (654).<br>Monitor for continued drop in Sep.</div>
+    </div>
+  </div>
+
+  <div class="section-title">Milestones &amp; Roadmap — H2 2026</div>
+  <div id="aevcRoadmap"></div>
+
+</div>
+
+
+<!-- ══ PLACEHOLDER PANELS ══ -->
+<div id="p_evb"          class="panel"><div class="empty-panel"><div class="ei">📋</div><h3>Executive Value Brief</h3><p>Data not yet available — TBD</p></div></div>
+<div id="p_cve"          class="panel"><div class="empty-panel"><div class="ei">🔍</div><h3>Customer Value Explorer</h3><p>Data not yet available — TBD</p></div></div>
+<div id="p_scg"          class="panel"><div class="empty-panel"><div class="ei">💬</div><h3>Strategic Conversations Guide</h3><p>Data not yet available — TBD</p></div></div>
+<div id="p_solution_scout" class="panel">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+    <div class="section-title" style="margin:0">SAP Solution Scout — August 2026</div>
+    <span style="background:#FFF3CD;color:#856404;font-size:12px;font-weight:700;padding:5px 14px;border-radius:12px">Data: TBD</span>
+  </div>
+  <div class="kpi-row">
+    <div class="kpi-card"><div class="lbl">Monthly Active Users</div><div class="val" style="font-size:24px;letter-spacing:0;-webkit-text-fill-color:var(--txt-muted);background:none">TBD</div></div>
+    <div class="kpi-card blue"><div class="lbl">Assessments</div><div class="val" style="font-size:24px;letter-spacing:0;-webkit-text-fill-color:var(--txt-muted);background:none">TBD</div></div>
+    <div class="kpi-card navy"><div class="lbl">YTD 2026</div><div class="val" style="font-size:24px;letter-spacing:0;-webkit-text-fill-color:var(--txt-muted);background:none">TBD</div></div>
+  </div>
+  <div class="section-title">Milestones &amp; Roadmap — H2 2026</div>
+  <div id="scoutRoadmap"></div>
+</div>
+<div id="p_exp_agent"    class="panel">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+    <div class="section-title" style="margin:0">Experience Agent — August 2026</div>
+    <span style="background:#FFF3CD;color:#856404;font-size:12px;font-weight:700;padding:5px 14px;border-radius:12px">Data: TBD</span>
+  </div>
+  <div class="kpi-row">
+    <div class="kpi-card"><div class="lbl">Monthly Active Users</div><div class="val" style="font-size:24px;letter-spacing:0;-webkit-text-fill-color:var(--txt-muted);background:none">TBD</div></div>
+    <div class="kpi-card blue"><div class="lbl">Queries</div><div class="val" style="font-size:24px;letter-spacing:0;-webkit-text-fill-color:var(--txt-muted);background:none">TBD</div></div>
+    <div class="kpi-card navy"><div class="lbl">YTD 2026</div><div class="val" style="font-size:24px;letter-spacing:0;-webkit-text-fill-color:var(--txt-muted);background:none">TBD</div></div>
+  </div>
+  <div class="section-title">Milestones &amp; Roadmap — H2 2026</div>
+  <div id="agentRoadmap"></div>
+</div>
+<div id="p_roadmap_exp"  class="panel">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+    <div class="section-title" style="margin:0">SAP Road Map Explorer — August 2026</div>
+    <span style="background:#FFF3CD;color:#856404;font-size:12px;font-weight:700;padding:5px 14px;border-radius:12px">Data: TBD</span>
+  </div>
+  <div class="kpi-row">
+    <div class="kpi-card"><div class="lbl">Monthly Active Users</div><div class="val" style="font-size:24px;letter-spacing:0;-webkit-text-fill-color:var(--txt-muted);background:none">TBD</div></div>
+    <div class="kpi-card blue"><div class="lbl">Roadmaps / Searches</div><div class="val" style="font-size:24px;letter-spacing:0;-webkit-text-fill-color:var(--txt-muted);background:none">TBD</div></div>
+    <div class="kpi-card navy"><div class="lbl">YTD 2026</div><div class="val" style="font-size:24px;letter-spacing:0;-webkit-text-fill-color:var(--txt-muted);background:none">TBD</div></div>
+  </div>
+  <div class="section-title">Milestones &amp; Roadmap — H2 2026</div>
+  <div id="rmexpRoadmap"></div>
+</div>
+<div id="p_gbc"          class="panel"><div class="empty-panel"><div class="ei">💼</div><h3>VLM / GBC</h3><p>Data not yet available — TBD</p></div></div>
+<div id="p_tco"          class="panel"><div class="empty-panel"><div class="ei">💰</div><h3>TCO</h3><p>Data not yet available — TBD</p></div></div>
+<div id="p_mtn"          class="panel"><div class="empty-panel"><div class="ei">📈</div><h3>Move the Needle</h3><p>Data not yet available — TBD</p></div></div>
+<div id="p_v_starter"    class="panel"><div class="empty-panel"><div class="ei">🚀</div><h3>Value Starter</h3><p>Data not yet available — TBD</p></div></div>
+<div id="p_v_onepager"   class="panel"><div class="empty-panel"><div class="ei">📄</div><h3>Value One-Pager</h3><p>Data not yet available — TBD</p></div></div>
+<div id="p_flash"        class="panel"><div class="empty-panel"><div class="ei">⚡</div><h3>FLASH</h3><p>Data not yet available — TBD</p></div></div>
+<div id="p_perf_bm"      class="panel"><div class="empty-panel"><div class="ei">📊</div><h3>Performance Benchmarking</h3><p>Data not yet available — TBD</p></div></div>
+<div id="p_v_library"    class="panel"><div class="empty-panel"><div class="ei">📚</div><h3>Value Library</h3><p>Data not yet available — TBD</p></div></div>
+<div id="p_l_enable"     class="panel"><div class="empty-panel"><div class="ei">🎓</div><h3>Learning &amp; Enablement</h3><p>Data not yet available — TBD</p></div></div>
+<div id="p_v_content"    class="panel"><div class="empty-panel"><div class="ei">🎯</div><h3>Value Content</h3><p>Data not yet available — TBD</p></div></div>
+<div id="p_vr_dash"      class="panel"><div class="empty-panel"><div class="ei">✅</div><h3>VR Dashboard</h3><p>Data not yet available — TBD</p></div></div>
+
+
+<script>
+/* ════════════════════════
+   DATA
+   ════════════════════════ */
+
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug'];
+
+// Monthly MAU arrays (Jan–Aug 2026)
+const DATA = {
+  cse:    { mau: [820,870,910,960,1020,1080,1148,1240], ytd: () => DATA.cse.mau.reduce((a,b)=>a+b,0) },
+  vally:  { mau: [560,595,630,665,700,730,752,842],     ytd: () => DATA.vally.mau.reduce((a,b)=>a+b,0) },
+  aevc:   { mau: [540,570,600,630,648,654,634,615],     ytd: () => DATA.aevc.mau.reduce((a,b)=>a+b,0) },
+};
+
+// Home tool cards config
+const HOME_TOOLS = [
+  {
+    cat: 'Customer Research',
+    tools: [
+      {
+        id:'cse', name:'CSE & Vally', tab:'cse',
+        internal: { val:'1,240', label:'Monthly Active Users', sublabel:'CSE — Aug 2026', trend:8 },
+        external: { val:'842',   label:'Monthly Active Users', sublabel:'Vally — Aug 2026', trend:12 },
+        intOut: '480 Uploads', extOut: '1,965 Deliverables',
+        ytd: (DATA.cse.ytd() + DATA.vally.ytd()).toLocaleString(), ytdLabel:'combined MAU YTD'
+      },
+      { id:'evb', name:'Executive Value Brief', tab:'evb',
+        internal:{ val:'111', label:'Monthly Active Users', sublabel:'EVB — Aug 2026', trend:11 },
+        external:{ val:'222', label:'Presentations', sublabel:'Aug 2026', trend:null },
+        intOut:'111 drafts created', extOut:null, ytd:'888', ytdLabel:'MAU YTD' },
+      { id:'cve', name:'Customer Value Explorer', tab:'cve',
+        internal:{ val:'333', label:'Monthly Active Users', sublabel:'CVE — Aug 2026', trend:3 },
+        external:{ val:'444', label:'Value outputs', sublabel:'Aug 2026', trend:null },
+        intOut:null, extOut:null, ytd:'2,664', ytdLabel:'MAU YTD' },
+      { id:'scg', name:'Strategic Conversations Guide', tab:'scg',
+        internal:{ val:'111', label:'Monthly Active Users', sublabel:'SCG — Aug 2026', trend:-11 },
+        external:{ val:'222', label:'Conversations', sublabel:'Aug 2026', trend:null },
+        intOut:null, extOut:null, ytd:'888', ytdLabel:'MAU YTD' },
+    ]
+  },
+  {
+    cat: 'Portfolio Discovery',
+    tools: [
+      { id:'solution_scout', name:'SAP Solution Scout', tab:'solution_scout',
+        internal:{ val:'444', label:'Monthly Active Users', sublabel:'Aug 2026', trend:4 },
+        external:{ val:'555', label:'Assessments', sublabel:'Aug 2026', trend:null },
+        intOut:'444 opportunity scores', extOut:null, ytd:'3,552', ytdLabel:'MAU YTD' },
+      { id:'exp_agent', name:'Experience Agent', tab:'exp_agent',
+        internal:{ val:'333', label:'Monthly Active Users', sublabel:'Aug 2026', trend:-3 },
+        external:{ val:'1,111', label:'Queries', sublabel:'Aug 2026', trend:null },
+        intOut:null, extOut:null, ytd:'2,664', ytdLabel:'MAU YTD' },
+      { id:'roadmap_exp', name:'SAP Road Map Explorer', tab:'roadmap_exp',
+        internal:{ val:'222', label:'Monthly Active Users', sublabel:'Aug 2026', trend:22 },
+        external:{ val:'333', label:'Roadmaps / searches', sublabel:'Aug 2026', trend:null },
+        intOut:null, extOut:null, ytd:'1,776', ytdLabel:'MAU YTD' },
+    ]
+  },
+  {
+    cat: 'Outside-In Analysis',
+    tools: [
+      { id:'mtn',       name:'Move the Needle',  tab:'mtn',
+        internal:{ val:'555', label:'Monthly Active Users', sublabel:'Aug 2026', trend:5 },
+        external:{ val:'666', label:'Analyses', sublabel:'Aug 2026', trend:null },
+        intOut:'555 needle moves', extOut:null, ytd:'4,440', ytdLabel:'MAU YTD' },
+      { id:'v_starter', name:'Value Starter',    tab:'v_starter',
+        internal:{ val:'444', label:'Monthly Active Users', sublabel:'Aug 2026', trend:4 },
+        external:{ val:'555', label:'Decks created', sublabel:'Aug 2026', trend:null },
+        intOut:null, extOut:null, ytd:'3,552', ytdLabel:'MAU YTD' },
+      { id:'v_onepager',name:'Value One-Pager', tab:'v_onepager',
+        internal:{ val:'333', label:'Monthly Active Users', sublabel:'Aug 2026', trend:3 },
+        external:{ val:'444', label:'One-pagers created', sublabel:'Aug 2026', trend:null },
+        intOut:null, extOut:null, ytd:'2,664', ytdLabel:'MAU YTD' },
+    ]
+  },
+  {
+    cat: 'Benchmarking',
+    tools: [
+      { id:'flash',   name:'FLASH', tab:'flash',
+        internal:{ val:'666', label:'Monthly Active Users', sublabel:'Aug 2026', trend:6 },
+        external:{ val:'777', label:'Benchmarks run', sublabel:'Aug 2026', trend:null },
+        intOut:'666 reports generated', extOut:null, ytd:'5,328', ytdLabel:'MAU YTD' },
+      { id:'perf_bm', name:'Performance Benchmarking', tab:'perf_bm',
+        internal:{ val:'444', label:'Monthly Active Users', sublabel:'Aug 2026', trend:4 },
+        external:{ val:'555', label:'Reports', sublabel:'Aug 2026', trend:null },
+        intOut:null, extOut:null, ytd:'3,552', ytdLabel:'MAU YTD' },
+    ]
+  },
+  {
+    cat: 'Value Case',
+    tools: [
+      {
+        id:'aevc', name:'AEVC', tab:'aevc',
+        internal: { val:'615', label:'Monthly Active Users', sublabel:'AEVC — Aug 2026', trend:-3 },
+        external: { val:'1,120', label:'Analyses Run', sublabel:'Aug 2026', trend:null },
+        intOut: null, extOut: null,
+        ytd: DATA.aevc.ytd().toLocaleString(), ytdLabel:'MAU YTD'
+      },
+      { id:'gbc', name:'VLM / GBC', tab:'gbc',
+        internal:{ val:'222', label:'Monthly Active Users', sublabel:'Aug 2026', trend:null },
+        external:{ val:'333', label:'Cases built', sublabel:'Aug 2026', trend:null },
+        intOut:null, extOut:null, ytd:'1,776', ytdLabel:'MAU YTD' },
+      { id:'tco', name:'TCO', tab:'tco',
+        internal:{ val:'111', label:'Monthly Active Users', sublabel:'Aug 2026', trend:null },
+        external:{ val:'222', label:'TCO models', sublabel:'Aug 2026', trend:null },
+        intOut:null, extOut:null, ytd:'888', ytdLabel:'MAU YTD' },
+    ]
+  },
+  {
+    cat: 'Learning & Internal Tools',
+    tools: [
+      { id:'v_library', name:'Value Library', tab:'v_library',
+        internal:{ val:'1,111', label:'Monthly Active Users', sublabel:'Aug 2026', trend:11 },
+        external:{ val:'2,222', label:'Content views', sublabel:'Aug 2026', trend:null },
+        intOut:'1,111 assets accessed', extOut:null, ytd:'8,888', ytdLabel:'MAU YTD' },
+      { id:'l_enable',  name:'Learning & Enablement', tab:'l_enable',
+        internal:{ val:'555', label:'Monthly Active Users', sublabel:'Aug 2026', trend:5 },
+        external:{ val:'666', label:'Completions', sublabel:'Aug 2026', trend:null },
+        intOut:null, extOut:null, ytd:'4,440', ytdLabel:'MAU YTD' },
+      { id:'v_content', name:'Value Content', tab:'v_content',
+        internal:{ val:'444', label:'Monthly Active Users', sublabel:'Aug 2026', trend:4 },
+        external:{ val:'555', label:'Downloads', sublabel:'Aug 2026', trend:null },
+        intOut:null, extOut:null, ytd:'3,552', ytdLabel:'MAU YTD' },
+    ]
+  },
+  {
+    cat: 'Value Realization',
+    tools: [
+      { id:'vr_dash', name:'VR Dashboard', tab:'vr_dash',
+        internal:{ val:'333', label:'Monthly Active Users', sublabel:'Aug 2026', trend:3 },
+        external:{ val:'444', label:'Reports generated', sublabel:'Aug 2026', trend:null },
+        intOut:null, extOut:null, ytd:'2,664', ytdLabel:'MAU YTD' },
+    ]
+  },
+];
+
+// Roadmap milestones (month as number: 7=Jul…12=Dec)
+// { item, status, original, current, actual }
+const ROADMAP = {
+  cse: [
+    { item:'Private data research', status:'delivered', original:8, current:8, actual:8 }
+  ],
+  aevc: [
+    { item:'Export enhancement', status:'on-track', original:9, current:9, actual:null }
+  ],
+  exp_agent: [
+    { item:'New content source', status:'at-risk', original:9, current:10, actual:null }
+  ],
+  solution_scout: [
+    { item:'Opportunity scoring', status:'delayed', original:8, current:10, actual:null }
+  ],
+  roadmap_exp: [
+    { item:'Guided roadmap view', status:'on-track', original:11, current:11, actual:null }
+  ],
+};
+
+
+/* ════════════════════════
+   HOME GRID RENDER
+   ════════════════════════ */
+const REAL_TOOLS = new Set(['cse','aevc']);
+
+function renderHome() {
+  let html = '';
+  HOME_TOOLS.forEach(cat => {
+    html += `<div class="cat-section">
+      <div class="cat-header"><span class="cat-header-label">${cat.cat}</span></div>
+      <div class="tool-grid">`;
+
+    cat.tools.forEach(t => {
+      const isReal = REAL_TOOLS.has(t.id);
+      const tmplTag = !isReal ? `<span class="template-tag">TEMPLATE</span>` : '';
+      const itrend = t.internal.trend > 0
+        ? `<span class="split-trend trend-up">▲ ${t.internal.trend}% vs Jul</span>`
+        : t.internal.trend < 0
+        ? `<span class="split-trend trend-dn">▼ ${Math.abs(t.internal.trend)}% vs Jul</span>`
+        : '';
+      const etrend = t.external.trend != null && t.external.trend > 0
+        ? `<span class="split-trend trend-up">▲ ${t.external.trend}% vs Jul</span>`
+        : t.external.trend != null && t.external.trend < 0
+        ? `<span class="split-trend trend-dn">▼ ${Math.abs(t.external.trend)}% vs Jul</span>`
+        : '';
+      const intOut = t.intOut ? `<div class="split-out">${t.intOut}</div>` : '';
+      const extOut = t.extOut ? `<div class="split-out">${t.extOut}</div>` : '';
+      const cardBorder = !isReal ? 'border:1px solid #F0C040;' : '';
+
+      html += `<div class="tool-card" onclick="showTab('${t.tab}')" style="${cardBorder}">
+        <div class="tool-card-header">
+          <span class="tool-card-name">${t.name}${tmplTag}</span>
+          <span class="tool-card-nav">Details →</span>
+        </div>
+        <div class="tool-card-split">
+          <div class="split-col">
+            <div class="split-label">Internal</div>
+            <div class="split-mau">${t.internal.val}</div>
+            <div class="split-sub">${t.internal.label}</div>
+            ${itrend}${intOut}
+          </div>
+          <div class="split-col">
+            <div class="split-label">External</div>
+            <div class="split-mau">${t.external.val}</div>
+            <div class="split-sub">${t.external.label}</div>
+            ${etrend}${extOut}
+          </div>
+        </div>
+        <div class="tool-card-ytd" ${!isReal ? 'style="background:#FFFBEE"' : ''}>
+          <span class="ytd-label">YTD 2026 — ${t.ytdLabel}</span>
+          <span class="ytd-val">${t.ytd}</span>
+        </div>
+      </div>`;
+    });
+
+    html += '</div></div>';
+  });
+  document.getElementById('homeGrid').innerHTML = html;
+}
+
+
+/* ════════════════════════
+   TOOL PANEL AUTO-RENDER
+   ════════════════════════ */
+function renderToolPanels() {
+  HOME_TOOLS.forEach(cat => {
+    cat.tools.forEach(t => {
+      if (REAL_TOOLS.has(t.id)) return; // CSE + AEVC handled in HTML
+      const panel = document.getElementById('p_' + t.tab);
+      if (!panel) return;
+
+      const itrend = t.internal.trend > 0
+        ? `<div class="trend trend-up">▲ ${t.internal.trend}% vs Jul</div>`
+        : t.internal.trend < 0
+        ? `<div class="trend trend-dn">▼ ${Math.abs(t.internal.trend)}% vs Jul</div>`
+        : '';
+
+      const roadmapId = `rm_${t.id}`;
+      const roadmapData = ROADMAP[t.id] ? ROADMAP[t.id] : null;
+
+      panel.innerHTML = `
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+          <div class="section-title" style="margin:0">${t.name}</div>
+          <span style="background:var(--lav);color:var(--gem-deep);font-size:12px;font-weight:700;padding:5px 14px;border-radius:12px">Reporting month: AUG 2026</span>
+        </div>
+        <div class="template-banner">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2l1.8 3.6L14 6.2l-3 2.9.7 4.1L8 11.2l-3.7 2 .7-4.1-3-2.9 4.2-.6z" stroke="#856404" stroke-width="1.3" stroke-linejoin="round"/></svg>
+          TEMPLATE / preview — placeholder data only, not connected to a real data source
+        </div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--txt-muted);margin-bottom:8px;padding-left:4px">Internal</div>
+        <div class="kpi-row">
+          <div class="kpi-card">
+            <div class="lbl">Monthly Active Users</div>
+            <div class="val">${t.internal.val}</div>
+            <div class="sub">Aug 2026</div>
+            ${itrend}
+          </div>
+          <div class="kpi-card blue">
+            <div class="lbl">${t.external.label}</div>
+            <div class="val">${t.external.val}</div>
+            <div class="sub">Aug 2026</div>
+          </div>
+          <div class="kpi-card navy">
+            <div class="lbl">YTD 2026 — ${t.ytdLabel}</div>
+            <div class="val">${t.ytd}</div>
+            <div class="sub">Jan – Aug cumulative</div>
+          </div>
+        </div>
+        ${roadmapData ? `<div class="section-title" style="margin-top:8px">Milestones &amp; Roadmap — H2 2026</div><div id="${roadmapId}"></div>` : ''}
+      `;
+
+      if (roadmapData) {
+        document.getElementById(roadmapId).innerHTML = buildRoadmap(roadmapData);
+      }
+    });
+  });
+}
+
+
+
+
+/* ════════════════════════
+   ROADMAP RENDER
+   ════════════════════════ */
+const RM_MONTHS = ['JUL','AUG','SEP','OCT','NOV','DEC'];
+
+function monthPct(m) {
+  // m: 7=Jul…12=Dec → 0%…100%
+  return ((m - 7) / 5) * 100;
+}
+
+const STATUS_META = {
+  'delivered': { cls:'st-delivered', label:'Delivered' },
+  'on-track':  { cls:'st-on-track',  label:'On Track'  },
+  'at-risk':   { cls:'st-at-risk',   label:'At Risk'   },
+  'delayed':   { cls:'st-delayed',   label:'Delayed'   },
+};
+
+function buildRoadmap(milestones) {
+  // Header
+  let html = `<div class="roadmap-wrap">
+    <div class="roadmap-legend">
+      <span class="rm-leg-item"><span class="rm-orig-dot">●</span> Original target</span>
+      <span class="rm-leg-item"><span class="rm-curr-dot">◆</span> Current estimate</span>
+      <span class="rm-leg-item"><span class="rm-actual-dot">★</span> Actual delivery</span>
+    </div>
+    <div class="roadmap-grid">
+      <div class="rm-header-row">
+        <div class="rm-col-item">Milestone</div>
+        <div class="rm-col-status">Status</div>
+        <div class="rm-col-timeline">
+          <div class="rm-months-row">
+            ${RM_MONTHS.map(m => `<div class="rm-month-lbl">${m}</div>`).join('')}
+          </div>
+        </div>
+      </div>`;
+
+  milestones.forEach(ms => {
+    const sm = STATUS_META[ms.status];
+    const origPct = monthPct(ms.original);
+    const currPct = monthPct(ms.current);
+    const hasMoved = ms.current !== ms.original;
+
+    let markers = `<div class="rm-marker rm-marker-orig" style="left:${origPct}%" title="Original: ${RM_MONTHS[ms.original-7]}">●</div>`;
+    if (hasMoved) {
+      markers += `<div class="rm-marker rm-marker-curr" style="left:${currPct}%" title="Current: ${RM_MONTHS[ms.current-7]}">◆</div>`;
+    } else if (ms.status !== 'delivered') {
+      markers += `<div class="rm-marker rm-marker-curr" style="left:${currPct}%;font-size:13px" title="Current: ${RM_MONTHS[ms.current-7]}">◆</div>`;
+    }
+    if (ms.actual !== null) {
+      const actPct = monthPct(ms.actual);
+      markers += `<div class="rm-marker rm-marker-actual" style="left:${actPct}%" title="Actual delivery">★</div>`;
+    }
+
+    // Draw a dashed line between original and current if slipped
+    let slipLine = '';
+    if (hasMoved && ms.actual === null) {
+      const left = Math.min(origPct, currPct);
+      const width = Math.abs(currPct - origPct);
+      slipLine = `<div style="position:absolute;left:${left}%;width:${width}%;top:50%;height:2px;background:linear-gradient(90deg,var(--txt-muted),var(--gem-2));opacity:0.4;margin-top:-1px;border-radius:1px"></div>`;
+    }
+
+    html += `<div class="rm-row">
+      <div class="rm-col-item">${ms.item}</div>
+      <div class="rm-col-status"><span class="status-badge ${sm.cls}">${sm.label}</span></div>
+      <div class="rm-col-timeline">
+        <div class="rm-track">
+          <div class="rm-line"></div>
+          ${slipLine}
+          ${markers}
+        </div>
+      </div>
+    </div>`;
+  });
+
+  html += '</div></div>';
+  return html;
+}
+
+
+/* ════════════════════════
+   CHARTS
+   ════════════════════════ */
+let chartsInitialized = false;
+
+function initCharts() {
+  if (chartsInitialized) return;
+  chartsInitialized = true;
+
+  const gradFn = (ctx, c1, c2) => {
+    const g = ctx.createLinearGradient(0,0,0,300);
+    g.addColorStop(0, c1); g.addColorStop(1, c2);
+    return g;
+  };
+
+  /* CSE MAU chart */
+  const ctxCse = document.getElementById('cseChartMAU').getContext('2d');
+  new Chart(ctxCse, {
+    type: 'bar',
+    data: {
+      labels: MONTHS,
+      datasets: [
+        { label:'CSE', data: DATA.cse.mau,   backgroundColor: gradFn(ctxCse,'rgba(107,53,232,0.85)','rgba(107,53,232,0.55)'), borderRadius:5, borderSkipped:false, barThickness:22 },
+        { label:'Vally', data: DATA.vally.mau, backgroundColor: gradFn(ctxCse,'rgba(0,112,242,0.80)','rgba(0,112,242,0.50)'), borderRadius:5, borderSkipped:false, barThickness:22 },
+      ]
+    },
+    options: {
+      responsive:true,
+      plugins: {
+        legend:{ position:'top', labels:{ font:{ family:var_font(), size:12 }, color:'#374151', boxWidth:12, padding:14 } },
+        tooltip:{ callbacks:{ label: i => ` ${i.dataset.label}: ${i.parsed.y.toLocaleString()} MAU` } }
+      },
+      scales: {
+        x:{ grid:{display:false}, border:{display:false}, ticks:{ font:{family:var_font(),size:12}, color:'#6B7280' } },
+        y:{ grid:{color:'#F3F4FB'}, border:{display:false}, ticks:{ font:{family:var_font(),size:12}, color:'#6B7280' } }
+      }
+    }
+  });
+
+  /* CSE output KPI (doughnut) */
+  const ctxOut = document.getElementById('cseChartOutput').getContext('2d');
+  new Chart(ctxOut, {
+    type: 'doughnut',
+    data: {
+      labels: ['CSE Uploads','Vally Deliverables'],
+      datasets: [{ data:[480,1965], backgroundColor:['rgba(107,53,232,0.82)','rgba(0,112,242,0.78)'], borderWidth:2, borderColor:'#fff', hoverOffset:6 }]
+    },
+    options: {
+      responsive:true, cutout:'62%',
+      plugins: {
+        legend:{ position:'bottom', labels:{ font:{family:var_font(),size:12}, color:'#374151', boxWidth:12, padding:10 } },
+        tooltip:{ callbacks:{ label: i => ` ${i.label}: ${i.parsed.toLocaleString()}` } }
+      }
+    }
+  });
+
+  /* AEVC MAU chart */
+  const ctxAevc = document.getElementById('aevcChartMAU').getContext('2d');
+  new Chart(ctxAevc, {
+    type: 'bar',
+    data: {
+      labels: MONTHS,
+      datasets: [{ label:'AEVC MAU', data: DATA.aevc.mau, backgroundColor: gradFn(ctxAevc,'rgba(61,26,122,0.85)','rgba(0,112,242,0.60)'), borderRadius:5, borderSkipped:false, barThickness:28 }]
+    },
+    options: {
+      responsive:true,
+      plugins: {
+        legend:{display:false},
+        tooltip:{ callbacks:{ label: i => ` ${i.parsed.y.toLocaleString()} MAU` } }
+      },
+      scales: {
+        x:{ grid:{display:false}, border:{display:false}, ticks:{ font:{family:var_font(),size:12}, color:'#6B7280' } },
+        y:{ grid:{color:'#F3F4FB'}, border:{display:false}, ticks:{ font:{family:var_font(),size:12}, color:'#6B7280' } }
+      }
+    }
+  });
+}
+
+function var_font() { return "'72','Helvetica Neue',Arial,sans-serif"; }
+
+
+/* ════════════════════════
+   NAVIGATION
+   ════════════════════════ */
+function showTab(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  const p = document.getElementById('p_' + id);
+  if (p) p.classList.add('active');
+
+  // Update tab buttons
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  if (id === 'home') document.querySelector('.tab-btn[onclick*="home"]').classList.add('active');
+  if (id === 'vr_dash') document.querySelector('.tab-btn[onclick*="vr_dash"]').classList.add('active');
+
+  // Update dropdowns
+  document.querySelectorAll('.tab-dropdown-item').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-dropdown-btn').forEach(b => b.classList.remove('has-active'));
+  const item = document.querySelector(`.tab-dropdown-item[onclick*="'${id}'"]`);
+  if (item) {
+    item.classList.add('active');
+    item.closest('.tab-dropdown').querySelector('.tab-dropdown-btn').classList.add('has-active');
+  }
+
+  // Init charts on first reveal
+  if (['cse','aevc'].includes(id)) {
+    setTimeout(initCharts, 50);
+  }
+}
+
+function toggleDd(id, e) {
+  e.stopPropagation();
+  const dd = document.getElementById(id);
+  const isOpen = dd.classList.contains('open');
+  closeDd();
+  if (!isOpen) {
+    dd.classList.add('open');
+    const btn = dd.querySelector('.tab-dropdown-btn');
+    const rect = btn.getBoundingClientRect();
+    const menu = dd.querySelector('.tab-dropdown-menu');
+    menu.style.top  = (rect.bottom + 4) + 'px';
+    menu.style.left = rect.left + 'px';
+  }
+}
+function closeDd() { document.querySelectorAll('.tab-dropdown').forEach(d => d.classList.remove('open')); }
+document.addEventListener('click', closeDd);
+
+
+/* ════════════════════════
+   INIT
+   ════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+  renderHome();
+  renderToolPanels();
+
+  // Real panels: CSE + AEVC roadmaps
+  document.getElementById('cseRoadmap').innerHTML  = buildRoadmap(ROADMAP.cse);
+  document.getElementById('aevcRoadmap').innerHTML = buildRoadmap(ROADMAP.aevc);
+});
+</script>
+</body>
+</html>

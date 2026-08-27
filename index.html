@@ -267,6 +267,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
           <button class="tab-dropdown-item" onclick="showTab('solution_scout');closeDd()">SAP Solution Scout</button>
           <button class="tab-dropdown-item" onclick="showTab('exp_agent');closeDd()">Experience Agent</button>
           <button class="tab-dropdown-item" onclick="showTab('roadmap_exp');closeDd()">SAP Road Map Explorer</button>
+          <button class="tab-dropdown-item" onclick="showTab('innov_repo');closeDd()">Innovation & Feature Repository</button>
         </div>
       </div>
 
@@ -485,6 +486,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
   <div class="section-title">Milestones &amp; Roadmap — H2 2026</div>
   <div id="rmexpRoadmap"></div>
 </div>
+<div id="p_innov_repo"   class="panel"><div class="empty-panel"><div class="ei">💡</div><h3>Innovation &amp; Feature Repository</h3><p>Data not yet available — TBD</p></div></div>
 <div id="p_gbc"          class="panel"><div class="empty-panel"><div class="ei">💼</div><h3>VLM / GBC</h3><p>Data not yet available — TBD</p></div></div>
 <div id="p_tco"          class="panel"><div class="empty-panel"><div class="ei">💰</div><h3>TCO</h3><p>Data not yet available — TBD</p></div></div>
 <div id="p_mtn"          class="panel"><div class="empty-panel"><div class="ei">📈</div><h3>Move the Needle</h3><p>Data not yet available — TBD</p></div></div>
@@ -514,6 +516,7 @@ const DATA = {
 
 // Home tool cards config
 const HOME_TOOLS = [
+  // ── SECTION 1: Customer Research ──────────────────────────────────
   {
     cat: 'Customer Research',
     tools: [
@@ -532,12 +535,17 @@ const HOME_TOOLS = [
         internal:{ val:'333', label:'Monthly Active Users', sublabel:'CVE — Aug 2026', trend:3 },
         external:{ val:'444', label:'Value outputs', sublabel:'Aug 2026', trend:null },
         intOut:null, extOut:null, ytd:'2,664', ytdLabel:'MAU YTD' },
-      { id:'scg', name:'Strategic Conversations Guide', tab:'scg',
-        internal:{ val:'111', label:'Monthly Active Users', sublabel:'SCG — Aug 2026', trend:-11 },
-        external:{ val:'222', label:'Conversations', sublabel:'Aug 2026', trend:null },
-        intOut:null, extOut:null, ytd:'888', ytdLabel:'MAU YTD' },
+      {
+        id:'aevc', name:'AEVC', tab:'aevc',
+        internal: { val:'615', label:'Monthly Active Users', sublabel:'AEVC — Aug 2026', trend:-3 },
+        external: { val:'1,120', label:'Analyses Run', sublabel:'Aug 2026', trend:null },
+        intOut: null, extOut: null,
+        ytd: DATA.aevc.ytd().toLocaleString(), ytdLabel:'MAU YTD'
+      },
     ]
   },
+
+  // ── SECTION 2: Portfolio Discovery ────────────────────────────────
   {
     cat: 'Portfolio Discovery',
     tools: [
@@ -553,29 +561,34 @@ const HOME_TOOLS = [
         internal:{ val:'222', label:'Monthly Active Users', sublabel:'Aug 2026', trend:22 },
         external:{ val:'333', label:'Roadmaps / searches', sublabel:'Aug 2026', trend:null },
         intOut:null, extOut:null, ytd:'1,776', ytdLabel:'MAU YTD' },
+      { id:'innov_repo', name:'Innovation & Feature Repository', tab:'innov_repo',
+        internal:{ val:'222', label:'Monthly Active Users', sublabel:'Aug 2026', trend:22 },
+        external:{ val:'333', label:'Features submitted', sublabel:'Aug 2026', trend:null },
+        intOut:null, extOut:null, ytd:'1,776', ytdLabel:'MAU YTD' },
     ]
   },
+
+  // ── SECTION 3: Other Tools ─────────────────────────────────────────
   {
-    cat: 'Outside-In Analysis',
+    cat: 'Other Tools',
     tools: [
-      { id:'mtn',       name:'Move the Needle',  tab:'mtn',
+      { id:'scg', name:'Strategic Conversations Guide', tab:'scg',
+        internal:{ val:'111', label:'Monthly Active Users', sublabel:'SCG — Aug 2026', trend:-11 },
+        external:{ val:'222', label:'Conversations', sublabel:'Aug 2026', trend:null },
+        intOut:null, extOut:null, ytd:'888', ytdLabel:'MAU YTD' },
+      { id:'mtn', name:'Move the Needle', tab:'mtn',
         internal:{ val:'555', label:'Monthly Active Users', sublabel:'Aug 2026', trend:5 },
         external:{ val:'666', label:'Analyses', sublabel:'Aug 2026', trend:null },
         intOut:'555 needle moves', extOut:null, ytd:'4,440', ytdLabel:'MAU YTD' },
-      { id:'v_starter', name:'Value Starter',    tab:'v_starter',
+      { id:'v_starter', name:'Value Starter', tab:'v_starter',
         internal:{ val:'444', label:'Monthly Active Users', sublabel:'Aug 2026', trend:4 },
         external:{ val:'555', label:'Decks created', sublabel:'Aug 2026', trend:null },
         intOut:null, extOut:null, ytd:'3,552', ytdLabel:'MAU YTD' },
-      { id:'v_onepager',name:'Value One-Pager', tab:'v_onepager',
+      { id:'v_onepager', name:'Value One-Pager', tab:'v_onepager',
         internal:{ val:'333', label:'Monthly Active Users', sublabel:'Aug 2026', trend:3 },
         external:{ val:'444', label:'One-pagers created', sublabel:'Aug 2026', trend:null },
         intOut:null, extOut:null, ytd:'2,664', ytdLabel:'MAU YTD' },
-    ]
-  },
-  {
-    cat: 'Benchmarking',
-    tools: [
-      { id:'flash',   name:'FLASH', tab:'flash',
+      { id:'flash', name:'FLASH', tab:'flash',
         internal:{ val:'666', label:'Monthly Active Users', sublabel:'Aug 2026', trend:6 },
         external:{ val:'777', label:'Benchmarks run', sublabel:'Aug 2026', trend:null },
         intOut:'666 reports generated', extOut:null, ytd:'5,328', ytdLabel:'MAU YTD' },
@@ -583,18 +596,6 @@ const HOME_TOOLS = [
         internal:{ val:'444', label:'Monthly Active Users', sublabel:'Aug 2026', trend:4 },
         external:{ val:'555', label:'Reports', sublabel:'Aug 2026', trend:null },
         intOut:null, extOut:null, ytd:'3,552', ytdLabel:'MAU YTD' },
-    ]
-  },
-  {
-    cat: 'Value Case',
-    tools: [
-      {
-        id:'aevc', name:'AEVC', tab:'aevc',
-        internal: { val:'615', label:'Monthly Active Users', sublabel:'AEVC — Aug 2026', trend:-3 },
-        external: { val:'1,120', label:'Analyses Run', sublabel:'Aug 2026', trend:null },
-        intOut: null, extOut: null,
-        ytd: DATA.aevc.ytd().toLocaleString(), ytdLabel:'MAU YTD'
-      },
       { id:'gbc', name:'VLM / GBC', tab:'gbc',
         internal:{ val:'222', label:'Monthly Active Users', sublabel:'Aug 2026', trend:null },
         external:{ val:'333', label:'Cases built', sublabel:'Aug 2026', trend:null },
@@ -603,16 +604,11 @@ const HOME_TOOLS = [
         internal:{ val:'111', label:'Monthly Active Users', sublabel:'Aug 2026', trend:null },
         external:{ val:'222', label:'TCO models', sublabel:'Aug 2026', trend:null },
         intOut:null, extOut:null, ytd:'888', ytdLabel:'MAU YTD' },
-    ]
-  },
-  {
-    cat: 'Learning & Internal Tools',
-    tools: [
       { id:'v_library', name:'Value Library', tab:'v_library',
         internal:{ val:'1,111', label:'Monthly Active Users', sublabel:'Aug 2026', trend:11 },
         external:{ val:'2,222', label:'Content views', sublabel:'Aug 2026', trend:null },
         intOut:'1,111 assets accessed', extOut:null, ytd:'8,888', ytdLabel:'MAU YTD' },
-      { id:'l_enable',  name:'Learning & Enablement', tab:'l_enable',
+      { id:'l_enable', name:'Learning & Enablement', tab:'l_enable',
         internal:{ val:'555', label:'Monthly Active Users', sublabel:'Aug 2026', trend:5 },
         external:{ val:'666', label:'Completions', sublabel:'Aug 2026', trend:null },
         intOut:null, extOut:null, ytd:'4,440', ytdLabel:'MAU YTD' },
@@ -620,11 +616,6 @@ const HOME_TOOLS = [
         internal:{ val:'444', label:'Monthly Active Users', sublabel:'Aug 2026', trend:4 },
         external:{ val:'555', label:'Downloads', sublabel:'Aug 2026', trend:null },
         intOut:null, extOut:null, ytd:'3,552', ytdLabel:'MAU YTD' },
-    ]
-  },
-  {
-    cat: 'Value Realization',
-    tools: [
       { id:'vr_dash', name:'VR Dashboard', tab:'vr_dash',
         internal:{ val:'333', label:'Monthly Active Users', sublabel:'Aug 2026', trend:3 },
         external:{ val:'444', label:'Reports generated', sublabel:'Aug 2026', trend:null },

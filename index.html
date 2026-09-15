@@ -34,9 +34,9 @@
 body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14px;min-height:100vh}
 
 /* ── HEADER ── */
-.header{background:var(--white);padding:0 40px;position:relative;overflow:hidden;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
+.header{background:var(--white);padding:0;position:relative;overflow:hidden;border-bottom:1px solid var(--border);box-shadow:var(--shadow)}
 .header-gem{position:absolute;top:-30px;right:-30px;width:260px;height:260px;pointer-events:none;opacity:0.22}
-.header-inner{display:flex;align-items:center;justify-content:space-between;padding:22px 0;position:relative;z-index:1}
+.header-inner{display:flex;align-items:center;justify-content:space-between;padding:22px 40px;position:relative;z-index:1;max-width:1440px;margin:0 auto}
 .header-brand{display:flex;align-items:center;gap:16px}
 .sap-logo{height:26px;padding:0 10px;background:linear-gradient(135deg,var(--gem-deep),var(--gem-1));border-radius:6px;display:flex;align-items:center;font-weight:700;font-size:13px;color:#fff;letter-spacing:1.5px}
 .header-eyebrow{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;background:linear-gradient(135deg,var(--gem-1),var(--gem-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px}
@@ -49,8 +49,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
 .header-divider{width:1px;height:40px;background:var(--border)}
 
 /* ── TAB BAR ── */
-.tab-bar-wrap{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(60,30,120,0.06);padding:0 40px}
-.tab-bar-scroll{overflow-x:auto;white-space:nowrap;scrollbar-width:none;padding:10px 0}
+.tab-bar-wrap{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(60,30,120,0.06);padding:0}
+.tab-bar-scroll{overflow-x:auto;white-space:nowrap;scrollbar-width:none;padding:10px 40px;text-align:center;max-width:1440px;margin:0 auto}
 .tab-bar-scroll::-webkit-scrollbar{display:none}
 .tab-bar{display:inline-flex;gap:6px;align-items:center}
 .tab-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;font-size:13px;font-weight:600;color:var(--txt-muted);cursor:pointer;border:1.5px solid transparent;background:transparent;border-radius:20px;transition:all 0.18s;white-space:nowrap;font-family:var(--font)}
@@ -129,6 +129,19 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
 .chart-box{flex:1;min-width:280px;background:var(--white);border-radius:var(--radius);padding:22px 26px;box-shadow:var(--shadow);border:1px solid var(--border)}
 .chart-box .section-title{margin-bottom:16px}
 
+/* ── PIPELINE BUTTONS (filter cascade) ── */
+.pipe-row{display:flex;align-items:center;gap:0;flex-wrap:wrap;row-gap:8px;margin-bottom:8px}
+.pipe-btn{display:inline-flex;align-items:center;padding:7px 16px;font-size:12px;font-weight:700;border-radius:20px;border:none;cursor:pointer;font-family:var(--font);transition:background 0.15s,color 0.15s;white-space:nowrap}
+.pipe-btn.on{background:#1a3a1a;color:#fff}
+.pipe-btn.off{background:transparent;color:var(--txt-muted);border:1.5px solid var(--border)}
+.pipe-arrow{font-size:13px;color:var(--txt-muted);margin:0 4px;flex-shrink:0}
+.pipe-reset{margin-left:auto;font-size:12px;color:var(--txt-muted);cursor:pointer;text-decoration:underline;padding:4px 8px}
+.pipe-reset:hover{color:var(--gem-1)}
+.cascade-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.cascade-label{width:140px;font-size:12px;font-weight:600;color:var(--txt-mid);text-align:right;flex-shrink:0}
+.cascade-bar{flex:1;height:22px;border-radius:4px;overflow:hidden;display:flex}
+.cascade-stat{width:130px;font-size:12px;font-weight:700;flex-shrink:0}
+
 /* ── ROADMAP ── */
 .roadmap-wrap{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--border);margin-bottom:28px;overflow:hidden}
 .roadmap-legend{display:flex;align-items:center;gap:20px;padding:12px 20px;background:var(--lav-2);border-bottom:1px solid var(--border);font-size:11px;color:var(--txt-mid)}
@@ -167,7 +180,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
 .status-badge{display:inline-block;padding:4px 10px;border-radius:8px;font-size:11px;font-weight:700;letter-spacing:0.3px}
 .st-delivered{background:#D4EDDA;color:#155724}
 .st-on-track {background:#D1ECF1;color:#0C5460}
-.st-at-risk  {background:#FFF3CD;color:#856404}
+.st-at-risk  {background:#FFE8F3;color:#DF1278}
 .st-delayed  {background:#F8D7DA;color:#721C24}
 
 /* ── EMPTY STATE ── */
@@ -177,9 +190,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
 .empty-panel p{font-size:13px}
 
 /* ── TEMPLATE BADGE ── */
-.template-banner{display:flex;align-items:center;gap:8px;background:repeating-linear-gradient(45deg,#FFFBEE,#FFFBEE 6px,#FFF3CD 6px,#FFF3CD 12px);border:1px solid #F0C040;border-radius:10px;padding:7px 14px;margin-bottom:20px;font-size:12px;color:#856404;font-weight:700}
+.template-banner{display:flex;align-items:center;gap:8px;background:repeating-linear-gradient(45deg,#FFF0F8,#FFF0F8 6px,#FFE8F3 6px,#FFE8F3 12px);border:1px solid #DF1278;border-radius:10px;padding:7px 14px;margin-bottom:20px;font-size:12px;color:#DF1278;font-weight:700}
 .template-banner svg{flex-shrink:0}
-.template-tag{display:inline-block;background:#FFF3CD;color:#856404;font-size:9px;font-weight:700;padding:2px 7px;border-radius:6px;letter-spacing:0.8px;text-transform:uppercase;border:1px solid #F0C040;margin-left:6px;vertical-align:middle}
+.template-tag{display:inline-block;background:#FFE8F3;color:#DF1278;font-size:9px;font-weight:700;padding:2px 7px;border-radius:6px;letter-spacing:0.8px;text-transform:uppercase;border:1px solid #DF1278;margin-left:6px;vertical-align:middle}
 
 /* ── SCROLLBAR ── */
 ::-webkit-scrollbar{width:6px;height:6px}
@@ -199,25 +212,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
 
 <!-- ══ HEADER ══ -->
 <div class="header">
-  <svg class="header-gem" viewBox="0 0 260 260" fill="none">
-    <defs>
-      <linearGradient id="gA" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#B04FFF"/><stop offset="100%" stop-color="#6B35E8"/></linearGradient>
-      <linearGradient id="gB" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#6B35E8"/><stop offset="100%" stop-color="#0070F2"/></linearGradient>
-      <linearGradient id="gC" x1="100%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#0070F2"/><stop offset="100%" stop-color="#1B90FF"/></linearGradient>
-      <linearGradient id="gD" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#3D1A7A"/><stop offset="100%" stop-color="#6B35E8"/></linearGradient>
-      <linearGradient id="gE" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#9B67FF"/><stop offset="100%" stop-color="#B04FFF"/></linearGradient>
-      <linearGradient id="gF" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#6B35E8"/><stop offset="100%" stop-color="#3D1A7A"/></linearGradient>
-    </defs>
-    <polygon points="130,20 195,80 165,105 130,72" fill="url(#gA)"/>
-    <polygon points="130,20 65,80 95,105 130,72" fill="url(#gE)"/>
-    <polygon points="195,80 220,150 175,140 165,105" fill="url(#gC)"/>
-    <polygon points="65,80 40,150 85,140 95,105" fill="url(#gD)"/>
-    <polygon points="130,20 195,80 220,40" fill="url(#gA)" opacity="0.6"/>
-    <polygon points="130,20 65,80 40,40" fill="url(#gE)" opacity="0.6"/>
-    <polygon points="165,105 130,72 95,105 85,140 130,152 175,140" fill="url(#gB)"/>
-    <polygon points="175,140 130,152 130,230 220,150" fill="url(#gC)"/>
-    <polygon points="85,140 130,152 130,230 40,150" fill="url(#gD)"/>
-  </svg>
   <div class="header-inner">
     <div class="header-brand">
       <div class="sap-logo">SAP</div>
@@ -227,17 +221,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
         <div class="sub">Tool Adoption &amp; Usage &nbsp;·&nbsp; Internal &nbsp;·&nbsp; AUG 2026</div>
       </div>
     </div>
-    <div class="header-meta">
-      <div class="header-stat">
-        <div class="hs-val">3,697</div>
-        <div class="hs-lbl">Total MAU — Aug 2026</div>
-      </div>
-      <div class="header-divider"></div>
-      <div class="header-stat">
-        <div class="hs-val">23,522</div>
-        <div class="hs-lbl">Total Users YTD 2026</div>
-      </div>
-    </div>
+    <img src="GVA logo - (SMALL 1500x750 px) - basic cropped.png" alt="Global Value Advisory" style="height:35px;object-fit:contain;margin-right:10px">
   </div>
 </div>
 
@@ -253,10 +237,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
       <div class="tab-dropdown" id="dd_cr">
         <button class="tab-dropdown-btn" onclick="toggleDd('dd_cr',event)">Customer Research <span class="tab-dropdown-arrow">▼</span></button>
         <div class="tab-dropdown-menu">
-          <button class="tab-dropdown-item" onclick="showTab('cse');closeDd()">CSE &amp; Vally</button>
+          <button class="tab-dropdown-item" onclick="showTab('cse');closeDd()">Customer Strategy Explorer &amp; Vally</button>
           <button class="tab-dropdown-item" onclick="showTab('evb');closeDd()">Executive Value Brief</button>
-          <button class="tab-dropdown-item" onclick="showTab('cve');closeDd()">Customer Value Explorer</button>
-          <button class="tab-dropdown-item" onclick="showTab('scg');closeDd()">Strategic Conversations Guide</button>
+          <button class="tab-dropdown-item" onclick="showTab('aevc');closeDd()">Autonomous Enterprise AI Value Calculator</button>
         </div>
       </div>
 
@@ -267,50 +250,23 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
           <button class="tab-dropdown-item" onclick="showTab('solution_scout');closeDd()">SAP Solution Scout</button>
           <button class="tab-dropdown-item" onclick="showTab('exp_agent');closeDd()">Experience Agent</button>
           <button class="tab-dropdown-item" onclick="showTab('roadmap_exp');closeDd()">SAP Road Map Explorer</button>
-          <button class="tab-dropdown-item" onclick="showTab('innov_repo');closeDd()">Innovation & Feature Repository</button>
+          <button class="tab-dropdown-item" onclick="showTab('innov_repo');closeDd()">Innovation &amp; Feature Repository</button>
         </div>
       </div>
 
-      <!-- Outside-In Analysis -->
-      <div class="tab-dropdown" id="dd_oi">
-        <button class="tab-dropdown-btn" onclick="toggleDd('dd_oi',event)">Outside-In Analysis <span class="tab-dropdown-arrow">▼</span></button>
+      <!-- VLM Tools -->
+      <div class="tab-dropdown" id="dd_vc">
+        <button class="tab-dropdown-btn" onclick="toggleDd('dd_vc',event)">VLM Tools <span class="tab-dropdown-arrow">▼</span></button>
         <div class="tab-dropdown-menu">
+          <button class="tab-dropdown-item" onclick="showTab('gbc');closeDd()">Conversational Business Case</button>
           <button class="tab-dropdown-item" onclick="showTab('mtn');closeDd()">Move the Needle</button>
-          <button class="tab-dropdown-item" onclick="showTab('v_starter');closeDd()">Value Starter</button>
           <button class="tab-dropdown-item" onclick="showTab('v_onepager');closeDd()">Value One-Pager</button>
-        </div>
-      </div>
-
-      <!-- Benchmarking -->
-      <div class="tab-dropdown" id="dd_bm">
-        <button class="tab-dropdown-btn" onclick="toggleDd('dd_bm',event)">Benchmarking <span class="tab-dropdown-arrow">▼</span></button>
-        <div class="tab-dropdown-menu">
+          <button class="tab-dropdown-item" onclick="showTab('v_starter');closeDd()">Value Starter</button>
           <button class="tab-dropdown-item" onclick="showTab('flash');closeDd()">FLASH</button>
           <button class="tab-dropdown-item" onclick="showTab('perf_bm');closeDd()">Performance Benchmarking</button>
         </div>
       </div>
 
-      <!-- Value Case -->
-      <div class="tab-dropdown" id="dd_vc">
-        <button class="tab-dropdown-btn" onclick="toggleDd('dd_vc',event)">Value Case <span class="tab-dropdown-arrow">▼</span></button>
-        <div class="tab-dropdown-menu">
-          <button class="tab-dropdown-item" onclick="showTab('aevc');closeDd()">AEVC</button>
-          <button class="tab-dropdown-item" onclick="showTab('gbc');closeDd()">VLM / GBC</button>
-          <button class="tab-dropdown-item" onclick="showTab('tco');closeDd()">TCO</button>
-        </div>
-      </div>
-
-      <!-- Learning -->
-      <div class="tab-dropdown" id="dd_ln">
-        <button class="tab-dropdown-btn" onclick="toggleDd('dd_ln',event)">Learning &amp; Tools <span class="tab-dropdown-arrow">▼</span></button>
-        <div class="tab-dropdown-menu">
-          <button class="tab-dropdown-item" onclick="showTab('v_library');closeDd()">Value Library</button>
-          <button class="tab-dropdown-item" onclick="showTab('l_enable');closeDd()">Learning &amp; Enablement</button>
-          <button class="tab-dropdown-item" onclick="showTab('v_content');closeDd()">Value Content</button>
-        </div>
-      </div>
-
-      <button class="tab-btn" onclick="showTab('vr_dash')">Value Realization</button>
 
     </div>
   </div>
@@ -332,8 +288,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
 
   <!-- Period badge -->
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px">
-    <div class="section-title" style="margin:0">CSE &amp; Vally — August 2026</div>
-    <span style="background:var(--lav);color:var(--gem-deep);font-size:12px;font-weight:700;padding:5px 14px;border-radius:12px">Reporting month: AUG 2026</span>
+    <div class="section-title" style="margin:0">Customer Strategy Explorer &amp; Vally — August 2026</div>
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+      <span style="background:var(--lav);color:var(--gem-deep);font-size:12px;font-weight:700;padding:5px 14px;border-radius:12px">Reporting month: AUG 2026</span>
+      <a href="https://cse.for.sap/" target="_blank" style="background:var(--gem-1);color:#fff;font-size:12px;font-weight:700;padding:5px 14px;border-radius:12px;text-decoration:none">Open Tool →</a>
+    </div>
   </div>
 
   <!-- KPI Row: Internal -->
@@ -403,8 +362,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
 <div id="p_aevc" class="panel">
 
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px">
-    <div class="section-title" style="margin:0">AEVC — August 2026</div>
-    <span style="background:var(--lav);color:var(--gem-deep);font-size:12px;font-weight:700;padding:5px 14px;border-radius:12px">Reporting month: AUG 2026</span>
+    <div class="section-title" style="margin:0">Autonomous Enterprise AI Value Calculator — August 2026</div>
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+      <span style="background:var(--lav);color:var(--gem-deep);font-size:12px;font-weight:700;padding:5px 14px;border-radius:12px">Reporting month: AUG 2026</span>
+      <a href="https://autonomous-value.agent.for.sap/" target="_blank" style="background:var(--gem-1);color:#fff;font-size:12px;font-weight:700;padding:5px 14px;border-radius:12px;text-decoration:none">Open Tool →</a>
+    </div>
   </div>
 
   <div class="kpi-row">
@@ -445,12 +407,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
 
 <!-- ══ PLACEHOLDER PANELS ══ -->
 <div id="p_evb"          class="panel"><div class="empty-panel"><div class="ei">📋</div><h3>Executive Value Brief</h3><p>Data not yet available — TBD</p></div></div>
-<div id="p_cve"          class="panel"><div class="empty-panel"><div class="ei">🔍</div><h3>Customer Value Explorer</h3><p>Data not yet available — TBD</p></div></div>
 <div id="p_scg"          class="panel"><div class="empty-panel"><div class="ei">💬</div><h3>Strategic Conversations Guide</h3><p>Data not yet available — TBD</p></div></div>
 <div id="p_solution_scout" class="panel">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
     <div class="section-title" style="margin:0">SAP Solution Scout — August 2026</div>
-    <span style="background:#FFF3CD;color:#856404;font-size:12px;font-weight:700;padding:5px 14px;border-radius:12px">Data: TBD</span>
+    <span style="background:#FFE8F3;color:#DF1278;font-size:12px;font-weight:700;padding:5px 14px;border-radius:12px">Data: TBD</span>
   </div>
   <div class="kpi-row">
     <div class="kpi-card"><div class="lbl">Monthly Active Users</div><div class="val" style="font-size:24px;letter-spacing:0;-webkit-text-fill-color:var(--txt-muted);background:none">TBD</div></div>
@@ -463,7 +424,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
 <div id="p_exp_agent"    class="panel">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
     <div class="section-title" style="margin:0">Experience Agent — August 2026</div>
-    <span style="background:#FFF3CD;color:#856404;font-size:12px;font-weight:700;padding:5px 14px;border-radius:12px">Data: TBD</span>
+    <span style="background:#FFE8F3;color:#DF1278;font-size:12px;font-weight:700;padding:5px 14px;border-radius:12px">Data: TBD</span>
   </div>
   <div class="kpi-row">
     <div class="kpi-card"><div class="lbl">Monthly Active Users</div><div class="val" style="font-size:24px;letter-spacing:0;-webkit-text-fill-color:var(--txt-muted);background:none">TBD</div></div>
@@ -476,7 +437,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
 <div id="p_roadmap_exp"  class="panel">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
     <div class="section-title" style="margin:0">SAP Road Map Explorer — August 2026</div>
-    <span style="background:#FFF3CD;color:#856404;font-size:12px;font-weight:700;padding:5px 14px;border-radius:12px">Data: TBD</span>
+    <span style="background:#FFE8F3;color:#DF1278;font-size:12px;font-weight:700;padding:5px 14px;border-radius:12px">Data: TBD</span>
   </div>
   <div class="kpi-row">
     <div class="kpi-card"><div class="lbl">Monthly Active Users</div><div class="val" style="font-size:24px;letter-spacing:0;-webkit-text-fill-color:var(--txt-muted);background:none">TBD</div></div>
@@ -487,17 +448,99 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
   <div id="rmexpRoadmap"></div>
 </div>
 <div id="p_innov_repo"   class="panel"><div class="empty-panel"><div class="ei">💡</div><h3>Innovation &amp; Feature Repository</h3><p>Data not yet available — TBD</p></div></div>
-<div id="p_gbc"          class="panel"><div class="empty-panel"><div class="ei">💼</div><h3>VLM / GBC</h3><p>Data not yet available — TBD</p></div></div>
-<div id="p_tco"          class="panel"><div class="empty-panel"><div class="ei">💰</div><h3>TCO</h3><p>Data not yet available — TBD</p></div></div>
+<div id="p_gbc" class="panel">
+
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px">
+    <div class="section-title" style="margin:0">Conversational Business Case — August 2026</div>
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+      <span style="background:var(--lav);color:var(--gem-deep);font-size:12px;font-weight:700;padding:5px 14px;border-radius:12px">Reporting month: AUG 2026</span>
+      <span style="background:#DF1278;color:#fff;font-size:12px;font-weight:700;padding:5px 14px;border-radius:12px;cursor:default" title="No link added yet">No link yet</span>
+    </div>
+  </div>
+
+  <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--txt-muted);margin-bottom:8px;padding-left:4px">Business Case — VLM Deliverables</div>
+  <div class="kpi-row">
+    <div class="kpi-card"><div class="lbl">BC Deliverables Sent</div><div class="val">3,049</div><div class="sub">Aug 2026 — total recipients</div></div>
+    <div class="kpi-card blue"><div class="lbl">Real Customer Engagements</div><div class="val">552</div><div class="sub">18% of sent — after full filter</div></div>
+    <div class="kpi-card navy"><div class="lbl">Filtered Out</div><div class="val">82%</div><div class="sub">test + never-opened + duplicates</div></div>
+  </div>
+
+  <div class="section-title" style="margin-top:28px">Filter Cascade — Real Engagement Quality</div>
+  <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:24px">
+
+    <div style="font-size:11px;color:var(--txt-muted);margin-bottom:10px">Pick a deliverable, walk the pipeline, see how much real customer engagement is left.</div>
+
+    <!-- Pipeline buttons -->
+    <div style="margin-bottom:6px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--txt-muted)">Pipeline:</div>
+    <div class="pipe-row" id="gbcPipeline">
+      <button class="pipe-btn on" id="gbcBtn1" onclick="setCascade(1)">1. Drop test</button>
+      <span class="pipe-arrow">→</span>
+      <button class="pipe-btn on" id="gbcBtn2" onclick="setCascade(2)">2. Drop never-opened</button>
+      <span class="pipe-arrow">→</span>
+      <button class="pipe-btn on" id="gbcBtn3" onclick="setCascade(3)">3. Dedup customers</button>
+      <span class="pipe-reset" onclick="setCascade(0)">reset</span>
+    </div>
+
+    <div id="gbcCascadeInfo" style="font-size:12px;color:var(--txt-muted);margin:10px 0 14px 0">
+      Bar length = 3,049 rows (raw, constant) · green = kept · red = filtered out · after all filters <strong>552 survive (~82%)</strong>
+    </div>
+
+    <!-- Cascade rows -->
+    <div class="cascade-row" id="gbcRow0">
+      <div class="cascade-label">Start</div>
+      <div class="cascade-bar"><div style="width:100%;background:#1a5c2a"></div></div>
+      <div class="cascade-stat" style="color:var(--txt)">3,049 / 3,049 (100%)</div>
+    </div>
+    <div class="cascade-row" id="gbcRow1" style="display:none">
+      <div class="cascade-label">Drop Test</div>
+      <div class="cascade-bar">
+        <div style="width:44%;background:#1a5c2a"></div>
+        <div style="width:56%;background:#c0392b"></div>
+      </div>
+      <div class="cascade-stat" style="color:var(--txt)">1,350 / 3,049 (44%)</div>
+    </div>
+    <div class="cascade-row" id="gbcRow2" style="display:none">
+      <div class="cascade-label">Drop never-opened</div>
+      <div class="cascade-bar">
+        <div style="width:22%;background:#1a5c2a"></div>
+        <div style="width:22%;background:#c0392b"></div>
+        <div style="width:56%;background:#7b1f1f"></div>
+      </div>
+      <div class="cascade-stat" style="color:var(--txt)">673 / 3,049 (22%)</div>
+    </div>
+    <div class="cascade-row" id="gbcRow3" style="display:none">
+      <div class="cascade-label">Dedup customers</div>
+      <div class="cascade-bar">
+        <div style="width:18%;background:#1a5c2a"></div>
+        <div style="width:4%;background:#c0392b"></div>
+        <div style="width:78%;background:#7b1f1f"></div>
+      </div>
+      <div class="cascade-stat" style="color:var(--gem-1)">552 / 3,049 (18%) ✓</div>
+    </div>
+
+    <div style="display:flex;gap:20px;font-size:11px;flex-wrap:wrap;margin-top:14px">
+      <span><span style="display:inline-block;width:10px;height:10px;background:#1a5c2a;border-radius:2px;margin-right:4px"></span>kept</span>
+      <span><span style="display:inline-block;width:10px;height:10px;background:#c0392b;border-radius:2px;margin-right:4px"></span>excluded · test</span>
+      <span><span style="display:inline-block;width:10px;height:10px;background:#c0392b;opacity:0.7;border-radius:2px;margin-right:4px"></span>excluded · never-opened</span>
+      <span><span style="display:inline-block;width:10px;height:10px;background:#7b1f1f;border-radius:2px;margin-right:4px"></span>excluded · duplicate</span>
+    </div>
+  </div>
+
+  <div class="section-title">Other VLM Deliverable Types — Aug 2026</div>
+  <div class="kpi-row">
+    <div class="kpi-card"><div class="lbl">MTN</div><div class="val" style="font-size:24px">2,245</div><div class="sub">deliverables sent</div></div>
+    <div class="kpi-card blue"><div class="lbl">DO PoV</div><div class="val" style="font-size:24px">733</div><div class="sub">deliverables sent</div></div>
+    <div class="kpi-card navy"><div class="lbl">TCO</div><div class="val" style="font-size:24px">169</div><div class="sub">deliverables sent</div></div>
+    <div class="kpi-card"><div class="lbl">Signavio</div><div class="val" style="font-size:24px">52</div><div class="sub">deliverables sent</div></div>
+    <div class="kpi-card blue"><div class="lbl">VR Dashboard</div><div class="val" style="font-size:24px">24</div><div class="sub">deliverables sent</div></div>
+  </div>
+
+</div>
 <div id="p_mtn"          class="panel"><div class="empty-panel"><div class="ei">📈</div><h3>Move the Needle</h3><p>Data not yet available — TBD</p></div></div>
 <div id="p_v_starter"    class="panel"><div class="empty-panel"><div class="ei">🚀</div><h3>Value Starter</h3><p>Data not yet available — TBD</p></div></div>
 <div id="p_v_onepager"   class="panel"><div class="empty-panel"><div class="ei">📄</div><h3>Value One-Pager</h3><p>Data not yet available — TBD</p></div></div>
 <div id="p_flash"        class="panel"><div class="empty-panel"><div class="ei">⚡</div><h3>FLASH</h3><p>Data not yet available — TBD</p></div></div>
 <div id="p_perf_bm"      class="panel"><div class="empty-panel"><div class="ei">📊</div><h3>Performance Benchmarking</h3><p>Data not yet available — TBD</p></div></div>
-<div id="p_v_library"    class="panel"><div class="empty-panel"><div class="ei">📚</div><h3>Value Library</h3><p>Data not yet available — TBD</p></div></div>
-<div id="p_l_enable"     class="panel"><div class="empty-panel"><div class="ei">🎓</div><h3>Learning &amp; Enablement</h3><p>Data not yet available — TBD</p></div></div>
-<div id="p_v_content"    class="panel"><div class="empty-panel"><div class="ei">🎯</div><h3>Value Content</h3><p>Data not yet available — TBD</p></div></div>
-<div id="p_vr_dash"      class="panel"><div class="empty-panel"><div class="ei">✅</div><h3>VR Dashboard</h3><p>Data not yet available — TBD</p></div></div>
 
 
 <script>
@@ -521,22 +564,18 @@ const HOME_TOOLS = [
     cat: 'Customer Research',
     tools: [
       {
-        id:'cse', name:'CSE & Vally', tab:'cse',
+        id:'cse', name:'Customer Strategy Explorer & Vally', tab:'cse', url: 'https://cse.for.sap/',
         internal: { val:'1,240', label:'Monthly Active Users', sublabel:'CSE — Aug 2026', trend:8 },
         external: { val:'842',   label:'Monthly Active Users', sublabel:'Vally — Aug 2026', trend:12 },
         intOut: '480 Uploads', extOut: '1,965 Deliverables',
         ytd: (DATA.cse.ytd() + DATA.vally.ytd()).toLocaleString(), ytdLabel:'combined MAU YTD'
       },
-      { id:'evb', name:'Executive Value Brief', tab:'evb',
-        internal:{ val:'111', label:'Monthly Active Users', sublabel:'EVB — Aug 2026', trend:11 },
-        external:{ val:'222', label:'Presentations', sublabel:'Aug 2026', trend:null },
-        intOut:'111 drafts created', extOut:null, ytd:'888', ytdLabel:'MAU YTD' },
-      { id:'cve', name:'Customer Value Explorer', tab:'cve',
-        internal:{ val:'333', label:'Monthly Active Users', sublabel:'CVE — Aug 2026', trend:3 },
-        external:{ val:'444', label:'Value outputs', sublabel:'Aug 2026', trend:null },
-        intOut:null, extOut:null, ytd:'2,664', ytdLabel:'MAU YTD' },
+      { id:'evb', name:'Executive Value Brief', tab:'evb', url: 'https://cse.cfapps.us10.hana.ondemand.com/',
+        internal:{ val:'###', label:'Monthly Active Users', sublabel:'EVB — Aug 2026', trend:null },
+        external:{ val:'###', label:'Presentations', sublabel:'Aug 2026', trend:null },
+        intOut:null, extOut:null, ytd:'###', ytdLabel:'MAU YTD' },
       {
-        id:'aevc', name:'AEVC', tab:'aevc',
+        id:'aevc', name:'Autonomous Enterprise AI Value Calculator', tab:'aevc', url: 'https://autonomous-value.agent.for.sap/',
         internal: { val:'615', label:'Monthly Active Users', sublabel:'AEVC — Aug 2026', trend:-3 },
         external: { val:'1,120', label:'Analyses Run', sublabel:'Aug 2026', trend:null },
         intOut: null, extOut: null,
@@ -549,77 +588,53 @@ const HOME_TOOLS = [
   {
     cat: 'Portfolio Discovery',
     tools: [
-      { id:'solution_scout', name:'SAP Solution Scout', tab:'solution_scout',
-        internal:{ val:'444', label:'Monthly Active Users', sublabel:'Aug 2026', trend:4 },
-        external:{ val:'555', label:'Assessments', sublabel:'Aug 2026', trend:null },
-        intOut:'444 opportunity scores', extOut:null, ytd:'3,552', ytdLabel:'MAU YTD' },
-      { id:'exp_agent', name:'Experience Agent', tab:'exp_agent',
-        internal:{ val:'333', label:'Monthly Active Users', sublabel:'Aug 2026', trend:-3 },
-        external:{ val:'1,111', label:'Queries', sublabel:'Aug 2026', trend:null },
-        intOut:null, extOut:null, ytd:'2,664', ytdLabel:'MAU YTD' },
-      { id:'roadmap_exp', name:'SAP Road Map Explorer', tab:'roadmap_exp',
-        internal:{ val:'222', label:'Monthly Active Users', sublabel:'Aug 2026', trend:22 },
-        external:{ val:'333', label:'Roadmaps / searches', sublabel:'Aug 2026', trend:null },
-        intOut:null, extOut:null, ytd:'1,776', ytdLabel:'MAU YTD' },
-      { id:'innov_repo', name:'Innovation & Feature Repository', tab:'innov_repo',
-        internal:{ val:'222', label:'Monthly Active Users', sublabel:'Aug 2026', trend:22 },
-        external:{ val:'333', label:'Features submitted', sublabel:'Aug 2026', trend:null },
-        intOut:null, extOut:null, ytd:'1,776', ytdLabel:'MAU YTD' },
+      { id:'solution_scout', name:'SAP Solution Scout', tab:'solution_scout', url: 'https://solutionscout.sap.com/welcome',
+        internal:{ val:'###', label:'Monthly Active Users', sublabel:'Aug 2026', trend:null },
+        external:{ val:'###', label:'Assessments', sublabel:'Aug 2026', trend:null },
+        intOut:null, extOut:null, ytd:'###', ytdLabel:'MAU YTD' },
+      { id:'exp_agent', name:'Experience Agent', tab:'exp_agent', url: 'https://www.experience-agent.cloud.sap/',
+        internal:{ val:'###', label:'Monthly Active Users', sublabel:'Aug 2026', trend:null },
+        external:{ val:'###', label:'Queries', sublabel:'Aug 2026', trend:null },
+        intOut:null, extOut:null, ytd:'###', ytdLabel:'MAU YTD' },
+      { id:'roadmap_exp', name:'SAP Road Map Explorer', tab:'roadmap_exp', url: 'https://roadmaps.sap.com/welcome#/',
+        internal:{ val:'###', label:'Monthly Active Users', sublabel:'Aug 2026', trend:null },
+        external:{ val:'###', label:'Roadmaps / searches', sublabel:'Aug 2026', trend:null },
+        intOut:null, extOut:null, ytd:'###', ytdLabel:'MAU YTD' },
+      { id:'innov_repo', name:'Innovation & Feature Repository', tab:'innov_repo', url: null,
+        internal:{ val:'###', label:'Monthly Active Users', sublabel:'Aug 2026', trend:null },
+        external:{ val:'###', label:'Features submitted', sublabel:'Aug 2026', trend:null },
+        intOut:null, extOut:null, ytd:'###', ytdLabel:'MAU YTD' },
     ]
   },
 
-  // ── SECTION 3: Other Tools ─────────────────────────────────────────
+  // ── SECTION 3: VLM Tools ──────────────────────────────────────────
   {
-    cat: 'Other Tools',
+    cat: 'VLM Tools',
     tools: [
-      { id:'scg', name:'Strategic Conversations Guide', tab:'scg',
-        internal:{ val:'111', label:'Monthly Active Users', sublabel:'SCG — Aug 2026', trend:-11 },
-        external:{ val:'222', label:'Conversations', sublabel:'Aug 2026', trend:null },
-        intOut:null, extOut:null, ytd:'888', ytdLabel:'MAU YTD' },
-      { id:'mtn', name:'Move the Needle', tab:'mtn',
-        internal:{ val:'555', label:'Monthly Active Users', sublabel:'Aug 2026', trend:5 },
-        external:{ val:'666', label:'Analyses', sublabel:'Aug 2026', trend:null },
-        intOut:'555 needle moves', extOut:null, ytd:'4,440', ytdLabel:'MAU YTD' },
-      { id:'v_starter', name:'Value Starter', tab:'v_starter',
-        internal:{ val:'444', label:'Monthly Active Users', sublabel:'Aug 2026', trend:4 },
-        external:{ val:'555', label:'Decks created', sublabel:'Aug 2026', trend:null },
-        intOut:null, extOut:null, ytd:'3,552', ytdLabel:'MAU YTD' },
-      { id:'v_onepager', name:'Value One-Pager', tab:'v_onepager',
-        internal:{ val:'333', label:'Monthly Active Users', sublabel:'Aug 2026', trend:3 },
-        external:{ val:'444', label:'One-pagers created', sublabel:'Aug 2026', trend:null },
-        intOut:null, extOut:null, ytd:'2,664', ytdLabel:'MAU YTD' },
-      { id:'flash', name:'FLASH', tab:'flash',
-        internal:{ val:'666', label:'Monthly Active Users', sublabel:'Aug 2026', trend:6 },
-        external:{ val:'777', label:'Benchmarks run', sublabel:'Aug 2026', trend:null },
-        intOut:'666 reports generated', extOut:null, ytd:'5,328', ytdLabel:'MAU YTD' },
-      { id:'perf_bm', name:'Performance Benchmarking', tab:'perf_bm',
-        internal:{ val:'444', label:'Monthly Active Users', sublabel:'Aug 2026', trend:4 },
-        external:{ val:'555', label:'Reports', sublabel:'Aug 2026', trend:null },
-        intOut:null, extOut:null, ytd:'3,552', ytdLabel:'MAU YTD' },
-      { id:'gbc', name:'VLM / GBC', tab:'gbc',
-        internal:{ val:'222', label:'Monthly Active Users', sublabel:'Aug 2026', trend:null },
-        external:{ val:'333', label:'Cases built', sublabel:'Aug 2026', trend:null },
-        intOut:null, extOut:null, ytd:'1,776', ytdLabel:'MAU YTD' },
-      { id:'tco', name:'TCO', tab:'tco',
-        internal:{ val:'111', label:'Monthly Active Users', sublabel:'Aug 2026', trend:null },
-        external:{ val:'222', label:'TCO models', sublabel:'Aug 2026', trend:null },
-        intOut:null, extOut:null, ytd:'888', ytdLabel:'MAU YTD' },
-      { id:'v_library', name:'Value Library', tab:'v_library',
-        internal:{ val:'1,111', label:'Monthly Active Users', sublabel:'Aug 2026', trend:11 },
-        external:{ val:'2,222', label:'Content views', sublabel:'Aug 2026', trend:null },
-        intOut:'1,111 assets accessed', extOut:null, ytd:'8,888', ytdLabel:'MAU YTD' },
-      { id:'l_enable', name:'Learning & Enablement', tab:'l_enable',
-        internal:{ val:'555', label:'Monthly Active Users', sublabel:'Aug 2026', trend:5 },
-        external:{ val:'666', label:'Completions', sublabel:'Aug 2026', trend:null },
-        intOut:null, extOut:null, ytd:'4,440', ytdLabel:'MAU YTD' },
-      { id:'v_content', name:'Value Content', tab:'v_content',
-        internal:{ val:'444', label:'Monthly Active Users', sublabel:'Aug 2026', trend:4 },
-        external:{ val:'555', label:'Downloads', sublabel:'Aug 2026', trend:null },
-        intOut:null, extOut:null, ytd:'3,552', ytdLabel:'MAU YTD' },
-      { id:'vr_dash', name:'VR Dashboard', tab:'vr_dash',
-        internal:{ val:'333', label:'Monthly Active Users', sublabel:'Aug 2026', trend:3 },
-        external:{ val:'444', label:'Reports generated', sublabel:'Aug 2026', trend:null },
-        intOut:null, extOut:null, ytd:'2,664', ytdLabel:'MAU YTD' },
+      { id:'gbc', name:'Conversational Business Case', tab:'gbc', url: null,
+        internal:{ val:'552', label:'Real Customer Engagements', sublabel:'BC Aug 2026', trend:null },
+        external:{ val:'3,049', label:'BC Deliverables Sent', sublabel:'Aug 2026', trend:null },
+        intOut:'18% real engagement rate', extOut:null, ytd:'TBD', ytdLabel:'MAU YTD' },
+      { id:'mtn', name:'Move the Needle', tab:'mtn', url: 'https://vlm.cfapps.eu10.hana.ondemand.com/mtn-info/0/1',
+        internal:{ val:'###', label:'Monthly Active Users', sublabel:'Aug 2026', trend:null },
+        external:{ val:'###', label:'Analyses', sublabel:'Aug 2026', trend:null },
+        intOut:null, extOut:null, ytd:'###', ytdLabel:'MAU YTD' },
+      { id:'v_onepager', name:'Value One-Pager', tab:'v_onepager', url: 'https://vlm.cfapps.eu10.hana.ondemand.com/pov-multi-info/0/1',
+        internal:{ val:'###', label:'Monthly Active Users', sublabel:'Aug 2026', trend:null },
+        external:{ val:'###', label:'One-pagers created', sublabel:'Aug 2026', trend:null },
+        intOut:null, extOut:null, ytd:'###', ytdLabel:'MAU YTD' },
+      { id:'v_starter', name:'Value Starter', tab:'v_starter', url: 'https://vlm.cfapps.eu10.hana.ondemand.com/pov-info/0/1/1',
+        internal:{ val:'###', label:'Monthly Active Users', sublabel:'Aug 2026', trend:null },
+        external:{ val:'###', label:'Decks created', sublabel:'Aug 2026', trend:null },
+        intOut:null, extOut:null, ytd:'###', ytdLabel:'MAU YTD' },
+      { id:'flash', name:'FLASH', tab:'flash', url: 'https://flash.cfapps.eu10.hana.ondemand.com/dashboard',
+        internal:{ val:'###', label:'Monthly Active Users', sublabel:'Aug 2026', trend:null },
+        external:{ val:'###', label:'Benchmarks run', sublabel:'Aug 2026', trend:null },
+        intOut:null, extOut:null, ytd:'###', ytdLabel:'MAU YTD' },
+      { id:'perf_bm', name:'Performance Benchmarking', tab:'perf_bm', url: 'https://vlm.cfapps.eu10.hana.ondemand.com/level/0_1_0',
+        internal:{ val:'###', label:'Monthly Active Users', sublabel:'Aug 2026', trend:null },
+        external:{ val:'###', label:'Reports', sublabel:'Aug 2026', trend:null },
+        intOut:null, extOut:null, ytd:'###', ytdLabel:'MAU YTD' },
     ]
   },
 ];
@@ -648,7 +663,7 @@ const ROADMAP = {
 /* ════════════════════════
    HOME GRID RENDER
    ════════════════════════ */
-const REAL_TOOLS = new Set(['cse','aevc']);
+const REAL_TOOLS = new Set(['cse','aevc','gbc']);
 
 function renderHome() {
   let html = '';
@@ -672,7 +687,7 @@ function renderHome() {
         : '';
       const intOut = t.intOut ? `<div class="split-out">${t.intOut}</div>` : '';
       const extOut = t.extOut ? `<div class="split-out">${t.extOut}</div>` : '';
-      const cardBorder = !isReal ? 'border:1px solid #F0C040;' : '';
+      const cardBorder = !isReal ? 'border:1px solid #DF1278;' : '';
 
       html += `<div class="tool-card" onclick="showTab('${t.tab}')" style="${cardBorder}">
         <div class="tool-card-header">
@@ -693,7 +708,7 @@ function renderHome() {
             ${etrend}${extOut}
           </div>
         </div>
-        <div class="tool-card-ytd" ${!isReal ? 'style="background:#FFFBEE"' : ''}>
+        <div class="tool-card-ytd" ${!isReal ? 'style="background:#FFF0F8"' : ''}>
           <span class="ytd-label">YTD 2026 — ${t.ytdLabel}</span>
           <span class="ytd-val">${t.ytd}</span>
         </div>
@@ -728,10 +743,15 @@ function renderToolPanels() {
       panel.innerHTML = `
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px">
           <div class="section-title" style="margin:0">${t.name}</div>
-          <span style="background:var(--lav);color:var(--gem-deep);font-size:12px;font-weight:700;padding:5px 14px;border-radius:12px">Reporting month: AUG 2026</span>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+            <span style="background:var(--lav);color:var(--gem-deep);font-size:12px;font-weight:700;padding:5px 14px;border-radius:12px">Reporting month: AUG 2026</span>
+            ${t.url
+              ? `<a href="${t.url}" target="_blank" style="background:var(--gem-1);color:#fff;font-size:12px;font-weight:700;padding:5px 14px;border-radius:12px;text-decoration:none">Open Tool →</a>`
+              : `<span style="background:#DF1278;color:#fff;font-size:12px;font-weight:700;padding:5px 14px;border-radius:12px;cursor:default" title="No link added yet">No link yet</span>`}
+          </div>
         </div>
         <div class="template-banner">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2l1.8 3.6L14 6.2l-3 2.9.7 4.1L8 11.2l-3.7 2 .7-4.1-3-2.9 4.2-.6z" stroke="#856404" stroke-width="1.3" stroke-linejoin="round"/></svg>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2l1.8 3.6L14 6.2l-3 2.9.7 4.1L8 11.2l-3.7 2 .7-4.1-3-2.9 4.2-.6z" stroke="#DF1278" stroke-width="1.3" stroke-linejoin="round"/></svg>
           TEMPLATE / preview — placeholder data only, not connected to a real data source
         </div>
         <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--txt-muted);margin-bottom:8px;padding-left:4px">Internal</div>
@@ -929,6 +949,22 @@ function var_font() { return "'72','Helvetica Neue',Arial,sans-serif"; }
 /* ════════════════════════
    NAVIGATION
    ════════════════════════ */
+function setCascade(step) {
+  const steps = [1,2,3];
+  const info = {
+    0: 'Bar length = 3,049 rows · after all filters <strong>3,049 survive (~0%)</strong>',
+    1: 'Bar length = 3,049 rows · green = kept · red = filtered out · after Drop Test <strong>1,350 survive (~56%)</strong>',
+    2: 'Bar length = 3,049 rows · green = kept · red = filtered out · after Drop never-opened <strong>673 survive (~78%)</strong>',
+    3: 'Bar length = 3,049 rows · green = kept · red = filtered out · after all filters <strong>552 survive (~82%)</strong>'
+  };
+  steps.forEach(i => {
+    document.getElementById('gbcRow' + i).style.display = i <= step ? 'flex' : 'none';
+    const btn = document.getElementById('gbcBtn' + i);
+    btn.className = 'pipe-btn ' + (i <= step ? 'on' : 'off');
+  });
+  document.getElementById('gbcCascadeInfo').innerHTML = info[step] || info[3];
+}
+
 function showTab(id) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   const p = document.getElementById('p_' + id);
@@ -937,7 +973,6 @@ function showTab(id) {
   // Update tab buttons
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   if (id === 'home') document.querySelector('.tab-btn[onclick*="home"]').classList.add('active');
-  if (id === 'vr_dash') document.querySelector('.tab-btn[onclick*="vr_dash"]').classList.add('active');
 
   // Update dropdowns
   document.querySelectorAll('.tab-dropdown-item').forEach(b => b.classList.remove('active'));
@@ -982,6 +1017,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Real panels: CSE + AEVC roadmaps
   document.getElementById('cseRoadmap').innerHTML  = buildRoadmap(ROADMAP.cse);
   document.getElementById('aevcRoadmap').innerHTML = buildRoadmap(ROADMAP.aevc);
+
+  // GBC cascade: start with all 3 steps active
+  setCascade(3);
 });
 </script>
 </body>

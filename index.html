@@ -111,6 +111,29 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
 .ytd-label{font-size:10px;color:var(--txt-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.8px}
 .ytd-val{font-size:15px;font-weight:700;color:var(--gem-deep);font-variant-numeric:tabular-nums}
 
+/* ── HOME CARD: 3-row layout ── */
+.tc-metrics{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid var(--border)}
+.tc-metric{padding:12px 14px;text-align:center}
+.tc-metric+.tc-metric{border-left:1px solid var(--border)}
+.tc-metric.tc-ytd{background:var(--lav-2)}
+.tc-m-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--txt-muted);margin-bottom:5px}
+.tc-m-val{font-size:24px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums;background:linear-gradient(135deg,var(--gem-deep),var(--gem-1) 60%,var(--gem-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.tc-ytd-val{font-size:20px;background:none;-webkit-text-fill-color:var(--gem-deep);color:var(--gem-deep)}
+.tc-m-sub{font-size:10px;color:var(--txt-muted);margin-top:3px}
+.tc-m-month{font-size:8px;font-weight:400;-webkit-text-fill-color:var(--txt-muted);color:var(--txt-muted);background:none;margin-left:3px;vertical-align:baseline;line-height:1;letter-spacing:0.3px}
+.tc-chart-row{padding:8px 14px 12px;border-top:1px solid var(--border)}
+.tc-chart-title{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--txt-muted);margin-bottom:6px}
+.tc-chart-wrap{height:68px;position:relative}
+.tc-charts-side{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border)}
+.tc-chart-half{padding:8px 10px 12px;min-width:0;overflow:hidden}
+.tc-chart-half+.tc-chart-half{border-left:1px solid var(--border)}
+.tc-chart-wrap-h{height:162px;position:relative}
+.tc-toggle{display:flex;gap:6px;padding:8px 14px 4px;border-top:1px solid var(--border)}
+.tc-toggle-btn{padding:4px 12px;font-size:11px;font-weight:600;border-radius:12px;border:1.5px solid var(--border);background:transparent;color:var(--txt-muted);cursor:pointer;font-family:var(--font);transition:all 0.15s}
+.tc-toggle-btn:hover{border-color:var(--gem-1);color:var(--gem-1)}
+.tc-toggle-btn.active{background:var(--gem-1);border-color:var(--gem-1);color:#fff}
+.tc-chart-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
 /* ── KPI ROW (tool pages) ── */
 .kpi-row{display:flex;gap:16px;margin-bottom:28px;flex-wrap:wrap}
 .kpi-card{background:var(--white);border-radius:var(--radius);padding:22px 24px 18px 28px;flex:1;min-width:180px;box-shadow:var(--shadow);position:relative;overflow:hidden;border:1px solid var(--border);transition:box-shadow 0.22s,transform 0.22s}
@@ -218,7 +241,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
       <div class="header-title">
         <div class="header-eyebrow">Global Value Advisory</div>
         <h1>GVA Tools - Monthly Report</h1>
-        <div class="sub">Tool Adoption &amp; Usage &nbsp;·&nbsp; Internal &nbsp;·&nbsp; AUG 2026</div>
+        <div class="sub">Tool Adoption &amp; Usage &nbsp;·&nbsp; Internal &nbsp;·&nbsp; Last updated: Sep 16, 2026</div>
       </div>
     </div>
     <img src="GVA logo - (SMALL 1500x750 px) - basic cropped.png" alt="Global Value Advisory" style="height:35px;object-fit:contain;margin-right:10px">
@@ -302,7 +325,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
       <div class="lbl">Monthly Active Users</div>
       <div class="val">1,240</div>
       <div class="sub">Aug 2026</div>
-      <div class="trend trend-up">▲ 8% vs Jul</div>
+      <div class="trend trend-up">▲ 8% vs JUL 26</div>
     </div>
     <div class="kpi-card blue">
       <div class="lbl">Uploads</div>
@@ -323,7 +346,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
       <div class="lbl">Monthly Active Users</div>
       <div class="val">842</div>
       <div class="sub">Aug 2026</div>
-      <div class="trend trend-up">▲ 12% vs Jul</div>
+      <div class="trend trend-up">▲ 12% vs JUL 26</div>
     </div>
     <div class="kpi-card blue">
       <div class="lbl">Deliverables</div>
@@ -374,7 +397,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
       <div class="lbl">Monthly Active Users</div>
       <div class="val">615</div>
       <div class="sub">Aug 2026</div>
-      <div class="trend trend-dn">▼ 3% vs Jul</div>
+      <div class="trend trend-dn">▼ 3% vs JUL 26</div>
     </div>
     <div class="kpi-card blue">
       <div class="lbl">Analyses Run</div>
@@ -557,27 +580,100 @@ const DATA = {
   aevc:   { mau: [540,570,600,630,648,654,634,615],     ytd: () => DATA.aevc.mau.reduce((a,b)=>a+b,0) },
 };
 
+const WEEKS_LABELS = (() => {
+  const M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const t = new Date();
+  const sun = new Date(t); sun.setDate(t.getDate() - t.getDay()); // last Sunday (=end of last complete week)
+  const out = [];
+  for (let i = 5; i >= 0; i--) {
+    const e = new Date(sun); e.setDate(sun.getDate() - i * 7);
+    const s = new Date(e);   s.setDate(e.getDate() - 6);
+    const sm = M[s.getMonth()], em = M[e.getMonth()];
+    out.push(sm === em ? `${sm} ${s.getDate()}–${e.getDate()}` : `${sm} ${s.getDate()}–${em} ${e.getDate()}`);
+  }
+  return out;
+})();
+
+const LAST6_MONTHS = (() => {
+  const M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const t = new Date();
+  const out = [];
+  for (let i = 5; i >= 0; i--) {
+    const d = new Date(t.getFullYear(), t.getMonth() - i, 1);
+    out.push(M[d.getMonth()]);
+  }
+  return out;
+})();
+
+const CHART_DATA = {
+  cse:   { monthly: DATA.cse.mau.slice(2), weekly: null },
+  test:  {
+    monthly: [380,420,450,420,390,455], weekly: [95,105,100,92,98,105],
+    views: {
+      'Unique Users':    { monthly: [380,420,450,420,390,455],         weekly: [95,105,100,92,98,105] },
+      'Active Searches': { monthly: [1100,1250,1380,1450,1520,1620],   weekly: [265,285,305,320,345,370] },
+    }
+  },
+  test2: {
+    monthly: [980,1050,1120,890,1050,1180], weekly: [310,325,290,268,305,318],
+    views: {
+      'Unique Users':    { monthly: [980,1050,1120,890,1050,1180],     weekly: [310,325,290,268,305,318] },
+      'Active Searches': { monthly: [4200,4600,5100,3800,4700,4500],   weekly: [1500,1600,1300,1200,1550,1400] },
+    }
+  },
+  test3: {
+    monthly: [420,580,980,1100,650,580], weekly: [180,240,350,290,190,175],
+    views: {
+      'Unique Users':    { monthly: [420,580,980,1100,650,580],        weekly: [180,240,350,290,190,175] },
+      'Active Searches': { monthly: [3200,4500,8500,9200,6800,6200],   weekly: [1100,1800,3200,2600,2000,1850] },
+    }
+  },
+  aevc:  { monthly: DATA.aevc.mau.slice(2), weekly: null },
+};
+
 // Home tool cards config
 const HOME_TOOLS = [
+  // ── SECTION 0: test ───────────────────────────────────────────────
+  {
+    cat: 'test',
+    tools: [
+      { id:'test',  name:'test',  tab:'cse', newLayout:true, hLayout:true, url: 'https://cse.for.sap/',
+        internal: { val:'455',   label:'Unique Users',    sublabel:'AUG 26', trend:8 },
+        external: { val:'1,620', label:'Active Searches', sublabel:'AUG 26', trend:7 },
+        intOut: null, extOut: null,
+        ytd: (DATA.cse.ytd() + DATA.vally.ytd()).toLocaleString(), ytdLabel:'combined MAU YTD' },
+      { id:'test2', name:'test',  tab:'cse', newLayout:true, hLayout:true, url: 'https://cse.for.sap/',
+        internal: { val:'3,800', label:'Unique Users',    sublabel:'AUG 26', trend:31 },
+        external: { val:'25,000', label:'Active Searches', sublabel:'AUG 26', trend:32 },
+        intOut: null, extOut: null,
+        ytd: '52,000', ytdLabel:'MAU YTD' },
+      { id:'test3', name:'test',  tab:'cse', newLayout:true, hLayout:true, url: 'https://cse.for.sap/',
+        internal: { val:'1,720', label:'Unique Users',    sublabel:'AUG 26', trend:8 },
+        external: { val:'10,200', label:'Active Searches', sublabel:'AUG 26', trend:4 },
+        intOut: null, extOut: null,
+        ytd: '15,800', ytdLabel:'MAU YTD' },
+    ]
+  },
+
   // ── SECTION 1: Customer Research ──────────────────────────────────
   {
     cat: 'Customer Research',
     tools: [
       {
-        id:'cse', name:'Customer Strategy Explorer & Vally', tab:'cse', url: 'https://cse.for.sap/',
+        id:'cse', name:'Customer Strategy Explorer & Vally', tab:'cse', newLayout:true, hLayout:true, url: 'https://cse.for.sap/',
         internal: { val:'1,240', label:'Monthly Active Users', sublabel:'CSE — Aug 2026', trend:8 },
         external: { val:'842',   label:'Monthly Active Users', sublabel:'Vally — Aug 2026', trend:12 },
-        intOut: '480 Uploads', extOut: '1,965 Deliverables',
+        intOut: null, extOut: null,
         ytd: (DATA.cse.ytd() + DATA.vally.ytd()).toLocaleString(), ytdLabel:'combined MAU YTD'
       },
-      { id:'evb', name:'Executive Value Brief', tab:'evb', url: 'https://cse.cfapps.us10.hana.ondemand.com/',
+      { id:'evb', name:'Executive Value Brief', tab:'evb', newLayout:true, hLayout:true, url: 'https://cse.cfapps.us10.hana.ondemand.com/',
         internal:{ val:'###', label:'Monthly Active Users', sublabel:'EVB — Aug 2026', trend:null },
         external:{ val:'###', label:'Presentations', sublabel:'Aug 2026', trend:null },
         intOut:null, extOut:null, ytd:'###', ytdLabel:'MAU YTD' },
       {
-        id:'aevc', name:'Autonomous Enterprise AI Value Calculator', tab:'aevc', url: 'https://autonomous-value.agent.for.sap/',
+        id:'aevc', name:'Autonomous Enterprise AI Value Calculator', tab:'aevc', newLayout:true, hLayout:true, url: 'https://autonomous-value.agent.for.sap/',
         internal: { val:'615', label:'Monthly Active Users', sublabel:'AEVC — Aug 2026', trend:-3 },
-        external: { val:'1,120', label:'Analyses Run', sublabel:'Aug 2026', trend:null },
+        external: { val:'###', label:'Analyses Run', sublabel:'Aug 2026', trend:null },
         intOut: null, extOut: null,
         ytd: DATA.aevc.ytd().toLocaleString(), ytdLabel:'MAU YTD'
       },
@@ -588,19 +684,19 @@ const HOME_TOOLS = [
   {
     cat: 'Portfolio Discovery',
     tools: [
-      { id:'solution_scout', name:'SAP Solution Scout', tab:'solution_scout', url: 'https://solutionscout.sap.com/welcome',
+      { id:'solution_scout', name:'SAP Solution Scout', tab:'solution_scout', newLayout:true, hLayout:true, url: 'https://solutionscout.sap.com/welcome',
         internal:{ val:'###', label:'Monthly Active Users', sublabel:'Aug 2026', trend:null },
         external:{ val:'###', label:'Assessments', sublabel:'Aug 2026', trend:null },
         intOut:null, extOut:null, ytd:'###', ytdLabel:'MAU YTD' },
-      { id:'exp_agent', name:'Experience Agent', tab:'exp_agent', url: 'https://www.experience-agent.cloud.sap/',
+      { id:'exp_agent', name:'Experience Agent', tab:'exp_agent', newLayout:true, hLayout:true, url: 'https://www.experience-agent.cloud.sap/',
         internal:{ val:'###', label:'Monthly Active Users', sublabel:'Aug 2026', trend:null },
         external:{ val:'###', label:'Queries', sublabel:'Aug 2026', trend:null },
         intOut:null, extOut:null, ytd:'###', ytdLabel:'MAU YTD' },
-      { id:'roadmap_exp', name:'SAP Road Map Explorer', tab:'roadmap_exp', url: 'https://roadmaps.sap.com/welcome#/',
+      { id:'roadmap_exp', name:'SAP Road Map Explorer', tab:'roadmap_exp', newLayout:true, hLayout:true, url: 'https://roadmaps.sap.com/welcome#/',
         internal:{ val:'###', label:'Monthly Active Users', sublabel:'Aug 2026', trend:null },
         external:{ val:'###', label:'Roadmaps / searches', sublabel:'Aug 2026', trend:null },
         intOut:null, extOut:null, ytd:'###', ytdLabel:'MAU YTD' },
-      { id:'innov_repo', name:'Innovation & Feature Repository', tab:'innov_repo', url: null,
+      { id:'innov_repo', name:'Innovation & Feature Repository', tab:'innov_repo', newLayout:true, hLayout:true, url: null,
         internal:{ val:'###', label:'Monthly Active Users', sublabel:'Aug 2026', trend:null },
         external:{ val:'###', label:'Features submitted', sublabel:'Aug 2026', trend:null },
         intOut:null, extOut:null, ytd:'###', ytdLabel:'MAU YTD' },
@@ -611,27 +707,27 @@ const HOME_TOOLS = [
   {
     cat: 'VLM Tools',
     tools: [
-      { id:'gbc', name:'Conversational Business Case', tab:'gbc', url: null,
+      { id:'gbc', name:'Conversational Business Case', tab:'gbc', newLayout:true, hLayout:true, url: null, comingSoon:true,
         internal:{ val:'552', label:'Real Customer Engagements', sublabel:'BC Aug 2026', trend:null },
         external:{ val:'3,049', label:'BC Deliverables Sent', sublabel:'Aug 2026', trend:null },
         intOut:'18% real engagement rate', extOut:null, ytd:'TBD', ytdLabel:'MAU YTD' },
-      { id:'mtn', name:'Move the Needle', tab:'mtn', url: 'https://vlm.cfapps.eu10.hana.ondemand.com/mtn-info/0/1',
+      { id:'mtn', name:'Move the Needle', tab:'mtn', newLayout:true, hLayout:true, url: 'https://vlm.cfapps.eu10.hana.ondemand.com/mtn-info/0/1',
         internal:{ val:'###', label:'Monthly Active Users', sublabel:'Aug 2026', trend:null },
         external:{ val:'###', label:'Analyses', sublabel:'Aug 2026', trend:null },
         intOut:null, extOut:null, ytd:'###', ytdLabel:'MAU YTD' },
-      { id:'v_onepager', name:'Value One-Pager', tab:'v_onepager', url: 'https://vlm.cfapps.eu10.hana.ondemand.com/pov-multi-info/0/1',
+      { id:'v_onepager', name:'Value One-Pager', tab:'v_onepager', newLayout:true, hLayout:true, url: 'https://vlm.cfapps.eu10.hana.ondemand.com/pov-multi-info/0/1',
         internal:{ val:'###', label:'Monthly Active Users', sublabel:'Aug 2026', trend:null },
         external:{ val:'###', label:'One-pagers created', sublabel:'Aug 2026', trend:null },
         intOut:null, extOut:null, ytd:'###', ytdLabel:'MAU YTD' },
-      { id:'v_starter', name:'Value Starter', tab:'v_starter', url: 'https://vlm.cfapps.eu10.hana.ondemand.com/pov-info/0/1/1',
+      { id:'v_starter', name:'Value Starter', tab:'v_starter', newLayout:true, hLayout:true, url: 'https://vlm.cfapps.eu10.hana.ondemand.com/pov-info/0/1/1',
         internal:{ val:'###', label:'Monthly Active Users', sublabel:'Aug 2026', trend:null },
         external:{ val:'###', label:'Decks created', sublabel:'Aug 2026', trend:null },
         intOut:null, extOut:null, ytd:'###', ytdLabel:'MAU YTD' },
-      { id:'flash', name:'FLASH', tab:'flash', url: 'https://flash.cfapps.eu10.hana.ondemand.com/dashboard',
+      { id:'flash', name:'FLASH', tab:'flash', newLayout:true, hLayout:true, url: 'https://flash.cfapps.eu10.hana.ondemand.com/dashboard',
         internal:{ val:'###', label:'Monthly Active Users', sublabel:'Aug 2026', trend:null },
         external:{ val:'###', label:'Benchmarks run', sublabel:'Aug 2026', trend:null },
         intOut:null, extOut:null, ytd:'###', ytdLabel:'MAU YTD' },
-      { id:'perf_bm', name:'Performance Benchmarking', tab:'perf_bm', url: 'https://vlm.cfapps.eu10.hana.ondemand.com/level/0_1_0',
+      { id:'perf_bm', name:'Performance Benchmarking', tab:'perf_bm', newLayout:true, hLayout:true, url: 'https://vlm.cfapps.eu10.hana.ondemand.com/level/0_1_0',
         internal:{ val:'###', label:'Monthly Active Users', sublabel:'Aug 2026', trend:null },
         external:{ val:'###', label:'Reports', sublabel:'Aug 2026', trend:null },
         intOut:null, extOut:null, ytd:'###', ytdLabel:'MAU YTD' },
@@ -663,7 +759,7 @@ const ROADMAP = {
 /* ════════════════════════
    HOME GRID RENDER
    ════════════════════════ */
-const REAL_TOOLS = new Set(['cse','aevc','gbc']);
+const REAL_TOOLS = new Set(['cse','aevc','gbc','test','test2','test3']);
 
 function renderHome() {
   let html = '';
@@ -676,48 +772,249 @@ function renderHome() {
       const isReal = REAL_TOOLS.has(t.id);
       const tmplTag = !isReal ? `<span class="template-tag">TEMPLATE</span>` : '';
       const itrend = t.internal.trend > 0
-        ? `<span class="split-trend trend-up">▲ ${t.internal.trend}% vs Jul</span>`
+        ? `<span class="split-trend trend-up">▲ ${t.internal.trend}% vs JUL 26</span>`
         : t.internal.trend < 0
-        ? `<span class="split-trend trend-dn">▼ ${Math.abs(t.internal.trend)}% vs Jul</span>`
+        ? `<span class="split-trend trend-dn">▼ ${Math.abs(t.internal.trend)}% vs JUL 26</span>`
         : '';
       const etrend = t.external.trend != null && t.external.trend > 0
-        ? `<span class="split-trend trend-up">▲ ${t.external.trend}% vs Jul</span>`
+        ? `<span class="split-trend trend-up">▲ ${t.external.trend}% vs JUL 26</span>`
         : t.external.trend != null && t.external.trend < 0
-        ? `<span class="split-trend trend-dn">▼ ${Math.abs(t.external.trend)}% vs Jul</span>`
+        ? `<span class="split-trend trend-dn">▼ ${Math.abs(t.external.trend)}% vs JUL 26</span>`
         : '';
-      const intOut = t.intOut ? `<div class="split-out">${t.intOut}</div>` : '';
-      const extOut = t.extOut ? `<div class="split-out">${t.extOut}</div>` : '';
       const cardBorder = !isReal ? 'border:1px solid #DF1278;' : '';
 
-      html += `<div class="tool-card" onclick="showTab('${t.tab}')" style="${cardBorder}">
-        <div class="tool-card-header">
-          <span class="tool-card-name">${t.name}${tmplTag}</span>
-          <span class="tool-card-nav">Details →</span>
-        </div>
-        <div class="tool-card-split">
-          <div class="split-col">
-            <div class="split-label">Internal</div>
-            <div class="split-mau">${t.internal.val}</div>
-            <div class="split-sub">${t.internal.label}</div>
-            ${itrend}${intOut}
+      if (t.newLayout) {
+        // ── 3-row layout (test card) ──
+        html += `<div class="tool-card" onclick="showTab('${t.tab}')" style="${cardBorder}">
+          <div class="tool-card-header">
+            <span class="tool-card-name">${t.name}${tmplTag}${t.comingSoon ? ' <span style="background:var(--lav);color:var(--gem-deep);font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border-radius:20px;vertical-align:middle">Coming Soon</span>' : ''}</span>
+            <span class="tool-card-nav">Details →</span>
           </div>
-          <div class="split-col">
-            <div class="split-label">External</div>
-            <div class="split-mau">${t.external.val}</div>
-            <div class="split-sub">${t.external.label}</div>
-            ${etrend}${extOut}
+          <div class="tc-metrics">
+            <div class="tc-metric">
+              <div class="tc-m-label">${t.internal.label}</div>
+              <div class="tc-m-val">${t.internal.val}<span class="tc-m-month">${t.internal.sublabel}</span></div>
+              ${itrend}
+            </div>
+            <div class="tc-metric">
+              <div class="tc-m-label">${t.external.label}</div>
+              <div class="tc-m-val">${t.external.val}<span class="tc-m-month">${t.external.sublabel}</span></div>
+              ${etrend}
+            </div>
+            <div class="tc-metric tc-ytd">
+              <div class="tc-m-label">Total Active Searches</div>
+              <div class="tc-m-val">${t.ytd}</div>
+              <div class="tc-m-sub">Year to Date 2026</div>
+            </div>
           </div>
-        </div>
-        <div class="tool-card-ytd" ${!isReal ? 'style="background:#FFF0F8"' : ''}>
-          <span class="ytd-label">YTD 2026 — ${t.ytdLabel}</span>
-          <span class="ytd-val">${t.ytd}</span>
-        </div>
-      </div>`;
+          ${CHART_DATA[t.id] && CHART_DATA[t.id].views ? `
+          <div class="tc-toggle tc-toggle-${t.id}">
+            ${Object.keys(CHART_DATA[t.id].views).map((v,i) =>
+              `<button class="tc-toggle-btn${i===0?' active':''}" data-view="${v}" onclick="setChartView('${t.id}','${v}');event.stopPropagation()">${v}</button>`
+            ).join('')}
+          </div>` : ''}
+          ${t.hLayout && CHART_DATA[t.id] ? `
+          <div class="tc-charts-side">
+            <div class="tc-chart-half">
+              <div class="tc-chart-title">Monthly MAU — last 6 months</div>
+              <div class="tc-chart-wrap-h"><canvas id="tcm-${t.id}"></canvas></div>
+            </div>
+            <div class="tc-chart-half">
+              <div class="tc-chart-title">Weekly — last 6 weeks</div>
+              ${CHART_DATA[t.id] && CHART_DATA[t.id].weekly
+                ? `<div class="tc-chart-wrap-h"><canvas id="tcw-${t.id}"></canvas></div>`
+                : `<div class="tc-chart-wrap-h" style="display:flex;flex-direction:column;justify-content:space-around;padding:4px 0">
+                ${[...WEEKS_LABELS].reverse().map(w=>`<div style="display:flex;align-items:center;gap:8px"><span style="font-size:10px;color:var(--txt-muted);width:72px;text-align:right;flex-shrink:0">${w}</span><div style="flex:1;height:16px;background:#0070F2;border-radius:3px;opacity:0.2"></div></div>`).join('')}
+              </div>`}
+            </div>
+          </div>` : t.hLayout ? `
+          <div class="tc-charts-side">
+            <div class="tc-chart-half">
+              <div class="tc-chart-title">Monthly MAU — last 6 months</div>
+              <div class="tc-chart-wrap-h" style="display:flex;flex-direction:column;justify-content:space-around;padding:4px 0">
+                ${[...LAST6_MONTHS].reverse().map(m=>`<div style="display:flex;align-items:center;gap:8px"><span style="font-size:10px;color:var(--txt-muted);width:28px;text-align:right;flex-shrink:0">${m}</span><div style="flex:1;height:16px;background:var(--lav);border-radius:3px;opacity:0.35"></div></div>`).join('')}
+              </div>
+            </div>
+            <div class="tc-chart-half">
+              <div class="tc-chart-title">Weekly — last 6 weeks</div>
+              <div class="tc-chart-wrap-h" style="display:flex;flex-direction:column;justify-content:space-around;padding:4px 0">
+                ${[...WEEKS_LABELS].reverse().map(w=>`<div style="display:flex;align-items:center;gap:8px"><span style="font-size:10px;color:var(--txt-muted);width:72px;text-align:right;flex-shrink:0">${w}</span><div style="flex:1;height:16px;background:#0070F2;border-radius:3px;opacity:0.2"></div></div>`).join('')}
+              </div>
+            </div>
+          </div>` : `
+          <div class="tc-chart-row">
+            <div class="tc-chart-title">Monthly MAU — last 6 months</div>
+            <div class="tc-chart-wrap"><canvas id="tcm-${t.id}"></canvas></div>
+          </div>
+          <div class="tc-chart-row">
+            <div class="tc-chart-title">Weekly — last 6 weeks</div>
+            <div class="tc-chart-wrap"><canvas id="tcw-${t.id}"></canvas></div>
+          </div>`}
+        </div>`;
+      } else {
+        // ── standard layout ──
+        const intOut = t.intOut ? `<div class="split-out">${t.intOut}</div>` : '';
+        const extOut = t.extOut ? `<div class="split-out">${t.extOut}</div>` : '';
+        html += `<div class="tool-card" onclick="showTab('${t.tab}')" style="${cardBorder}">
+          <div class="tool-card-header">
+            <span class="tool-card-name">${t.name}${tmplTag}</span>
+            <span class="tool-card-nav">Details →</span>
+          </div>
+          <div class="tool-card-split">
+            <div class="split-col">
+              <div class="split-label">Internal</div>
+              <div class="split-mau">${t.internal.val}</div>
+              <div class="split-sub">${t.internal.label}</div>
+              ${itrend}${intOut}
+            </div>
+            <div class="split-col">
+              <div class="split-label">External</div>
+              <div class="split-mau">${t.external.val}</div>
+              <div class="split-sub">${t.external.label}</div>
+              ${etrend}${extOut}
+            </div>
+          </div>
+          <div class="tool-card-ytd" ${!isReal ? 'style="background:#FFF0F8"' : ''}>
+            <span class="ytd-label">YTD 2026 — ${t.ytdLabel}</span>
+            <span class="ytd-val">${t.ytd}</span>
+          </div>
+        </div>`;
+      }
     });
 
     html += '</div></div>';
   });
   document.getElementById('homeGrid').innerHTML = html;
+  initHomeCharts();
+}
+
+const HOME_CHART_INSTANCES = {};
+
+const barDatalabels = {
+  id: 'barDatalabels',
+  afterDatasetsDraw(chart) {
+    const ctx = chart.ctx;
+    chart.data.datasets.forEach((ds, i) => {
+      chart.getDatasetMeta(i).data.forEach((bar, idx) => {
+        const v = ds.data[idx];
+        if (!v) return;
+        const lbl = chart.data.labels[idx];
+        ctx.save();
+        ctx.textAlign = 'center';
+        // value
+        ctx.font = 'bold 8px sans-serif';
+        ctx.fillStyle = '#374151';
+        ctx.textBaseline = 'bottom';
+        ctx.fillText(v.toLocaleString(), bar.x, bar.y - 12);
+        // month below value
+        ctx.font = '7px sans-serif';
+        ctx.fillStyle = '#9CA3AF';
+        ctx.fillText(lbl, bar.x, bar.y - 3);
+        ctx.restore();
+      });
+    });
+  }
+};
+
+function makeBarChart(canvasId, labels, data, color) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  if (HOME_CHART_INSTANCES[canvasId]) { HOME_CHART_INSTANCES[canvasId].destroy(); }
+  HOME_CHART_INSTANCES[canvasId] = new Chart(canvas.getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{ data, backgroundColor: color, borderRadius: 4, barPercentage: 0.6 }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      layout: { padding: { top: 28 } },
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ctx.parsed.y ? ctx.parsed.y.toLocaleString() : 'No data' } } },
+      scales: {
+        x: { grid: { display: false }, ticks: { display: false } },
+        y: { display: false, beginAtZero: true }
+      }
+    },
+    plugins: [barDatalabels]
+  });
+}
+
+const hBarDatalabels = {
+  id: 'hBarDatalabels',
+  afterDatasetsDraw(chart) {
+    const ctx = chart.ctx;
+    chart.data.datasets.forEach((ds, i) => {
+      chart.getDatasetMeta(i).data.forEach((bar, idx) => {
+        const v = ds.data[idx];
+        if (!v) return;
+        ctx.save();
+        ctx.font = 'bold 8px sans-serif';
+        ctx.fillStyle = '#fff';
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(v.toLocaleString(), bar.base + 4, bar.y);
+        ctx.restore();
+      });
+    });
+  }
+};
+
+function makeHBarChart(canvasId, labels, data, color) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  if (HOME_CHART_INSTANCES[canvasId]) { HOME_CHART_INSTANCES[canvasId].destroy(); }
+  HOME_CHART_INSTANCES[canvasId] = new Chart(canvas.getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{ data, backgroundColor: color, borderRadius: 3, barPercentage: 0.7, categoryPercentage: 0.85 }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      layout: { padding: 0 },
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ctx.parsed.x ? ctx.parsed.x.toLocaleString() : 'No data' } } },
+      scales: {
+        x: { display: false, beginAtZero: true },
+        y: { grid: { display: false }, ticks: { font: { size: 7 }, color: '#6B7280', padding: 2 } }
+      }
+    },
+    plugins: [hBarDatalabels]
+  });
+}
+
+function initHomeCharts() {
+  const monthLabels = MONTHS.slice(2);
+  HOME_TOOLS.forEach(cat => {
+    cat.tools.forEach(t => {
+      const cd = CHART_DATA[t.id];
+      if (t.hLayout && cd) {
+        makeHBarChart(`tcm-${t.id}`, [...monthLabels].reverse(), [...cd.monthly].reverse(), '#6B35E8');
+        if (cd.weekly) makeHBarChart(`tcw-${t.id}`, [...WEEKS_LABELS].reverse(), [...cd.weekly].reverse(), '#0070F2');
+      } else if (cd) {
+        makeBarChart(`tcm-${t.id}`, monthLabels, cd.monthly, '#6B35E8');
+        makeBarChart(`tcw-${t.id}`, WEEKS_LABELS, cd.weekly, '#0070F2');
+      } else {
+        makeBarChart(`tcm-${t.id}`, monthLabels, [0,0,0,0,0,0], '#E5E7EB');
+        makeBarChart(`tcw-${t.id}`, WEEKS_LABELS, [0,0,0,0,0,0], '#E5E7EB');
+      }
+    });
+  });
+}
+
+function setChartView(cardId, view) {
+  const cd = CHART_DATA[cardId];
+  if (!cd || !cd.views || !cd.views[view]) return;
+  const v = cd.views[view];
+  document.querySelectorAll(`.tc-toggle-${cardId} .tc-toggle-btn`).forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.view === view);
+  });
+  const mc = HOME_CHART_INSTANCES[`tcm-${cardId}`];
+  const wc = HOME_CHART_INSTANCES[`tcw-${cardId}`];
+  if (mc) { mc.data.datasets[0].data = [...v.monthly].reverse(); mc.update(); }
+  if (wc) { wc.data.datasets[0].data = [...v.weekly].reverse();  wc.update(); }
 }
 
 
@@ -732,9 +1029,9 @@ function renderToolPanels() {
       if (!panel) return;
 
       const itrend = t.internal.trend > 0
-        ? `<div class="trend trend-up">▲ ${t.internal.trend}% vs Jul</div>`
+        ? `<div class="trend trend-up">▲ ${t.internal.trend}% vs JUL 26</div>`
         : t.internal.trend < 0
-        ? `<div class="trend trend-dn">▼ ${Math.abs(t.internal.trend)}% vs Jul</div>`
+        ? `<div class="trend trend-dn">▼ ${Math.abs(t.internal.trend)}% vs JUL 26</div>`
         : '';
 
       const roadmapId = `rm_${t.id}`;

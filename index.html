@@ -471,94 +471,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
   <div id="rmexpRoadmap"></div>
 </div>
 <div id="p_innov_repo"   class="panel"><div class="empty-panel"><div class="ei">💡</div><h3>Innovation &amp; Feature Repository</h3><p>Data not yet available — TBD</p></div></div>
-<div id="p_gbc" class="panel">
-
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px">
-    <div class="section-title" style="margin:0">Conversational Business Case — August 2026</div>
-    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-      <span style="background:var(--lav);color:var(--gem-deep);font-size:12px;font-weight:700;padding:5px 14px;border-radius:12px">Reporting month: AUG 2026</span>
-      <span style="background:#DF1278;color:#fff;font-size:12px;font-weight:700;padding:5px 14px;border-radius:12px;cursor:default" title="No link added yet">No link yet</span>
-    </div>
-  </div>
-
-  <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--txt-muted);margin-bottom:8px;padding-left:4px">Business Case — VLM Deliverables</div>
-  <div class="kpi-row">
-    <div class="kpi-card"><div class="lbl">BC Deliverables Sent</div><div class="val">3,049</div><div class="sub">Aug 2026 — total recipients</div></div>
-    <div class="kpi-card blue"><div class="lbl">Real Customer Engagements</div><div class="val">552</div><div class="sub">18% of sent — after full filter</div></div>
-    <div class="kpi-card navy"><div class="lbl">Filtered Out</div><div class="val">82%</div><div class="sub">test + never-opened + duplicates</div></div>
-  </div>
-
-  <div class="section-title" style="margin-top:28px">Filter Cascade — Real Engagement Quality</div>
-  <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-bottom:24px">
-
-    <div style="font-size:11px;color:var(--txt-muted);margin-bottom:10px">Pick a deliverable, walk the pipeline, see how much real customer engagement is left.</div>
-
-    <!-- Pipeline buttons -->
-    <div style="margin-bottom:6px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--txt-muted)">Pipeline:</div>
-    <div class="pipe-row" id="gbcPipeline">
-      <button class="pipe-btn on" id="gbcBtn1" onclick="setCascade(1)">1. Drop test</button>
-      <span class="pipe-arrow">→</span>
-      <button class="pipe-btn on" id="gbcBtn2" onclick="setCascade(2)">2. Drop never-opened</button>
-      <span class="pipe-arrow">→</span>
-      <button class="pipe-btn on" id="gbcBtn3" onclick="setCascade(3)">3. Dedup customers</button>
-      <span class="pipe-reset" onclick="setCascade(0)">reset</span>
-    </div>
-
-    <div id="gbcCascadeInfo" style="font-size:12px;color:var(--txt-muted);margin:10px 0 14px 0">
-      Bar length = 3,049 rows (raw, constant) · green = kept · red = filtered out · after all filters <strong>552 survive (~82%)</strong>
-    </div>
-
-    <!-- Cascade rows -->
-    <div class="cascade-row" id="gbcRow0">
-      <div class="cascade-label">Start</div>
-      <div class="cascade-bar"><div style="width:100%;background:#1a5c2a"></div></div>
-      <div class="cascade-stat" style="color:var(--txt)">3,049 / 3,049 (100%)</div>
-    </div>
-    <div class="cascade-row" id="gbcRow1" style="display:none">
-      <div class="cascade-label">Drop Test</div>
-      <div class="cascade-bar">
-        <div style="width:44%;background:#1a5c2a"></div>
-        <div style="width:56%;background:#c0392b"></div>
-      </div>
-      <div class="cascade-stat" style="color:var(--txt)">1,350 / 3,049 (44%)</div>
-    </div>
-    <div class="cascade-row" id="gbcRow2" style="display:none">
-      <div class="cascade-label">Drop never-opened</div>
-      <div class="cascade-bar">
-        <div style="width:22%;background:#1a5c2a"></div>
-        <div style="width:22%;background:#c0392b"></div>
-        <div style="width:56%;background:#7b1f1f"></div>
-      </div>
-      <div class="cascade-stat" style="color:var(--txt)">673 / 3,049 (22%)</div>
-    </div>
-    <div class="cascade-row" id="gbcRow3" style="display:none">
-      <div class="cascade-label">Dedup customers</div>
-      <div class="cascade-bar">
-        <div style="width:18%;background:#1a5c2a"></div>
-        <div style="width:4%;background:#c0392b"></div>
-        <div style="width:78%;background:#7b1f1f"></div>
-      </div>
-      <div class="cascade-stat" style="color:var(--gem-1)">552 / 3,049 (18%) ✓</div>
-    </div>
-
-    <div style="display:flex;gap:20px;font-size:11px;flex-wrap:wrap;margin-top:14px">
-      <span><span style="display:inline-block;width:10px;height:10px;background:#1a5c2a;border-radius:2px;margin-right:4px"></span>kept</span>
-      <span><span style="display:inline-block;width:10px;height:10px;background:#c0392b;border-radius:2px;margin-right:4px"></span>excluded · test</span>
-      <span><span style="display:inline-block;width:10px;height:10px;background:#c0392b;opacity:0.7;border-radius:2px;margin-right:4px"></span>excluded · never-opened</span>
-      <span><span style="display:inline-block;width:10px;height:10px;background:#7b1f1f;border-radius:2px;margin-right:4px"></span>excluded · duplicate</span>
-    </div>
-  </div>
-
-  <div class="section-title">Other VLM Deliverable Types — Aug 2026</div>
-  <div class="kpi-row">
-    <div class="kpi-card"><div class="lbl">MTN</div><div class="val" style="font-size:24px">2,245</div><div class="sub">deliverables sent</div></div>
-    <div class="kpi-card blue"><div class="lbl">DO PoV</div><div class="val" style="font-size:24px">733</div><div class="sub">deliverables sent</div></div>
-    <div class="kpi-card navy"><div class="lbl">TCO</div><div class="val" style="font-size:24px">169</div><div class="sub">deliverables sent</div></div>
-    <div class="kpi-card"><div class="lbl">Signavio</div><div class="val" style="font-size:24px">52</div><div class="sub">deliverables sent</div></div>
-    <div class="kpi-card blue"><div class="lbl">VR Dashboard</div><div class="val" style="font-size:24px">24</div><div class="sub">deliverables sent</div></div>
-  </div>
-
-</div>
+<div id="p_gbc" class="panel"><div class="empty-panel"><div class="ei">💼</div><h3>Conversational Business Case</h3><p>Data not yet available — TBD</p></div></div>
 <div id="p_mtn"          class="panel"><div class="empty-panel"><div class="ei">📈</div><h3>Move the Needle</h3><p>Data not yet available — TBD</p></div></div>
 <div id="p_v_starter"    class="panel"><div class="empty-panel"><div class="ei">🚀</div><h3>Value Starter</h3><p>Data not yet available — TBD</p></div></div>
 <div id="p_v_onepager"   class="panel"><div class="empty-panel"><div class="ei">📄</div><h3>Value One-Pager</h3><p>Data not yet available — TBD</p></div></div>
@@ -708,9 +621,9 @@ const HOME_TOOLS = [
     cat: 'VLM Tools',
     tools: [
       { id:'gbc', name:'Conversational Business Case', tab:'gbc', newLayout:true, hLayout:true, url: null, comingSoon:true,
-        internal:{ val:'552', label:'Real Customer Engagements', sublabel:'BC Aug 2026', trend:null },
-        external:{ val:'3,049', label:'BC Deliverables Sent', sublabel:'Aug 2026', trend:null },
-        intOut:'18% real engagement rate', extOut:null, ytd:'TBD', ytdLabel:'MAU YTD' },
+        internal:{ val:'###', label:'Real Customer Engagements', sublabel:'BC Aug 2026', trend:null },
+        external:{ val:'###', label:'BC Deliverables Sent', sublabel:'Aug 2026', trend:null },
+        intOut:null, extOut:null, ytd:'###', ytdLabel:'MAU YTD' },
       { id:'mtn', name:'Move the Needle', tab:'mtn', newLayout:true, hLayout:true, url: 'https://vlm.cfapps.eu10.hana.ondemand.com/mtn-info/0/1',
         internal:{ val:'###', label:'Monthly Active Users', sublabel:'Aug 2026', trend:null },
         external:{ val:'###', label:'Analyses', sublabel:'Aug 2026', trend:null },
@@ -759,7 +672,7 @@ const ROADMAP = {
 /* ════════════════════════
    HOME GRID RENDER
    ════════════════════════ */
-const REAL_TOOLS = new Set(['cse','aevc','gbc','test','test2','test3']);
+const REAL_TOOLS = new Set(['cse','aevc','test','test2','test3']);
 
 function renderHome() {
   let html = '';
@@ -770,7 +683,7 @@ function renderHome() {
 
     cat.tools.forEach(t => {
       const isReal = REAL_TOOLS.has(t.id);
-      const tmplTag = !isReal ? `<span class="template-tag">TEMPLATE</span>` : '';
+      const tmplTag = '';
       const itrend = t.internal.trend > 0
         ? `<span class="split-trend trend-up">▲ ${t.internal.trend}% vs JUL 26</span>`
         : t.internal.trend < 0

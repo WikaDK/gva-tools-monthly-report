@@ -53,10 +53,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
 .overview-bar{padding:10px 16px 0;display:flex;justify-content:flex-end}
 .overview-toggle-btn{background:var(--gem-1);border:none;color:#fff;font-size:10px;font-weight:600;padding:4px 14px;border-radius:12px;cursor:pointer;font-family:var(--font);letter-spacing:0.5px;transition:background 0.15s}
 .overview-toggle-btn:hover{background:var(--gem-deep)}
-body .tc-toggle{display:flex;max-height:0;overflow:hidden;opacity:0;padding-top:0;padding-bottom:0;border-top-width:0;transition:max-height 0.32s ease,opacity 0.22s ease,padding 0.32s ease,border 0.2s ease}
-body .tc-charts-side{display:grid;max-height:0;overflow:hidden;opacity:0;border-top-width:0;transition:max-height 0.4s ease,opacity 0.3s ease,border 0.2s ease}
-body.overview-expanded .tc-toggle{max-height:80px;overflow-x:auto;opacity:1;padding-top:8px;padding-bottom:6px;border-top-width:1px}
-body.overview-expanded .tc-charts-side{max-height:600px;opacity:1;border-top-width:1px}
+body .tc-toggle{display:none}
+body .tc-charts-side{display:none}
 
 /* ── TAB BAR ── */
 .tab-bar-wrap{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(60,30,120,0.06);padding:0}
@@ -772,6 +770,28 @@ const fmtBI = v => (v && v !== '###') ? v.replace(/^\$/, '$ ').replace(/([KMB]
 function toggleOverview() {
   const expanded = document.body.classList.toggle('overview-expanded');
   document.getElementById('overviewToggleBtn').textContent = expanded ? '▴ Hide' : '▾ Expand';
+  document.querySelectorAll('.tc-toggle, .tc-charts-side').forEach(el => {
+    const isTgl = el.classList.contains('tc-toggle');
+    if (expanded) {
+      el.style.display = isTgl ? 'flex' : 'grid';
+      el.style.overflow = 'hidden';
+      el.style.maxHeight = '0';
+      el.style.opacity = '0';
+      el.style.transition = 'max-height 0.35s ease, opacity 0.25s ease';
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        el.style.maxHeight = isTgl ? '80px' : '600px';
+        el.style.opacity = '1';
+      }));
+    } else {
+      el.style.transition = 'max-height 0.3s ease, opacity 0.2s ease';
+      el.style.maxHeight = '0';
+      el.style.opacity = '0';
+      setTimeout(() => {
+        el.style.display = 'none';
+        el.style.cssText = '';
+      }, 320);
+    }
+  });
   if (expanded) {
     setTimeout(() => {
       Object.values(HOME_CHART_INSTANCES).forEach(c => { c.resize(); c.reset(); c.update(); });

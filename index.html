@@ -582,22 +582,22 @@ const CHART_DATA = {
   test:  {
     monthly: [380,420,450,420,390,455], weekly: [95,105,100,92,98,105],
     views: {
-      'Unique Users':    { monthly: [380,420,450,420,390,455],         weekly: [95,105,100,92,98,105] },
-      'Active Searches': { monthly: [1100,1250,1380,1450,1520,1620],   weekly: [265,285,305,320,345,370] },
+      'Active Users':  { monthly: [380,420,450,420,390,455],         weekly: [95,105,100,92,98,105] },
+      'Interactions':  { monthly: [1100,1250,1380,1450,1520,1620],   weekly: [265,285,305,320,345,370] },
     }
   },
   test2: {
     monthly: [980,1050,1120,890,1050,1180], weekly: [310,325,290,268,305,318],
     views: {
-      'Unique Users':    { monthly: [980,1050,1120,890,1050,1180],     weekly: [310,325,290,268,305,318] },
-      'Active Searches': { monthly: [4200,4600,5100,3800,4700,4500],   weekly: [1500,1600,1300,1200,1550,1400] },
+      'Active Users':  { monthly: [980,1050,1120,890,1050,1180],     weekly: [310,325,290,268,305,318] },
+      'Interactions':  { monthly: [4200,4600,5100,3800,4700,4500],   weekly: [1500,1600,1300,1200,1550,1400] },
     }
   },
   test3: {
     monthly: [420,580,980,1100,650,580], weekly: [180,240,350,290,190,175],
     views: {
-      'Unique Users':    { monthly: [420,580,980,1100,650,580],        weekly: [180,240,350,290,190,175] },
-      'Active Searches': { monthly: [3200,4500,8500,9200,6800,6200],   weekly: [1100,1800,3200,2600,2000,1850] },
+      'Active Users':  { monthly: [420,580,980,1100,650,580],        weekly: [180,240,350,290,190,175] },
+      'Interactions':  { monthly: [3200,4500,8500,9200,6800,6200],   weekly: [1100,1800,3200,2600,2000,1850] },
     }
   },
   aevc:  { monthly: DATA.aevc.mau.slice(2), weekly: null },
@@ -610,20 +610,20 @@ const HOME_TOOLS = [
     cat: 'test',
     tools: [
       { id:'test',  name:'test',  tab:'cse', newLayout:true, hLayout:true, url: 'https://cse.for.sap/',
-        internal: { val:'455',   label:'Unique Users',    sublabel:'AUG 26', trend:8 },
-        external: { val:'1,620', label:'Active Searches', sublabel:'AUG 26', trend:7 },
+        internal: { val:'455',   label:'Active Users',    sublabel:'AUG 26', trend:8 },
+        external: { val:'1,620', label:'Interactions', sublabel:'AUG 26', trend:7 },
         hours:'2,400', dollars:'$72K',
         intOut: null, extOut: null,
         ytd: (DATA.cse.ytd() + DATA.vally.ytd()).toLocaleString(), ytdLabel:'combined MAU YTD' },
       { id:'test2', name:'test',  tab:'cse', newLayout:true, hLayout:true, url: 'https://cse.for.sap/',
-        internal: { val:'3,800', label:'Unique Users',    sublabel:'AUG 26', trend:31 },
-        external: { val:'25,000', label:'Active Searches', sublabel:'AUG 26', trend:32 },
+        internal: { val:'3,800', label:'Active Users',    sublabel:'AUG 26', trend:31 },
+        external: { val:'25,000', label:'Interactions', sublabel:'AUG 26', trend:32 },
         hours:'15,200', dollars:'$456K',
         intOut: null, extOut: null,
         ytd: '52,000', ytdLabel:'MAU YTD' },
       { id:'test3', name:'test',  tab:'cse', newLayout:true, hLayout:true, url: 'https://cse.for.sap/',
-        internal: { val:'1,720', label:'Unique Users',    sublabel:'AUG 26', trend:8 },
-        external: { val:'10,200', label:'Active Searches', sublabel:'AUG 26', trend:4 },
+        internal: { val:'1,720', label:'Active Users',    sublabel:'AUG 26', trend:8 },
+        external: { val:'10,200', label:'Interactions', sublabel:'AUG 26', trend:4 },
         hours:'6,880', dollars:'$206K',
         intOut: null, extOut: null,
         ytd: '15,800', ytdLabel:'MAU YTD' },

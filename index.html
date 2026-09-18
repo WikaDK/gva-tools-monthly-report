@@ -49,6 +49,15 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
 .header-stat .hs-lbl{font-size:9px;color:var(--txt-muted);letter-spacing:0.8px;text-transform:uppercase;margin-top:3px;font-weight:600}
 .header-divider{width:1px;height:40px;background:var(--border)}
 
+/* ── OVERVIEW EXPAND BAR ── */
+.overview-bar{padding:10px 16px 0;display:flex;justify-content:flex-end}
+.overview-toggle-btn{background:var(--gem-1);border:none;color:#fff;font-size:10px;font-weight:600;padding:4px 14px;border-radius:12px;cursor:pointer;font-family:var(--font);letter-spacing:0.5px;transition:background 0.15s}
+.overview-toggle-btn:hover{background:var(--gem-deep)}
+body .tc-toggle{display:flex;max-height:0;overflow:hidden;opacity:0;padding-top:0;padding-bottom:0;border-top-width:0;transition:max-height 0.32s ease,opacity 0.22s ease,padding 0.32s ease,border 0.2s ease}
+body .tc-charts-side{display:grid;max-height:0;overflow:hidden;opacity:0;border-top-width:0;transition:max-height 0.4s ease,opacity 0.3s ease,border 0.2s ease}
+body.overview-expanded .tc-toggle{max-height:80px;overflow-x:auto;opacity:1;padding-top:8px;padding-bottom:6px;border-top-width:1px}
+body.overview-expanded .tc-charts-side{max-height:600px;opacity:1;border-top-width:1px}
+
 /* ── TAB BAR ── */
 .tab-bar-wrap{background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(60,30,120,0.06);padding:0}
 .tab-bar-scroll{overflow-x:auto;white-space:nowrap;scrollbar-width:none;padding:10px 40px;text-align:center;max-width:1440px;margin:0 auto}
@@ -101,7 +110,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
 .split-mau{font-size:28px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums;background:linear-gradient(135deg,var(--gem-deep),var(--gem-1) 60%,var(--gem-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .split-mau.tbd{font-size:22px;color:var(--txt-muted);background:none;-webkit-text-fill-color:var(--txt-muted)}
 .split-sub{font-size:11px;color:var(--txt-muted);margin-top:2px}
-.split-trend{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:700;margin-top:5px;padding:2px 8px;border-radius:8px;background:var(--lav)}
+.split-trend{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:700;margin-top:10px;padding:2px 8px;border-radius:8px;background:var(--lav)}
 .trend-up{color:var(--success)}
 .trend-dn{color:var(--danger)}
 .split-out{font-size:12px;color:var(--txt-mid);margin-top:8px;font-weight:600}
@@ -124,7 +133,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
 .tc-bi-item{display:flex;align-items:center;gap:8px;padding:3px 0;text-align:left}
 .tc-bi-item+.tc-bi-item{border-top:1px solid var(--border)}
 .tc-bi-key{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--txt-muted);white-space:nowrap;flex:1;text-align:right}
-.tc-bi-val{font-size:17px;font-weight:800;color:var(--gem-deep);font-variant-numeric:tabular-nums;line-height:1;letter-spacing:-0.5px;flex-shrink:0}
+.tc-bi-val{font-size:17px;font-weight:800;color:var(--gem-deep);font-variant-numeric:tabular-nums;line-height:1;letter-spacing:0;flex-shrink:0}
 .tc-m-month{font-size:8px;font-weight:400;-webkit-text-fill-color:var(--txt-muted);color:var(--txt-muted);background:none;margin-left:3px;vertical-align:baseline;line-height:1;letter-spacing:0.3px}
 .tc-chart-row{padding:8px 14px 12px;border-top:1px solid var(--border)}
 .tc-chart-title{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--txt-muted);margin-bottom:6px}
@@ -135,7 +144,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
 .tc-chart-wrap-h{height:162px;position:relative}
 .tc-toggle{display:flex;gap:4px;padding:8px 14px 6px;border-top:1px solid var(--border);overflow-x:auto;scrollbar-width:none}
 .tc-toggle::-webkit-scrollbar{display:none}
-.tc-toggle-btn{flex-shrink:0;padding:4px 8px;font-size:9px;font-weight:600;border-radius:12px;border:1.5px solid var(--border);background:transparent;color:var(--txt-muted);cursor:pointer;font-family:var(--font);transition:all 0.15s;white-space:nowrap}
+.tc-toggle-btn{flex:1 1 auto;padding:4px 8px;font-size:9px;font-weight:600;border-radius:12px;border:1.5px solid var(--border);background:transparent;color:var(--txt-muted);cursor:pointer;font-family:var(--font);transition:all 0.15s;white-space:nowrap;text-align:center}
 .tc-toggle-btn:hover{border-color:var(--gem-1);color:var(--gem-1)}
 .tc-toggle-btn.active{background:var(--gem-1);border-color:var(--gem-1);color:#fff}
 .tc-chart-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -346,6 +355,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
      PANEL — HOME (OVERVIEW)
      ══════════════════════════════════════ -->
 <div id="p_home" class="panel active">
+  <div class="overview-bar">
+    <button class="overview-toggle-btn" id="overviewToggleBtn" onclick="toggleOverview()">▾ Expand</button>
+  </div>
   <div id="homeGrid"></div>
 </div>
 
@@ -756,6 +768,17 @@ const ROADMAP = {
    ════════════════════════ */
 const REAL_TOOLS = new Set(['cse','aevc','test','test2','test3']);
 
+const fmtBI = v => (v && v !== '###') ? v.replace(/^\$/, '$ ').replace(/([KMB])$/, ' $1') : (v || '###');
+function toggleOverview() {
+  const expanded = document.body.classList.toggle('overview-expanded');
+  document.getElementById('overviewToggleBtn').textContent = expanded ? '▴ Hide' : '▾ Expand';
+  if (expanded) {
+    setTimeout(() => {
+      Object.values(HOME_CHART_INSTANCES).forEach(c => { c.resize(); c.reset(); c.update(); });
+    }, 80);
+  }
+}
+
 function renderHome() {
   let html = '';
   HOME_TOOLS.forEach(cat => {
@@ -799,11 +822,11 @@ function renderHome() {
             <div class="tc-metric tc-ytd">
               <div class="tc-m-label">Business Impact</div>
               <div class="tc-bi-item">
-                <span class="tc-bi-val">${t.hours || '###'}</span>
+                <span class="tc-bi-val">${fmtBI(t.hours)}</span>
                 <span class="tc-bi-key">Hours Saved</span>
               </div>
               <div class="tc-bi-item">
-                <span class="tc-bi-val">${t.dollars || '###'}</span>
+                <span class="tc-bi-val">${fmtBI(t.dollars)}</span>
                 <span class="tc-bi-key">Dollar Value</span>
               </div>
             </div>
@@ -817,11 +840,11 @@ function renderHome() {
           ${t.hLayout && CHART_DATA[t.id] ? `
           <div class="tc-charts-side">
             <div class="tc-chart-half">
-              <div class="tc-chart-title">Monthly MAU — last 6 months</div>
+              <div class="tc-chart-title">Last 6 completed months</div>
               <div class="tc-chart-wrap-h"><canvas id="tcm-${t.id}"></canvas></div>
             </div>
             <div class="tc-chart-half">
-              <div class="tc-chart-title">Weekly — last 6 weeks</div>
+              <div class="tc-chart-title">Last 6 completed weeks</div>
               ${CHART_DATA[t.id] && CHART_DATA[t.id].weekly
                 ? `<div class="tc-chart-wrap-h"><canvas id="tcw-${t.id}"></canvas></div>`
                 : `<div class="tc-chart-wrap-h" style="display:flex;flex-direction:column;justify-content:space-around;padding:4px 0">
@@ -831,24 +854,24 @@ function renderHome() {
           </div>` : t.hLayout ? `
           <div class="tc-charts-side">
             <div class="tc-chart-half">
-              <div class="tc-chart-title">Monthly MAU — last 6 months</div>
+              <div class="tc-chart-title">Last 6 completed months</div>
               <div class="tc-chart-wrap-h" style="display:flex;flex-direction:column;justify-content:space-around;padding:4px 0">
                 ${[...LAST6_MONTHS].reverse().map(m=>`<div style="display:flex;align-items:center;gap:8px"><span style="font-size:10px;color:var(--txt-muted);width:28px;text-align:right;flex-shrink:0">${m}</span><div style="flex:1;height:16px;background:var(--lav);border-radius:3px;opacity:0.35"></div></div>`).join('')}
               </div>
             </div>
             <div class="tc-chart-half">
-              <div class="tc-chart-title">Weekly — last 6 weeks</div>
+              <div class="tc-chart-title">Last 6 completed weeks</div>
               <div class="tc-chart-wrap-h" style="display:flex;flex-direction:column;justify-content:space-around;padding:4px 0">
                 ${[...WEEKS_LABELS].reverse().map(w=>`<div style="display:flex;align-items:center;gap:8px"><span style="font-size:10px;color:var(--txt-muted);width:72px;text-align:right;flex-shrink:0">${w}</span><div style="flex:1;height:16px;background:#0070F2;border-radius:3px;opacity:0.2"></div></div>`).join('')}
               </div>
             </div>
           </div>` : `
           <div class="tc-chart-row">
-            <div class="tc-chart-title">Monthly MAU — last 6 months</div>
+            <div class="tc-chart-title">Last 6 completed months</div>
             <div class="tc-chart-wrap"><canvas id="tcm-${t.id}"></canvas></div>
           </div>
           <div class="tc-chart-row">
-            <div class="tc-chart-title">Weekly — last 6 weeks</div>
+            <div class="tc-chart-title">Last 6 completed weeks</div>
             <div class="tc-chart-wrap"><canvas id="tcw-${t.id}"></canvas></div>
           </div>`}
         </div>`;

@@ -1283,7 +1283,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
       <!-- Tool Usage -->
       <div class="six-col">
-        <div class="six-col-label">Tool Usage</div>
+        <div class="six-col-label">Tool Interaction</div>
         <div class="six-total" id="sixTUTotal">—</div>
         <div class="six-pie-wrap"><canvas id="sixPieCanvasTU"></canvas></div>
       </div>
@@ -1415,7 +1415,7 @@ async function downloadSixReport() {
   // Three pie charts
   const pies = [
     { id:'sixPieCanvasPR', label:'People Reach · Unique Users', x:0.15 },
-    { id:'sixPieCanvasTU', label:'Tool Usage',                  x:3.45 },
+    { id:'sixPieCanvasTU', label:'Tool Interaction',              x:3.45 },
     { id:'sixPieCanvas',   label:'Business Impact',             x:6.75 },
   ];
   pies.forEach(p => {
@@ -1427,7 +1427,7 @@ async function downloadSixReport() {
   const rows = [[
     { text:'Tool',         options:{bold:true, color:'FFFFFF', fill:'3D1A7A'} },
     { text:'People Reach', options:{bold:true, color:'FFFFFF', fill:'3D1A7A', align:'right'} },
-    { text:'Tool Usage',   options:{bold:true, color:'FFFFFF', fill:'3D1A7A', align:'right'} },
+    { text:'Tool Interaction', options:{bold:true, color:'FFFFFF', fill:'3D1A7A', align:'right'} },
   ]];
   SIX_TOOLS.forEach((t, i) => {
     const pr = (document.getElementById('sixPR_' + i) || {}).textContent || '—';

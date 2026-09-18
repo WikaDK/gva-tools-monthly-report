@@ -114,17 +114,17 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
 
 /* ── HOME CARD: 3-row layout ── */
 .tc-metrics{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid var(--border)}
-.tc-metric{padding:12px 14px;text-align:center}
+.tc-metric{padding:12px 14px;text-align:center;display:flex;flex-direction:column}
 .tc-metric+.tc-metric{border-left:1px solid var(--border)}
 .tc-metric.tc-ytd{background:var(--lav-2)}
-.tc-m-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--txt-muted);margin-bottom:5px}
+.tc-m-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--txt-muted);margin-bottom:6px;min-height:28px;display:flex;align-items:center;justify-content:center}
 .tc-m-val{font-size:24px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums;background:linear-gradient(135deg,var(--gem-deep),var(--gem-1) 60%,var(--gem-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .tc-ytd-val{font-size:20px;background:none;-webkit-text-fill-color:var(--gem-deep);color:var(--gem-deep)}
 .tc-m-sub{font-size:10px;color:var(--txt-muted);margin-top:3px}
-.tc-bi-item{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:3px 0}
+.tc-bi-item{display:flex;align-items:center;gap:8px;padding:3px 0;text-align:left}
 .tc-bi-item+.tc-bi-item{border-top:1px solid var(--border)}
-.tc-bi-key{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--txt-muted);white-space:nowrap}
-.tc-bi-val{font-size:17px;font-weight:800;color:var(--gem-deep);font-variant-numeric:tabular-nums;line-height:1;letter-spacing:-0.5px}
+.tc-bi-key{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--txt-muted);white-space:nowrap;flex:1;text-align:right}
+.tc-bi-val{font-size:17px;font-weight:800;color:var(--gem-deep);font-variant-numeric:tabular-nums;line-height:1;letter-spacing:-0.5px;flex-shrink:0}
 .tc-m-month{font-size:8px;font-weight:400;-webkit-text-fill-color:var(--txt-muted);color:var(--txt-muted);background:none;margin-left:3px;vertical-align:baseline;line-height:1;letter-spacing:0.3px}
 .tc-chart-row{padding:8px 14px 12px;border-top:1px solid var(--border)}
 .tc-chart-title{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--txt-muted);margin-bottom:6px}
@@ -778,12 +778,12 @@ function renderHome() {
             <div class="tc-metric tc-ytd">
               <div class="tc-m-label">Business Impact</div>
               <div class="tc-bi-item">
-                <span class="tc-bi-key">Hours Saved</span>
                 <span class="tc-bi-val">${t.hours || '###'}</span>
+                <span class="tc-bi-key">Hours Saved</span>
               </div>
               <div class="tc-bi-item">
-                <span class="tc-bi-key">Dollar Value</span>
                 <span class="tc-bi-val">${t.dollars || '###'}</span>
+                <span class="tc-bi-key">Dollar Value</span>
               </div>
             </div>
           </div>

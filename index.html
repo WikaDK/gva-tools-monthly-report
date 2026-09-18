@@ -133,9 +133,9 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
 .tc-chart-half{padding:8px 10px 12px;min-width:0;overflow:hidden}
 .tc-chart-half+.tc-chart-half{border-left:1px solid var(--border)}
 .tc-chart-wrap-h{height:162px;position:relative}
-.tc-toggle{display:flex;gap:6px;padding:8px 14px 6px;border-top:1px solid var(--border)}
+.tc-toggle{display:flex;gap:4px;padding:8px 14px 6px;border-top:1px solid var(--border);overflow-x:auto;scrollbar-width:none}
 .tc-toggle::-webkit-scrollbar{display:none}
-.tc-toggle-btn{flex:1;padding:5px 6px;font-size:10px;font-weight:600;border-radius:12px;border:1.5px solid var(--border);background:transparent;color:var(--txt-muted);cursor:pointer;font-family:var(--font);transition:all 0.15s;text-align:center;line-height:1.3;word-break:break-word}
+.tc-toggle-btn{flex-shrink:0;padding:4px 8px;font-size:9px;font-weight:600;border-radius:12px;border:1.5px solid var(--border);background:transparent;color:var(--txt-muted);cursor:pointer;font-family:var(--font);transition:all 0.15s;white-space:nowrap}
 .tc-toggle-btn:hover{border-color:var(--gem-1);color:var(--gem-1)}
 .tc-toggle-btn.active{background:var(--gem-1);border-color:var(--gem-1);color:#fff}
 .tc-chart-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}

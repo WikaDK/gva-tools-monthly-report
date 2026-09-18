@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GVA Tools - Monthly Report — AUG 2026</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PptxGenJS/3.12.0/pptxgen.bundled.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=72:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
@@ -229,6 +230,37 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
   .header,.tab-bar-wrap{padding:0 16px}
   .tool-grid{grid-template-columns:1fr}
 }
+/* ── SIX REPORT ── */
+.six-controls{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px}
+.six-q-pills{display:flex;gap:6px}
+.six-q-btn{padding:5px 14px;border-radius:20px;border:1px solid var(--border);background:var(--white);font-size:12px;font-weight:700;color:var(--txt-muted);cursor:pointer;font-family:var(--font)}
+.six-q-btn.active{background:var(--gem-1);border-color:var(--gem-1);color:#fff}
+.six-dl-btn{padding:8px 20px;border-radius:20px;border:none;background:linear-gradient(135deg,var(--gem-deep),var(--gem-1));color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);letter-spacing:0.3px}
+.six-slide{width:960px;min-height:540px;background:#fff;border:2px solid var(--gem-1);border-radius:12px;box-shadow:var(--shadow-lg);overflow:hidden;margin:0 auto}
+.six-header{background:linear-gradient(135deg,var(--gem-deep) 0%,var(--gem-1) 100%);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.six-logo-gva{height:32px;object-fit:contain;filter:brightness(0) invert(1)}
+.six-header-center{text-align:center;flex:1}
+.six-title{font-size:18px;font-weight:700;color:#fff;letter-spacing:-0.3px;line-height:1.2}
+.six-q-badge{display:inline-block;background:rgba(255,255,255,0.2);color:#fff;font-size:11px;font-weight:700;padding:2px 10px;border-radius:10px;margin-top:4px;letter-spacing:1px}
+.six-logo-six{width:80px;height:36px;border:2px dashed rgba(255,255,255,0.4);border-radius:6px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;flex-shrink:0}
+.six-body{display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--border)}
+.six-col{padding:12px 14px;min-width:0}
+.six-col+.six-col{border-left:1px solid var(--border)}
+.six-col-label{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:1.4px;color:var(--gem-deep);margin-bottom:8px;padding-bottom:6px;border-bottom:2px solid var(--gem-1)}
+.six-table{width:100%;border-collapse:collapse}
+.six-table tr+tr td{border-top:1px solid var(--border)}
+.six-table td{padding:3px 4px;font-size:11px;vertical-align:middle}
+.six-table td:first-child{color:var(--txt-mid);font-weight:500;width:65%}
+.six-table td:last-child{text-align:right;font-weight:700;color:var(--gem-deep)}
+.six-cell[contenteditable]{outline:none;min-width:40px;display:inline-block;border-bottom:1px dashed var(--border);cursor:text}
+.six-cell[contenteditable]:focus{border-bottom-color:var(--gem-1);color:var(--gem-1)}
+.six-pie-wrap{height:180px;position:relative;margin:4px 0}
+.six-bottom{display:grid;grid-template-columns:1fr 1fr}
+.six-bottom-col{padding:12px 14px}
+.six-bottom-col+.six-bottom-col{border-left:1px solid var(--border)}
+.six-bottom-label{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:1.4px;color:var(--gem-deep);margin-bottom:6px;padding-bottom:5px;border-bottom:2px solid var(--gem-1)}
+.six-bottom-text{font-size:11px;color:var(--txt-mid);min-height:60px;outline:none;line-height:1.6}
+.six-bottom-text:empty::before{content:attr(data-ph);color:var(--txt-muted);pointer-events:none}
 </style>
 </head>
 <body>
@@ -290,6 +322,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
         </div>
       </div>
 
+      <div class="tab-sep"></div>
+      <button class="tab-btn" onclick="showTab('six_report')">Six Report</button>
 
     </div>
   </div>
@@ -1208,9 +1242,213 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('cseRoadmap').innerHTML  = buildRoadmap(ROADMAP.cse);
   document.getElementById('aevcRoadmap').innerHTML = buildRoadmap(ROADMAP.aevc);
 
-  // GBC cascade: start with all 3 steps active
-  setCascade(3);
 });
 </script>
-</body>
+<div id="p_six_report" class="panel">
+  <div class="six-controls">
+    <div class="six-q-pills" id="sixQPills">
+      <button class="six-q-btn" onclick="setSixQuarter('Q1')">Q1 · Jan–Mar</button>
+      <button class="six-q-btn" onclick="setSixQuarter('Q2')">Q2 · Apr–Jun</button>
+      <button class="six-q-btn" onclick="setSixQuarter('Q3')">Q3 · Jul–Sep</button>
+      <button class="six-q-btn" onclick="setSixQuarter('Q4')">Q4 · Oct–Dec</button>
+    </div>
+    <button class="six-dl-btn" onclick="downloadSixReport()">⬇ Download PPTX</button>
+  </div>
+
+  <div class="six-slide" id="sixSlide">
+    <!-- Header -->
+    <div class="six-header">
+      <img src="GVA logo - (SMALL 1500x750 px) - basic cropped.png" class="six-logo-gva" alt="GVA">
+      <div class="six-header-center">
+        <div class="six-title">Global Value Advisory Tools Report</div>
+        <div class="six-q-badge" id="sixQBadge">Q3 2026</div>
+      </div>
+      <div class="six-logo-six" id="sixLogoPlaceholder">SIX<br>LOGO</div>
+    </div>
+
+    <!-- Three data columns -->
+    <div class="six-body">
+      <!-- People Reach -->
+      <div class="six-col">
+        <div class="six-col-label">People Reach · Unique Users</div>
+        <table class="six-table" id="sixTablePR">
+          <tbody id="sixPRBody"></tbody>
+        </table>
+      </div>
+      <!-- Tool Usage -->
+      <div class="six-col">
+        <div class="six-col-label">Tool Usage</div>
+        <table class="six-table" id="sixTableTU">
+          <tbody id="sixTUBody"></tbody>
+        </table>
+      </div>
+      <!-- Business Impact -->
+      <div class="six-col">
+        <div class="six-col-label">Business Impact · Share of Reach</div>
+        <div class="six-pie-wrap"><canvas id="sixPieCanvas"></canvas></div>
+      </div>
+    </div>
+
+    <!-- Bottom editable sections -->
+    <div class="six-bottom">
+      <div class="six-bottom-col">
+        <div class="six-bottom-label">Launches &amp; Enhancements</div>
+        <div class="six-bottom-text" id="sixLaunches" contenteditable="true" data-ph="Add launches and enhancements…"></div>
+      </div>
+      <div class="six-bottom-col">
+        <div class="six-bottom-label">Field &amp; Customer Highlights</div>
+        <div class="six-bottom-text" id="sixHighlights" contenteditable="true" data-ph="Add field and customer highlights…"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════
+   SIX REPORT
+   ════════════════════════ */
+const SIX_TOOLS = HOME_TOOLS
+  .filter(s => s.cat !== 'test')
+  .flatMap(s => s.tools);
+
+const SIX_COLORS = ['#6B35E8','#0070F2','#9B67FF','#00B4D8','#3D1A7A','#56CFE1',
+                    '#48CAE4','#9B2226','#AE2012','#BB3E03','#CA6702','#EE9B00','#94D2BD'];
+
+let sixQ = 'Q' + Math.ceil((new Date().getMonth() + 1) / 3);
+let sixYear = new Date().getFullYear();
+let sixPieChart = null;
+
+function initSixReport() {
+  // Build People Reach table
+  const prBody = document.getElementById('sixPRBody');
+  const tuBody = document.getElementById('sixTUBody');
+  SIX_TOOLS.forEach((t, i) => {
+    const prVal = t.internal.val === '###' ? '' : t.internal.val;
+    const tuVal = t.external.val === '###' ? '' : t.external.val;
+    const shortName = t.name.length > 28 ? t.name.slice(0,26)+'…' : t.name;
+    prBody.innerHTML += `<tr><td>${shortName}</td><td><span class="six-cell" id="sixPR_${i}" contenteditable="true" oninput="renderSixPie()" data-ph="—">${prVal}</span></td></tr>`;
+    tuBody.innerHTML += `<tr><td>${shortName}</td><td><span class="six-cell" id="sixTU_${i}" contenteditable="true" data-ph="—">${tuVal}</span></td></tr>`;
+  });
+
+  setSixQuarter(sixQ);
+  renderSixPie();
+}
+
+function setSixQuarter(q) {
+  sixQ = q;
+  document.getElementById('sixQBadge').textContent = q + ' ' + sixYear;
+  document.querySelectorAll('.six-q-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent.startsWith(q));
+  });
+}
+
+function renderSixPie() {
+  const vals = SIX_TOOLS.map((t, i) => {
+    const raw = (document.getElementById('sixPR_' + i) || {}).textContent || '';
+    return parseFloat(raw.replace(/,/g, '')) || 0;
+  });
+  const total = vals.reduce((a, b) => a + b, 0);
+  const labels = SIX_TOOLS.map(t => t.name.length > 22 ? t.name.slice(0,20)+'…' : t.name);
+
+  if (sixPieChart) {
+    sixPieChart.data.datasets[0].data = vals;
+    sixPieChart.update();
+    return;
+  }
+  const ctx = document.getElementById('sixPieCanvas').getContext('2d');
+  sixPieChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels,
+      datasets: [{ data: vals, backgroundColor: SIX_COLORS, borderWidth: 1, borderColor: '#fff' }]
+    },
+    options: {
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: true, position: 'right', labels: { font: { size: 8 }, boxWidth: 10, padding: 4 } },
+        tooltip: { callbacks: { label: ctx => {
+          const v = ctx.parsed;
+          const t = ctx.dataset.data.reduce((a,b)=>a+b,0);
+          return t > 0 ? ` ${v.toLocaleString()} (${Math.round(v/t*100)}%)` : ' —';
+        }}}
+      }
+    }
+  });
+}
+
+async function downloadSixReport() {
+  const pptx = new PptxGenJS();
+  pptx.layout = 'LAYOUT_16x9';
+  const slide = pptx.addSlide();
+
+  // Background
+  slide.addShape(pptx.ShapeType.rect, { x:0, y:0, w:'100%', h:'100%', fill:{color:'FFFFFF'} });
+
+  // Header bar
+  slide.addShape(pptx.ShapeType.rect, { x:0, y:0, w:'100%', h:1.1, fill:{color:'3D1A7A'} });
+
+  // Title
+  slide.addText('Global Value Advisory Tools Report', {
+    x:2.2, y:0.15, w:5.6, h:0.55, fontSize:20, bold:true, color:'FFFFFF', align:'center', fontFace:'Calibri'
+  });
+  slide.addText(sixQ + ' ' + sixYear, {
+    x:2.2, y:0.7, w:5.6, h:0.3, fontSize:11, color:'EEEEEE', align:'center', fontFace:'Calibri'
+  });
+
+  // GVA logo (image)
+  try {
+    const img = document.querySelector('.six-logo-gva');
+    const c = document.createElement('canvas');
+    c.width = img.naturalWidth; c.height = img.naturalHeight;
+    c.getContext('2d').drawImage(img, 0, 0);
+    slide.addImage({ data: c.toDataURL('image/png'), x:0.15, y:0.1, w:1.8, h:0.8 });
+  } catch(e) {}
+
+  // People Reach table
+  const prRows = [[ {text:'Tool', options:{bold:true,color:'FFFFFF',fill:'3D1A7A'}}, {text:'People Reach', options:{bold:true,color:'FFFFFF',fill:'3D1A7A'}} ]];
+  SIX_TOOLS.forEach((t, i) => {
+    const v = (document.getElementById('sixPR_' + i) || {}).textContent || '—';
+    prRows.push([ {text:t.name, options:{fontSize:8}}, {text:v||'—', options:{align:'right', fontSize:8}} ]);
+  });
+  slide.addTable(prRows, { x:0.2, y:1.2, w:3.0, rowH:0.22, fontSize:9, border:{pt:0.5,color:'E5E7EB'} });
+
+  // Tool Usage table
+  const tuRows = [[ {text:'Tool', options:{bold:true,color:'FFFFFF',fill:'0070F2'}}, {text:'Tool Usage', options:{bold:true,color:'FFFFFF',fill:'0070F2'}} ]];
+  SIX_TOOLS.forEach((t, i) => {
+    const v = (document.getElementById('sixTU_' + i) || {}).textContent || '—';
+    tuRows.push([ {text:t.name, options:{fontSize:8}}, {text:v||'—', options:{align:'right', fontSize:8}} ]);
+  });
+  slide.addTable(tuRows, { x:3.4, y:1.2, w:3.0, rowH:0.22, fontSize:9, border:{pt:0.5,color:'E5E7EB'} });
+
+  // Business Impact pie
+  try {
+    const pieData = document.getElementById('sixPieCanvas').toDataURL('image/png');
+    slide.addImage({ data: pieData, x:6.5, y:1.2, w:3.0, h:3.0 });
+  } catch(e) {}
+
+  // Launches text
+  const launches = document.getElementById('sixLaunches').innerText || '';
+  slide.addText('Launches & Enhancements', { x:0.2, y:4.3, w:4.7, h:0.25, fontSize:9, bold:true, color:'3D1A7A', fontFace:'Calibri' });
+  slide.addText(launches || ' ', { x:0.2, y:4.55, w:4.7, h:0.9, fontSize:9, color:'374151', wrap:true, fontFace:'Calibri' });
+
+  // Highlights text
+  const highlights = document.getElementById('sixHighlights').innerText || '';
+  slide.addText('Field & Customer Highlights', { x:5.0, y:4.3, w:4.7, h:0.25, fontSize:9, bold:true, color:'3D1A7A', fontFace:'Calibri' });
+  slide.addText(highlights || ' ', { x:5.0, y:4.55, w:4.7, h:0.9, fontSize:9, color:'374151', wrap:true, fontFace:'Calibri' });
+
+  await pptx.writeFile({ fileName: `GVA-Six-Report-${sixQ}-${sixYear}.pptx` });
+}
+
+// Init Six Report lazily on first open
+let sixReportInited = false;
+const _origShowTab = showTab;
+showTab = function(id) {
+  _origShowTab(id);
+  if (id === 'six_report' && !sixReportInited) {
+    sixReportInited = true;
+    initSixReport();
+  }
+};
+</script>
+
 </html>

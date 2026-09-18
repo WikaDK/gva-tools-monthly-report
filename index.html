@@ -133,7 +133,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
 .tc-chart-half{padding:8px 10px 12px;min-width:0;overflow:hidden}
 .tc-chart-half+.tc-chart-half{border-left:1px solid var(--border)}
 .tc-chart-wrap-h{height:162px;position:relative}
-.tc-toggle{display:flex;gap:6px;padding:8px 14px 4px;border-top:1px solid var(--border)}
+.tc-toggle{display:flex;gap:6px;padding:8px 14px 4px;border-top:1px solid var(--border);flex-wrap:wrap}
 .tc-toggle-btn{padding:4px 12px;font-size:11px;font-weight:600;border-radius:12px;border:1.5px solid var(--border);background:transparent;color:var(--txt-muted);cursor:pointer;font-family:var(--font);transition:all 0.15s}
 .tc-toggle-btn:hover{border-color:var(--gem-1);color:var(--gem-1)}
 .tc-toggle-btn.active{background:var(--gem-1);border-color:var(--gem-1);color:#fff}
@@ -582,22 +582,31 @@ const CHART_DATA = {
   test:  {
     monthly: [380,420,450,420,390,455], weekly: [95,105,100,92,98,105],
     views: {
-      'Active Users':  { monthly: [380,420,450,420,390,455],         weekly: [95,105,100,92,98,105] },
-      'Interactions':  { monthly: [1100,1250,1380,1450,1520,1620],   weekly: [265,285,305,320,345,370] },
+      'Active Users':          { monthly: [380,420,450,420,390,455],       weekly: [95,105,100,92,98,105] },
+      'Meaningful Interactions': { monthly: [1100,1250,1380,1450,1520,1620], weekly: [265,285,305,320,345,370] },
+      'Hours Saved':           { monthly: [120,135,145,160,175,180],       weekly: [28,32,35,38,40,42] },
+      'BI Dollars':            { monthly: [3600,4050,4350,4800,5250,5400], weekly: [840,960,1050,1140,1200,1260] },
+      'Dollar Value':          { monthly: [4800,5400,5800,6400,7000,7200], weekly: [1120,1280,1400,1520,1600,1680] },
     }
   },
   test2: {
     monthly: [980,1050,1120,890,1050,1180], weekly: [310,325,290,268,305,318],
     views: {
-      'Active Users':  { monthly: [980,1050,1120,890,1050,1180],     weekly: [310,325,290,268,305,318] },
-      'Interactions':  { monthly: [4200,4600,5100,3800,4700,4500],   weekly: [1500,1600,1300,1200,1550,1400] },
+      'Active Users':          { monthly: [980,1050,1120,890,1050,1180],     weekly: [310,325,290,268,305,318] },
+      'Meaningful Interactions': { monthly: [4200,4600,5100,3800,4700,4500],   weekly: [1500,1600,1300,1200,1550,1400] },
+      'Hours Saved':           { monthly: [520,580,640,760,820,860],         weekly: [130,145,160,190,205,215] },
+      'BI Dollars':            { monthly: [15600,17400,19200,22800,24600,25800], weekly: [3900,4350,4800,5700,6150,6450] },
+      'Dollar Value':          { monthly: [20800,23200,25600,30400,32800,34400], weekly: [5200,5800,6400,7600,8200,8600] },
     }
   },
   test3: {
     monthly: [420,580,980,1100,650,580], weekly: [180,240,350,290,190,175],
     views: {
-      'Active Users':  { monthly: [420,580,980,1100,650,580],        weekly: [180,240,350,290,190,175] },
-      'Interactions':  { monthly: [3200,4500,8500,9200,6800,6200],   weekly: [1100,1800,3200,2600,2000,1850] },
+      'Active Users':          { monthly: [420,580,980,1100,650,580],        weekly: [180,240,350,290,190,175] },
+      'Meaningful Interactions': { monthly: [3200,4500,8500,9200,6800,6200],   weekly: [1100,1800,3200,2600,2000,1850] },
+      'Hours Saved':           { monthly: [180,250,420,470,280,250],         weekly: [78,104,151,124,82,75] },
+      'BI Dollars':            { monthly: [5400,7500,12600,14100,8400,7500], weekly: [2340,3120,4530,3720,2460,2250] },
+      'Dollar Value':          { monthly: [7200,10000,16800,18800,11200,10000], weekly: [3120,4160,6040,4960,3280,3000] },
     }
   },
   aevc:  { monthly: DATA.aevc.mau.slice(2), weekly: null },
@@ -611,19 +620,19 @@ const HOME_TOOLS = [
     tools: [
       { id:'test',  name:'test',  tab:'cse', newLayout:true, hLayout:true, url: 'https://cse.for.sap/',
         internal: { val:'455',   label:'Active Users',    sublabel:'AUG 26', trend:8 },
-        external: { val:'1,620', label:'Interactions', sublabel:'AUG 26', trend:7 },
+        external: { val:'1,620', label:'Meaningful Interactions', sublabel:'AUG 26', trend:7 },
         hours:'2,400', dollars:'$72K',
         intOut: null, extOut: null,
         ytd: (DATA.cse.ytd() + DATA.vally.ytd()).toLocaleString(), ytdLabel:'combined MAU YTD' },
       { id:'test2', name:'test',  tab:'cse', newLayout:true, hLayout:true, url: 'https://cse.for.sap/',
         internal: { val:'3,800', label:'Active Users',    sublabel:'AUG 26', trend:31 },
-        external: { val:'25,000', label:'Interactions', sublabel:'AUG 26', trend:32 },
+        external: { val:'25,000', label:'Meaningful Interactions', sublabel:'AUG 26', trend:32 },
         hours:'15,200', dollars:'$456K',
         intOut: null, extOut: null,
         ytd: '52,000', ytdLabel:'MAU YTD' },
       { id:'test3', name:'test',  tab:'cse', newLayout:true, hLayout:true, url: 'https://cse.for.sap/',
         internal: { val:'1,720', label:'Active Users',    sublabel:'AUG 26', trend:8 },
-        external: { val:'10,200', label:'Interactions', sublabel:'AUG 26', trend:4 },
+        external: { val:'10,200', label:'Meaningful Interactions', sublabel:'AUG 26', trend:4 },
         hours:'6,880', dollars:'$206K',
         intOut: null, extOut: null,
         ytd: '15,800', ytdLabel:'MAU YTD' },

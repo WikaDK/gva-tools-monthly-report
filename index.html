@@ -566,7 +566,15 @@ const LAST6_MONTHS = (() => {
 const MONTH_LABEL = (() => {
   const M = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
   const t = new Date();
-  return M[t.getMonth()] + ' ' + t.getFullYear();
+  const d = new Date(t.getFullYear(), t.getMonth() - 1, 1);
+  return M[d.getMonth()] + ' ' + d.getFullYear();
+})();
+
+const PREV_MONTH_SHORT = (() => {
+  const M = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+  const t = new Date();
+  const d = new Date(t.getFullYear(), t.getMonth() - 2, 1);
+  return M[d.getMonth()] + ' ' + String(d.getFullYear()).slice(2);
 })();
 
 const CHART_DATA = {
@@ -752,14 +760,14 @@ function renderHome() {
       const isReal = REAL_TOOLS.has(t.id);
       const tmplTag = '';
       const itrend = t.internal.trend > 0
-        ? `<span class="split-trend trend-up">▲ ${t.internal.trend}% vs JUL 26</span>`
+        ? `<span class="split-trend trend-up">▲ ${t.internal.trend}% vs ${PREV_MONTH_SHORT}</span>`
         : t.internal.trend < 0
-        ? `<span class="split-trend trend-dn">▼ ${Math.abs(t.internal.trend)}% vs JUL 26</span>`
+        ? `<span class="split-trend trend-dn">▼ ${Math.abs(t.internal.trend)}% vs ${PREV_MONTH_SHORT}</span>`
         : '';
       const etrend = t.external.trend != null && t.external.trend > 0
-        ? `<span class="split-trend trend-up">▲ ${t.external.trend}% vs JUL 26</span>`
+        ? `<span class="split-trend trend-up">▲ ${t.external.trend}% vs ${PREV_MONTH_SHORT}</span>`
         : t.external.trend != null && t.external.trend < 0
-        ? `<span class="split-trend trend-dn">▼ ${Math.abs(t.external.trend)}% vs JUL 26</span>`
+        ? `<span class="split-trend trend-dn">▼ ${Math.abs(t.external.trend)}% vs ${PREV_MONTH_SHORT}</span>`
         : '';
       const cardBorder = !isReal ? 'border:1px solid #DF1278;' : '';
 
@@ -1015,9 +1023,9 @@ function renderToolPanels() {
       if (!panel) return;
 
       const itrend = t.internal.trend > 0
-        ? `<div class="trend trend-up">▲ ${t.internal.trend}% vs JUL 26</div>`
+        ? `<div class="trend trend-up">▲ ${t.internal.trend}% vs ${PREV_MONTH_SHORT}</div>`
         : t.internal.trend < 0
-        ? `<div class="trend trend-dn">▼ ${Math.abs(t.internal.trend)}% vs JUL 26</div>`
+        ? `<div class="trend trend-dn">▼ ${Math.abs(t.internal.trend)}% vs ${PREV_MONTH_SHORT}</div>`
         : '';
 
       const roadmapId = `rm_${t.id}`;
@@ -1280,6 +1288,16 @@ document.addEventListener('DOMContentLoaded', () => {
   // Real panels: CSE + AEVC roadmaps
   document.getElementById('cseRoadmap').innerHTML  = buildRoadmap(ROADMAP.cse);
   document.getElementById('aevcRoadmap').innerHTML = buildRoadmap(ROADMAP.aevc);
+
+  // Update hardcoded month labels in static panel HTML
+  document.querySelectorAll('.trend').forEach(el => {
+    el.innerHTML = el.innerHTML.replace(/vs [A-Z]{3} \d{2}/g, `vs ${PREV_MONTH_SHORT}`);
+  });
+  document.querySelectorAll('.kpi-card .sub').forEach(el => {
+    if (/^[A-Z][a-z]{2} 20\d{2}$/.test(el.textContent.trim())) {
+      el.textContent = MONTH_LABEL;
+    }
+  });
 
 });
 </script>

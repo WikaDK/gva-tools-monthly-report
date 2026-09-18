@@ -121,6 +121,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
 .tc-m-val{font-size:24px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums;background:linear-gradient(135deg,var(--gem-deep),var(--gem-1) 60%,var(--gem-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .tc-ytd-val{font-size:20px;background:none;-webkit-text-fill-color:var(--gem-deep);color:var(--gem-deep)}
 .tc-m-sub{font-size:10px;color:var(--txt-muted);margin-top:3px}
+.tc-bi-item{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:3px 0}
+.tc-bi-item+.tc-bi-item{border-top:1px solid var(--border)}
+.tc-bi-key{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--txt-muted);white-space:nowrap}
+.tc-bi-val{font-size:17px;font-weight:800;color:var(--gem-deep);font-variant-numeric:tabular-nums;line-height:1;letter-spacing:-0.5px}
 .tc-m-month{font-size:8px;font-weight:400;-webkit-text-fill-color:var(--txt-muted);color:var(--txt-muted);background:none;margin-left:3px;vertical-align:baseline;line-height:1;letter-spacing:0.3px}
 .tc-chart-row{padding:8px 14px 12px;border-top:1px solid var(--border)}
 .tc-chart-title{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--txt-muted);margin-bottom:6px}
@@ -594,16 +598,19 @@ const HOME_TOOLS = [
       { id:'test',  name:'test',  tab:'cse', newLayout:true, hLayout:true, url: 'https://cse.for.sap/',
         internal: { val:'455',   label:'Unique Users',    sublabel:'AUG 26', trend:8 },
         external: { val:'1,620', label:'Active Searches', sublabel:'AUG 26', trend:7 },
+        hours:'2,400', dollars:'$72K',
         intOut: null, extOut: null,
         ytd: (DATA.cse.ytd() + DATA.vally.ytd()).toLocaleString(), ytdLabel:'combined MAU YTD' },
       { id:'test2', name:'test',  tab:'cse', newLayout:true, hLayout:true, url: 'https://cse.for.sap/',
         internal: { val:'3,800', label:'Unique Users',    sublabel:'AUG 26', trend:31 },
         external: { val:'25,000', label:'Active Searches', sublabel:'AUG 26', trend:32 },
+        hours:'15,200', dollars:'$456K',
         intOut: null, extOut: null,
         ytd: '52,000', ytdLabel:'MAU YTD' },
       { id:'test3', name:'test',  tab:'cse', newLayout:true, hLayout:true, url: 'https://cse.for.sap/',
         internal: { val:'1,720', label:'Unique Users',    sublabel:'AUG 26', trend:8 },
         external: { val:'10,200', label:'Active Searches', sublabel:'AUG 26', trend:4 },
+        hours:'6,880', dollars:'$206K',
         intOut: null, extOut: null,
         ytd: '15,800', ytdLabel:'MAU YTD' },
     ]
@@ -617,17 +624,20 @@ const HOME_TOOLS = [
         id:'cse', name:'Customer Strategy Explorer & Vally', tab:'cse', newLayout:true, hLayout:true, url: 'https://cse.for.sap/',
         internal: { val:'1,240', label:'Monthly Active Users', sublabel:'CSE — Aug 2026', trend:8 },
         external: { val:'842',   label:'Monthly Active Users', sublabel:'Vally — Aug 2026', trend:12 },
+        hours:'###', dollars:'###',
         intOut: null, extOut: null,
         ytd: (DATA.cse.ytd() + DATA.vally.ytd()).toLocaleString(), ytdLabel:'combined MAU YTD'
       },
       { id:'evb', name:'Executive Value Brief', tab:'evb', newLayout:true, hLayout:true, url: 'https://cse.cfapps.us10.hana.ondemand.com/',
         internal:{ val:'###', label:'Monthly Active Users', sublabel:'EVB — Aug 2026', trend:null },
         external:{ val:'###', label:'Presentations', sublabel:'Aug 2026', trend:null },
+        hours:'###', dollars:'###',
         intOut:null, extOut:null, ytd:'###', ytdLabel:'MAU YTD' },
       {
         id:'aevc', name:'Autonomous Enterprise AI Value Calculator', tab:'aevc', newLayout:true, hLayout:true, url: 'https://autonomous-value.agent.for.sap/',
         internal: { val:'615', label:'Monthly Active Users', sublabel:'AEVC — Aug 2026', trend:-3 },
         external: { val:'###', label:'Analyses Run', sublabel:'Aug 2026', trend:null },
+        hours:'###', dollars:'###',
         intOut: null, extOut: null,
         ytd: DATA.aevc.ytd().toLocaleString(), ytdLabel:'MAU YTD'
       },
@@ -641,18 +651,22 @@ const HOME_TOOLS = [
       { id:'solution_scout', name:'SAP Solution Scout', tab:'solution_scout', newLayout:true, hLayout:true, url: 'https://solutionscout.sap.com/welcome',
         internal:{ val:'###', label:'Monthly Active Users', sublabel:'Aug 2026', trend:null },
         external:{ val:'###', label:'Assessments', sublabel:'Aug 2026', trend:null },
+        hours:'###', dollars:'###',
         intOut:null, extOut:null, ytd:'###', ytdLabel:'MAU YTD' },
       { id:'exp_agent', name:'Experience Agent', tab:'exp_agent', newLayout:true, hLayout:true, url: 'https://www.experience-agent.cloud.sap/',
         internal:{ val:'###', label:'Monthly Active Users', sublabel:'Aug 2026', trend:null },
         external:{ val:'###', label:'Queries', sublabel:'Aug 2026', trend:null },
+        hours:'###', dollars:'###',
         intOut:null, extOut:null, ytd:'###', ytdLabel:'MAU YTD' },
       { id:'roadmap_exp', name:'SAP Road Map Explorer', tab:'roadmap_exp', newLayout:true, hLayout:true, url: 'https://roadmaps.sap.com/welcome#/',
         internal:{ val:'###', label:'Monthly Active Users', sublabel:'Aug 2026', trend:null },
         external:{ val:'###', label:'Roadmaps / searches', sublabel:'Aug 2026', trend:null },
+        hours:'###', dollars:'###',
         intOut:null, extOut:null, ytd:'###', ytdLabel:'MAU YTD' },
       { id:'innov_repo', name:'Innovation & Feature Repository', tab:'innov_repo', newLayout:true, hLayout:true, url: null,
         internal:{ val:'###', label:'Monthly Active Users', sublabel:'Aug 2026', trend:null },
         external:{ val:'###', label:'Features submitted', sublabel:'Aug 2026', trend:null },
+        hours:'###', dollars:'###',
         intOut:null, extOut:null, ytd:'###', ytdLabel:'MAU YTD' },
     ]
   },
@@ -664,26 +678,32 @@ const HOME_TOOLS = [
       { id:'gbc', name:'Conversational Business Case', tab:'gbc', newLayout:true, hLayout:true, url: null, comingSoon:true,
         internal:{ val:'###', label:'Real Customer Engagements', sublabel:'BC Aug 2026', trend:null },
         external:{ val:'###', label:'BC Deliverables Sent', sublabel:'Aug 2026', trend:null },
+        hours:'###', dollars:'###',
         intOut:null, extOut:null, ytd:'###', ytdLabel:'MAU YTD' },
       { id:'mtn', name:'Move the Needle', tab:'mtn', newLayout:true, hLayout:true, url: 'https://vlm.cfapps.eu10.hana.ondemand.com/mtn-info/0/1',
         internal:{ val:'###', label:'Monthly Active Users', sublabel:'Aug 2026', trend:null },
         external:{ val:'###', label:'Analyses', sublabel:'Aug 2026', trend:null },
+        hours:'###', dollars:'###',
         intOut:null, extOut:null, ytd:'###', ytdLabel:'MAU YTD' },
       { id:'v_onepager', name:'Value One-Pager', tab:'v_onepager', newLayout:true, hLayout:true, url: 'https://vlm.cfapps.eu10.hana.ondemand.com/pov-multi-info/0/1',
         internal:{ val:'###', label:'Monthly Active Users', sublabel:'Aug 2026', trend:null },
         external:{ val:'###', label:'One-pagers created', sublabel:'Aug 2026', trend:null },
+        hours:'###', dollars:'###',
         intOut:null, extOut:null, ytd:'###', ytdLabel:'MAU YTD' },
       { id:'v_starter', name:'Value Starter', tab:'v_starter', newLayout:true, hLayout:true, url: 'https://vlm.cfapps.eu10.hana.ondemand.com/pov-info/0/1/1',
         internal:{ val:'###', label:'Monthly Active Users', sublabel:'Aug 2026', trend:null },
         external:{ val:'###', label:'Decks created', sublabel:'Aug 2026', trend:null },
+        hours:'###', dollars:'###',
         intOut:null, extOut:null, ytd:'###', ytdLabel:'MAU YTD' },
       { id:'flash', name:'FLASH', tab:'flash', newLayout:true, hLayout:true, url: 'https://flash.cfapps.eu10.hana.ondemand.com/dashboard',
         internal:{ val:'###', label:'Monthly Active Users', sublabel:'Aug 2026', trend:null },
         external:{ val:'###', label:'Benchmarks run', sublabel:'Aug 2026', trend:null },
+        hours:'###', dollars:'###',
         intOut:null, extOut:null, ytd:'###', ytdLabel:'MAU YTD' },
       { id:'perf_bm', name:'Performance Benchmarking', tab:'perf_bm', newLayout:true, hLayout:true, url: 'https://vlm.cfapps.eu10.hana.ondemand.com/level/0_1_0',
         internal:{ val:'###', label:'Monthly Active Users', sublabel:'Aug 2026', trend:null },
         external:{ val:'###', label:'Reports', sublabel:'Aug 2026', trend:null },
+        hours:'###', dollars:'###',
         intOut:null, extOut:null, ytd:'###', ytdLabel:'MAU YTD' },
     ]
   },
@@ -746,19 +766,25 @@ function renderHome() {
           </div>
           <div class="tc-metrics">
             <div class="tc-metric">
-              <div class="tc-m-label">${t.internal.label}</div>
+              <div class="tc-m-label">Active Users</div>
               <div class="tc-m-val">${t.internal.val}<span class="tc-m-month">${t.internal.sublabel}</span></div>
               ${itrend}
             </div>
             <div class="tc-metric">
-              <div class="tc-m-label">${t.external.label}</div>
+              <div class="tc-m-label">Meaningful Interactions</div>
               <div class="tc-m-val">${t.external.val}<span class="tc-m-month">${t.external.sublabel}</span></div>
               ${etrend}
             </div>
             <div class="tc-metric tc-ytd">
-              <div class="tc-m-label">Total Active Searches</div>
-              <div class="tc-m-val">${t.ytd}</div>
-              <div class="tc-m-sub">Year to Date 2026</div>
+              <div class="tc-m-label">Business Impact</div>
+              <div class="tc-bi-item">
+                <span class="tc-bi-key">Hours Saved</span>
+                <span class="tc-bi-val">${t.hours || '###'}</span>
+              </div>
+              <div class="tc-bi-item">
+                <span class="tc-bi-key">Dollar Value</span>
+                <span class="tc-bi-val">${t.dollars || '###'}</span>
+              </div>
             </div>
           </div>
           ${CHART_DATA[t.id] && CHART_DATA[t.id].views ? `
